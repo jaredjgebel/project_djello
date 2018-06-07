@@ -1,0 +1,5 @@
+/node_modules/
+notes.txt
+.vscode/
+src/sequelize/config/
+*.code-workspace
