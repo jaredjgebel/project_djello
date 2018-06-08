@@ -10,16 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     passwordHash: DataTypes.STRING,
     photo: DataTypes.STRING,
     boards: DataTypes.ARRAY(Sequelize.INTEGER)
-  }, {
-      classMethods: {
-        associate: function (models) {
-          // associations can be defined here
-          User.hasMany(Board, { as: 'Boards', foreignKey: 'boardId' });
-          User.belongsToMany(Card, { as: 'UserCards', through: 'user_cards' });
-        }
-      }
-    });
+  });
 
+  User.hasMany(Board, { as: 'Boards', foreignKey: 'boardId' });
+  User.belongsToMany(Card, { as: 'UserCards', through: 'user_cards' });
 
   return User;
 };
