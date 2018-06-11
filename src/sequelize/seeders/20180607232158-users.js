@@ -36,6 +36,21 @@ module.exports = {
     console.log('userQuery', userQuery);
     const userRows = userQuery[0];
 
+    // LISTS
+    const lists = [];
+    for (let i = 0; i < 10; i++) {
+      lists.push({
+        title: faker.random.words(),
+        description: faker.lorem.sentence(),
+      })
+    }
+
+    await queryInterface.bulkInsert('Lists', lists);
+
+    const listsQuery = await queryInterface.sequelize.query(`SELECT id from "Lists";`);
+    console.log('listsQuery', listsQuery);
+    const listRows = listsQuery[0];
+
     // CARDS
     const cards = [];
     for (let i = 0; i < 10; i++) {
@@ -44,7 +59,7 @@ module.exports = {
         description: faker.company.bsAdjective(),
         assignees: [userRows[i].id],
         complete: faker.random.boolean(),
-        history: [historyRows[i].id]
+        history: [historyRows[i].id],
       });
     }
 
@@ -55,21 +70,6 @@ module.exports = {
     const cardRows = cardsQuery[0];
 
 
-    // LISTS
-    const lists = [];
-    for (let i = 0; i < 10; i++) {
-      lists.push({
-        title: faker.random.words(),
-        description: faker.lorem.sentence(),
-        cards: [cardRows[i].id],
-      })
-    }
-
-    await queryInterface.bulkInsert('Lists', lists);
-
-    const listsQuery = await queryInterface.sequelize.query(`SELECT id from "Lists";`);
-    console.log('listsQuery', listsQuery);
-    const listRows = listsQuery[0];
 
     // CREATE BOARDS
     const boards = [];
@@ -93,7 +93,7 @@ module.exports = {
     const userBoards = [];
     for (let i = 0; i < 10; i++) {
       userBoards.push({
-        boards: boardRows[i].id
+        boards: [boardRows[i].id]
       });
     }
 

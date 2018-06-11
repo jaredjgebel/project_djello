@@ -1,6 +1,4 @@
 'use strict';
-const Board = require('./board');
-const Card = require('./list');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -9,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     passwordHash: DataTypes.STRING,
     photo: DataTypes.STRING,
-    boards: DataTypes.ARRAY(Sequelize.INTEGER)
+    boards: DataTypes.ARRAY(DataTypes.INTEGER)
   });
-
-  User.hasMany(Board, { as: 'Boards', foreignKey: 'boardId' });
-  User.belongsToMany(Card, { as: 'UserCards', through: 'user_cards' });
+  User.associate = function (models) {
+    User.hasMany(models.Board, { as: 'Boards', foreignKey: 'boardId' });
+    // User.belongsToMany(models.Card, { as: 'UserCards', through: 'user_cards' });
+  };
 
   return User;
 };
