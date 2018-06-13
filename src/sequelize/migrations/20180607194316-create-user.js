@@ -23,9 +23,6 @@ module.exports = {
       photo: {
         type: Sequelize.STRING
       },
-      boards: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     passwordHash: DataTypes.STRING,
     photo: DataTypes.STRING,
-    boards: DataTypes.ARRAY(DataTypes.INTEGER)
   });
+
   User.associate = function (models) {
-    User.hasMany(models.Board, { as: 'Boards', foreignKey: 'boardId' });
-    // User.belongsToMany(models.Card, { as: 'UserCards', through: 'user_cards' });
+    User.belongsToMany(models.Board, { through: 'UserBoards' });
+    User.belongsToMany(models.Card, { through: 'UserCards' });
   };
 
   return User;

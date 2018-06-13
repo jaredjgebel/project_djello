@@ -14,14 +14,8 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      assignees: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
-      },
       complete: {
         type: Sequelize.BOOLEAN
-      },
-      history: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +30,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('cards');
+    return queryInterface.dropTable('Cards');
   }
 };
