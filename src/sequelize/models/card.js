@@ -5,13 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     complete: DataTypes.BOOLEAN,
+    HistoryIds: DataTypes.ARRAY(DataTypes.INTEGER),
   });
-
-  Card.associate = function (models) {
-    Card.belongsTo(models.List);
-    Card.belongsToMany(models.User, { through: 'UserCards' });
-    Card.hasMany(models.History);
-  }
 
   return Card;
 };

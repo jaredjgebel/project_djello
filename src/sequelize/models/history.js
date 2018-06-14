@@ -5,9 +5,5 @@ module.exports = (sequelize, DataTypes) => {
     text: DataTypes.STRING
   });
 
-  History.associate = function (models) {
-    History.belongsTo(models.Card);
-  };
-
   return History;
 };

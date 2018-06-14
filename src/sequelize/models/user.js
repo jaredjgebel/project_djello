@@ -9,10 +9,5 @@ module.exports = (sequelize, DataTypes) => {
     photo: DataTypes.STRING,
   });
 
-  User.associate = function (models) {
-    User.belongsToMany(models.Board, { through: 'UserBoards' });
-    User.belongsToMany(models.Card, { through: 'UserCards' });
-  };
-
   return User;
 };
