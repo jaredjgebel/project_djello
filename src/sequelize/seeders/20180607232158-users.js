@@ -1,5 +1,6 @@
 'use strict';
 const faker = require('faker');
+const models = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -8,15 +9,13 @@ module.exports = {
     for (let i = 0; i < 10; i++) {
       histories.push({
         text: 'This user created this card for this board.'
-      })
+      });
     }
 
     await queryInterface.bulkInsert('Histories', histories);
 
     const historiesQuery = await queryInterface.sequelize.query(`SELECT id from "Histories";`)
-    console.log(historiesQuery);
     const historyRows = historiesQuery[0];
-
 
 
     // USERS
@@ -33,23 +32,9 @@ module.exports = {
     await queryInterface.bulkInsert('Users', users);
 
     const userQuery = await queryInterface.sequelize.query(`SELECT id from "Users";`);
-    console.log('userQuery', userQuery);
+    // console.log('userQuery', userQuery);
     const userRows = userQuery[0];
 
-    // LISTS
-    const lists = [];
-    for (let i = 0; i < 10; i++) {
-      lists.push({
-        title: faker.random.words(),
-        description: faker.lorem.sentence(),
-      })
-    }
-
-    await queryInterface.bulkInsert('Lists', lists);
-
-    const listsQuery = await queryInterface.sequelize.query(`SELECT id from "Lists";`);
-    console.log('listsQuery', listsQuery);
-    const listRows = listsQuery[0];
 
     // CARDS
     const cards = [];
@@ -57,19 +42,33 @@ module.exports = {
       cards.push({
         title: faker.company.bsNoun(),
         description: faker.company.bsAdjective(),
-        assignees: [userRows[i].id],
         complete: faker.random.boolean(),
-        history: [historyRows[i].id],
+        HistoryIds: [historyRows[i].id],
       });
     }
 
     await queryInterface.bulkInsert('Cards', cards);
 
     const cardsQuery = await queryInterface.sequelize.query(`SELECT id from "Cards";`);
-    console.log('cardsQuery', cardsQuery);
+    // console.log('cardsQuery', cardsQuery);
     const cardRows = cardsQuery[0];
 
 
+    // LISTS
+    const lists = [];
+    for (let i = 0; i < 10; i++) {
+      lists.push({
+        title: faker.random.words(),
+        description: faker.lorem.sentence(),
+        CardIds: [cardRows[i].id],
+      })
+    }
+
+    await queryInterface.bulkInsert('Lists', lists);
+
+    const listsQuery = await queryInterface.sequelize.query(`SELECT id from "Lists";`);
+    // console.log('listsQuery', listsQuery);
+    const listRows = listsQuery[0];
 
     // CREATE BOARDS
     const boards = [];
@@ -78,26 +77,42 @@ module.exports = {
       boards.push({
         title: `To-Do ${i}`,
         description: faker.lorem.sentence(),
-        lists: [listRows[i].id]
+        ListIds: [listRows[i].id],
       });
     }
 
     await queryInterface.bulkInsert('Boards', boards);
 
     const boardsQuery = await queryInterface.sequelize.query(`SELECT id from "Boards";`);
-    console.log('boardsQuery', boardsQuery);
+    // console.log('boardsQuery', boardsQuery);
     const boardRows = boardsQuery[0];
-    console.log(boardRows);
+    // console.log(boardRows);
 
-    // Add boards to user
+    // USERBOARDS
     const userBoards = [];
     for (let i = 0; i < 10; i++) {
       userBoards.push({
-        boards: [boardRows[i].id]
+        createdAt: Sequelize.fn('NOW'),
+        updatedAt: Sequelize.fn('NOW'),
+        UserIds: [userRows[i].id],
+        BoardIds: [boardRows[i].id],
       });
     }
 
-    return await queryInterface.addColumn('Users', 'Boards', userBoards, {});
+    await queryInterface.bulkInsert('UserBoards', userBoards);
+
+    // USERCARDS
+    const userCards = [];
+    for (let i = 0; i < 10; i++) {
+      userCards.push({
+        createdAt: Sequelize.fn('NOW'),
+        updatedAt: Sequelize.fn('NOW'),
+        UserIds: [userRows[i].id],
+        CardIds: [userRows[i].id],
+      });
+    }
+
+    return await queryInterface.bulkInsert('UserCards', userCards);
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -109,6 +124,8 @@ module.exports = {
       return queryInterface.bulkDelete('Person', null, {});
       
     */
+    await queryInterface.bulkDelete('UserBoards', null, {});
+    await queryInterface.bulkDelete('UserCards', null, {});
     await queryInterface.bulkDelete('Users', null, {});
     await queryInterface.bulkDelete('Boards', null, {});
     await queryInterface.bulkDelete('Lists', null, {});

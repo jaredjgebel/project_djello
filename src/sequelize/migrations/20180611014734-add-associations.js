@@ -7,11 +7,7 @@ module.exports = {
       'Cards',
       'HistoryIds',
       {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Histories',
-          key: 'id',
-        },
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       }
@@ -23,11 +19,7 @@ module.exports = {
       'Lists',
       'CardIds',
       {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Cards',
-          key: 'id',
-        },
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       }
@@ -38,11 +30,7 @@ module.exports = {
       'Boards', // name of Source model
       'ListIds', // added key
       {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Lists', // name of Target model
-          key: 'id', // key in Target model that we're referencing
-        },
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       }
