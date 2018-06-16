@@ -8,7 +8,9 @@ const app = express();
 app.use(compression());
 app.use(express.static('dist'));
 
-// 
+const apiRoutes = require('./routes/api');
+app.use('/api/v1', apiRoutes);
+
 app.get('/api', (req, res) => {
    res.json({ "hi": "there" });
 });

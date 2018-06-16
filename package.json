@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "clear-require": "^2.0.0",
     "compression": "^1.7.2",
     "express": "^4.16.3",
     "faker": "^4.1.0",
