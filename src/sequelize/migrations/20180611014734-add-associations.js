@@ -41,6 +41,12 @@ module.exports = {
     await queryInterface.createTable(
       'UserBoards',
       {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
@@ -51,11 +57,9 @@ module.exports = {
         },
         UserIds: {
           type: Sequelize.ARRAY(Sequelize.INTEGER),
-          primaryKey: true,
         },
         BoardIds: {
           type: Sequelize.ARRAY(Sequelize.INTEGER),
-          primaryKey: true,
         }
       }
     )
@@ -65,6 +69,12 @@ module.exports = {
     return queryInterface.createTable(
       'UserCards',
       {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
@@ -75,11 +85,9 @@ module.exports = {
         },
         UserIds: {
           type: Sequelize.ARRAY(Sequelize.INTEGER),
-          primaryKey: true,
         },
         CardIds: {
           type: Sequelize.ARRAY(Sequelize.INTEGER),
-          primaryKey: true,
         }
       }
     )
