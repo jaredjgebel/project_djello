@@ -5,7 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     complete: DataTypes.BOOLEAN,
-    HistoryIds: DataTypes.ARRAY(DataTypes.INTEGER),
+    HistoryIds: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      validate: {
+        notIn: [[sequelize.col('HistoryIds')]]
+      },
+    },
   });
 
   return Card;

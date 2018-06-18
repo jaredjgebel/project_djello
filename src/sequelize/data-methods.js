@@ -10,6 +10,7 @@ const UserBoard = models.UserBoard;
 const UserCard = models.UserCard;
 const Op = Sequelize.Op;
 
+// METHODS FOR GET ROUTES
 const getUser = async (userId) => {
    try {
       const user = await User.findById(userId);
@@ -113,7 +114,96 @@ const getHistories = async (cardId) => {
    }
 };
 
+// =============================================
+// METHODS FOR POST ROUTES
+const createBoard = async (title = '', description = '') => {
+   try {
+      const board = await Board.create({
+         title,
+         description
+      });
+
+
+
+      return board;
+
+   } catch (err) {
+      console.error(err);
+      throw new Error(err);
+   }
+};
+
+const addBoardToUser = async (userId, boardId) => {
+   try {
+      const userBoardsResponse = await UserBoard.update({
+
+      })
+
+   } catch (err) {
+      console.error(err);
+      return Promise.reject(err);
+   }
+};
+
+const createList = async (boardId, title, description) => {
+   try {
+      const list = await List.create({
+         title,
+         description
+      });
+
+      const board = await addListToBoard(boardId, list.id);
+
+      return list, board;
+
+   } catch (err) {
+      console.error(err);
+      throw new Error(err);
+   }
+};
+
+const addListToBoard = async (boardId, listId) => {
+   try {
+      const boardResponse = await Board.update({
+         ListIds: Sequelize.fn('array_append', Sequelize.col('ListIds'), listId)
+      },
+         {
+            returning: true,
+            where: {
+               id: boardId,
+            },
+         });
+
+      const board = boardResponse[1][0].dataValues;
+
+      return Promise.resolve(board);
+   } catch (err) {
+      console.error(err);
+      return Promise.reject('List could not be added to baord.');
+   }
+};
+
+const createCard = async (listId) => {
+   const card = Card.create()
+};
 
 module.exports = {
-   getUser, getUserBoards, getLists, getCards, getHistories, getCardAssignees
+   getUser,
+   getUserBoards,
+   getLists,
+   getCards,
+   getHistories,
+   getCardAssignees,
+   createBoard,
+   addListToBoard,
 }
+
+createBoard('To-Do', 'Description')
+   .then(board => {
+      console.log(board);
+   });
+
+// addListToBoard(1, 3)
+//    .then(board => {
+//       console.log(board);
+//    })
