@@ -1,6 +1,5 @@
 'use strict';
 const faker = require('faker');
-const models = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -44,6 +43,7 @@ module.exports = {
         description: faker.company.bsAdjective(),
         complete: faker.random.boolean(),
         HistoryIds: [historyRows[i].id],
+        AssigneeIds: [userRows[i].id],
       });
     }
 
@@ -81,38 +81,7 @@ module.exports = {
       });
     }
 
-    await queryInterface.bulkInsert('Boards', boards);
-
-    const boardsQuery = await queryInterface.sequelize.query(`SELECT id from "Boards";`);
-    // console.log('boardsQuery', boardsQuery);
-    const boardRows = boardsQuery[0];
-    // console.log(boardRows);
-
-    // USERBOARDS
-    const userBoards = [];
-    for (let i = 0; i < 10; i++) {
-      userBoards.push({
-        createdAt: Sequelize.fn('NOW'),
-        updatedAt: Sequelize.fn('NOW'),
-        UserIds: [userRows[i].id],
-        BoardIds: [boardRows[i].id],
-      });
-    }
-
-    await queryInterface.bulkInsert('UserBoards', userBoards);
-
-    // USERCARDS
-    const userCards = [];
-    for (let i = 0; i < 10; i++) {
-      userCards.push({
-        createdAt: Sequelize.fn('NOW'),
-        updatedAt: Sequelize.fn('NOW'),
-        UserIds: [userRows[i].id],
-        CardIds: [userRows[i].id],
-      });
-    }
-
-    return await queryInterface.bulkInsert('UserCards', userCards);
+    return queryInterface.bulkInsert('Boards', boards);
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -124,8 +93,6 @@ module.exports = {
       return queryInterface.bulkDelete('Person', null, {});
       
     */
-    await queryInterface.bulkDelete('UserBoards', null, {});
-    await queryInterface.bulkDelete('UserCards', null, {});
     await queryInterface.bulkDelete('Users', null, {});
     await queryInterface.bulkDelete('Boards', null, {});
     await queryInterface.bulkDelete('Lists', null, {});

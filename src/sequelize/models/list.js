@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notIn: [[sequelize.col('CardIds')]]
       },
-    }
+    },
   });
 
   return List;

@@ -37,58 +37,35 @@ module.exports = {
     )
 
     // Users have many Boards
-    // Board have many Users
-    await queryInterface.createTable(
-      'UserBoards',
+    await queryInterface.addColumn(
+      'Users',
+      'BoardIds',
       {
-        id: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER
-        },
-        createdAt: {
-          allowNull: false,
-          type: Sequelize.DATE,
-        },
-        updatedAt: {
-          allowNull: false,
-          type: Sequelize.DATE,
-        },
-        UserIds: {
-          type: Sequelize.ARRAY(Sequelize.INTEGER),
-        },
-        BoardIds: {
-          type: Sequelize.ARRAY(Sequelize.INTEGER),
-        }
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       }
     )
 
-    // Cards have many Users
     // Users have many Cards
-    return queryInterface.createTable(
-      'UserCards',
+    await queryInterface.addColumn(
+      'Users',
+      'CardIds',
       {
-        id: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER
-        },
-        createdAt: {
-          allowNull: false,
-          type: Sequelize.DATE,
-        },
-        updatedAt: {
-          allowNull: false,
-          type: Sequelize.DATE,
-        },
-        UserIds: {
-          type: Sequelize.ARRAY(Sequelize.INTEGER),
-        },
-        CardIds: {
-          type: Sequelize.ARRAY(Sequelize.INTEGER),
-        }
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    )
+
+    // Cards have many Assignees (Users)
+    await queryInterface.addColumn(
+      'Cards',
+      'AssigneeIds',
+      {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       }
     )
   },
@@ -109,9 +86,19 @@ module.exports = {
       'ListIds'
     )
 
-    await queryInterface.dropTable('UserCards')
+    await queryInterface.removeColumn(
+      'Users',
+      'BoardIds'
+    )
 
-    return queryInterface.dropTable('UserBoards')
+    await queryInterface.removeColumn(
+      'Boards',
+      'CardIds'
+    )
 
+    return queryInterface.removeColumn(
+      'Cards',
+      'AssigneeIds'
+    )
   }
 };

@@ -117,17 +117,23 @@ const getHistories = async (cardId) => {
 // =============================================
 // METHODS FOR POST ROUTES
 const createBoard = async (title = '', description = '') => {
+   let transaction;
    try {
+      transaction = await Sequelize.transaction();
+
       const board = await Board.create({
          title,
          description
-      });
+      }, { transaction });
 
+      // add board to user
 
+      await transaction.commit();
 
       return board;
 
    } catch (err) {
+      await transaction.rollback();
       console.error(err);
       throw new Error(err);
    }
