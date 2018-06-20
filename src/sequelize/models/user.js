@@ -31,20 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     passwordHash: DataTypes.STRING,
     photo: DataTypes.STRING,
-    BoardIds: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      validate: {
-        notIn: [[sequelize.col('BoardIds')]]
-      },
-      defaultValue: [],
-    },
-    CardIds: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      validate: {
-        notIn: [[sequelize.col('CardIds')]]
-      },
-      defaultValue: [],
-    },
+    BoardIds: DataTypes.ARRAY(DataTypes.INTEGER),
   });
 
   return User;

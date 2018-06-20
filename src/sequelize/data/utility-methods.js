@@ -9,7 +9,7 @@ const Op = Sequelize.Op;
 
 const addBoardToUser = async (userId, boardId) => {
    try {
-      const user = await User.update({
+      const userResponse = await User.update({
          BoardIds: Sequelize.fn('array_append', Sequelize.col('BoardIds'), boardId),
       },
          {
@@ -18,6 +18,9 @@ const addBoardToUser = async (userId, boardId) => {
                id: userId,
             },
          });
+
+
+      const user = userResponse[1][0].dataValues;
 
       return Promise.resolve(user);
 
@@ -149,6 +152,14 @@ module.exports = {
 // addHistoryToCard(24, 25)
 //    .then(card => {
 //       console.log(card);
+//    })
+//    .catch(err => {
+//       console.error(err);
+//    });
+
+// addCardToUser(24, 25)
+//    .then(user => {
+//       console.log(user);
 //    })
 //    .catch(err => {
 //       console.error(err);
