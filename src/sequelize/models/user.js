@@ -36,12 +36,14 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notIn: [[sequelize.col('BoardIds')]]
       },
+      defaultValue: [],
     },
     CardIds: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
       validate: {
         notIn: [[sequelize.col('CardIds')]]
       },
+      defaultValue: [],
     },
   });
 
