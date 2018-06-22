@@ -47,19 +47,8 @@ module.exports = {
       }
     )
 
-    // Users have many Cards
-    await queryInterface.addColumn(
-      'Users',
-      'CardIds',
-      {
-        type: Sequelize.ARRAY(Sequelize.INTEGER),
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-      }
-    )
-
     // Cards have many Assignees (Users)
-    await queryInterface.addColumn(
+    return queryInterface.addColumn(
       'Cards',
       'AssigneeIds',
       {
@@ -89,11 +78,6 @@ module.exports = {
     await queryInterface.removeColumn(
       'Users',
       'BoardIds'
-    )
-
-    await queryInterface.removeColumn(
-      'Boards',
-      'CardIds'
     )
 
     return queryInterface.removeColumn(

@@ -3,3 +3,4 @@ notes.txt
 .vscode/
 src/sequelize/config/
 *.code-workspace
+.env

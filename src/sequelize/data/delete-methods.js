@@ -12,10 +12,11 @@ const deleteBoard = async (boardId) => {
          limit: 1,
       });
 
-      return Promise.resolve('Board successfully deleted.');
+      return `Board successfully deleted.`;
+
    } catch (err) {
       console.error(err);
-      return Promise.reject('Board could not be deleted.');
+      return 'Board could not be deleted.';
    }
 };
 
@@ -28,10 +29,10 @@ const deleteList = async (listId) => {
          limit: 1,
       });
 
-      return Promise.resolve('List successfully deleted.');
+      return 'List successfully deleted.';
    } catch (err) {
       console.error(err);
-      return Promise.reject('List could not be deleted.');
+      return 'List could not be deleted.';
    }
 };
 
@@ -44,10 +45,10 @@ const deleteCard = async (cardId) => {
          limit: 1,
       });
 
-      return Promise.resolve('Card successfully deleted.');
+      return 'Card successfully deleted.';
    } catch (err) {
       console.error(err);
-      return Promise.reject('Card could not be deleted.');
+      return 'Card could not be deleted.';
    }
 };
 

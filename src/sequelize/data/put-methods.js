@@ -18,11 +18,11 @@ const editBoard = async (boardId, title = '', description = '') => {
 
       const board = boardResponse[1][0].dataValues;
 
-      return Promise.resolve(board);
+      return board;
 
    } catch (err) {
       console.error(err);
-      return Promise.reject('Board could not be edited.');
+      return 'Board could not be edited.';
    }
 };
 

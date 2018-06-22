@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../src/sequelize/models');
-const User = models.User;
 const {
 	getUser,
 	getUserBoards,
@@ -9,7 +7,7 @@ const {
 	getCards,
 	getHistories,
 	getCardAssignees
-} = require('../src/sequelize/data-methods');
+} = require('../sequelize/data/get-methods');
 
 // GET current user info
 router.get('/users/:id', async (req, res) => {
@@ -27,9 +25,9 @@ router.get('/users/:id', async (req, res) => {
 });
 
 // GET all boards for given user
-router.get('/boards', (req, res) => {
+router.get('/boards/:user_id', (req, res) => {
 	// get userId from auth token
-	const userId = 100;
+	const userId = req.params.user_id;
 
 	getUserBoards(userId)
 		.then(boards => {
@@ -45,7 +43,7 @@ router.get('/boards', (req, res) => {
 router.get('/boards/:board_id/lists', (req, res) => {
 	const boardId = req.params.board_id;
 
-	getList(boardId)
+	getLists(boardId)
 		.then(histories => {
 			res.status(200).json(histories);
 
@@ -89,10 +87,6 @@ router.get('/cards/:card_id/histories', (req, res) => {
 			res.status(404).json('Card not found.');
 		});
 })
-
-// =============================================
-
-
 
 module.exports = router;
 

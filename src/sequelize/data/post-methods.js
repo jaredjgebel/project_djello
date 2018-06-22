@@ -7,7 +7,6 @@ const {
    addBoardToUser,
    addListToBoard,
    addCardToList,
-   addAssigneeToCard,
    addHistoryToCard,
 } = require('./utility-methods');
 
