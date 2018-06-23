@@ -1,4 +1,5 @@
 require('./style.css');
+require('bootstrap/dist/css/bootstrap.min.css');
 const greeting = 'Hello, Webpack!';
 
 (() => {

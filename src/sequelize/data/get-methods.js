@@ -11,7 +11,7 @@ const Op = Sequelize.Op;
 const getUser = async (userId) => {
    try {
       const user = await User.findById(userId);
-      return user;
+      return user.dataValues;
    } catch (err) {
       throw new Error(err);
    }
@@ -22,13 +22,18 @@ const getUserBoards = async (userId) => {
    try {
       const userBoards = [];
       const user = await User.findById(userId);
+      if (user.dataValues.BoardIds[0]) {
+         // if a user has boards, iterate and return them
+         for (let board of user.dataValues.BoardIds) {
+            const boardInfo = await Board.findById(board);
+            userBoards.push(boardInfo.dataValues);
+         }
 
-      for (let board of user.dataValues.BoardIds) {
-         const boardInfo = await Board.findById(board);
-         userBoards.push(board.dataValues);
+         return userBoards;
+      } else {
+         // otherwise return null
+         return null;
       }
-
-      return userBoards;
 
    } catch (err) {
       throw new Error(err);
@@ -40,12 +45,16 @@ const getLists = async (boardId) => {
       const lists = [];
       const board = await Board.findById(boardId);
 
-      for (let id of board.ListIds) {
-         const list = await List.findById(id);
-         lists.push(list.dataValues);
-      }
+      if (!board.dataValues.ListIds[0]) {
+         return null;
+      } else {
+         for (let id of board.ListIds) {
+            const list = await List.findById(id);
+            lists.push(list.dataValues);
+         }
 
-      return lists;
+         return lists;
+      }
    } catch (err) {
       throw new Error(err);
    }
@@ -56,14 +65,18 @@ const getCards = async (listId) => {
       const cards = [];
       const list = await List.findById(listId);
 
-      for (let id of list.CardIds) {
-         const card = await Card.findById(id);
-         cards.push(card.dataValues);
-      }
+      if (!list.dataValues.CardIds[0]) {
+         return null;
+      } else {
+         for (let id of list.CardIds) {
+            const card = await Card.findById(id);
+            cards.push(card.dataValues);
+         }
 
-      return cards;
+         return cards;
+      }
    } catch (err) {
-      console.log(err);
+      throw new Error(err);
    }
 }
 
@@ -71,19 +84,19 @@ const getCards = async (listId) => {
 const getCardAssignees = async (cardId) => {
    try {
       const assignees = [];
-      const cardResponse = await UserCard.findAll({
-         where: {
-            CardIds: {
-               [Op.contains]: [cardId],
-            }
+      const cardResponse = await Card.findById(cardId);
+
+
+      if (!cardResponse.dataValues.AssigneeIds[0]) {
+         return null;
+
+      } else {
+         for (assigneeId of cardResponse.dataValues.AssigneeIds) {
+            const userResponse = await User.findById(assigneeId);
+            assignees.push(userResponse.dataValues);
          }
-      });
-
-      for (card of cardResponse) {
-         assignees.push(card.dataValues);
+         return assignees;
       }
-
-      return Promise.resolve(assignees);
 
    } catch (err) {
       throw new Error(err);

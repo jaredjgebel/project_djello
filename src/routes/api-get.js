@@ -31,7 +31,12 @@ router.get('/boards/:user_id', (req, res) => {
 
 	getUserBoards(userId)
 		.then(boards => {
-			res.status(200).json(boards);
+			console.log('Boards', boards);
+			if (boards) {
+				res.status(200).json(boards);
+			} else {
+				res.status(200).json('User has no boards.');
+			}
 		})
 		.catch(err => {
 			console.log(err.stack);
