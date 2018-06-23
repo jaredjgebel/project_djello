@@ -108,12 +108,16 @@ const getHistories = async (cardId) => {
       const histories = [];
       const card = await Card.findById(cardId);
 
-      for (let id of card.HistoryIds) {
-         const history = await History.findById(id);
-         histories.push(history.dataValues);
-      }
+      if (!card.dataValues.HistoryIds[0]) {
+         return null;
+      } else {
+         for (let id of card.HistoryIds) {
+            const history = await History.findById(id);
+            histories.push(history.dataValues);
+         }
 
-      return histories;
+         return histories;
+      }
    } catch (err) {
       throw new Error(err);
    }

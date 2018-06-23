@@ -7,6 +7,9 @@ const History = models.History;
 const List = models.List;
 const Op = Sequelize.Op;
 
+// NOTE: returning promises with these methods
+// so they can be 'await'ed in post methods
+
 const addBoardToUser = async (userId, boardId) => {
    try {
       const userResponse = await User.update({

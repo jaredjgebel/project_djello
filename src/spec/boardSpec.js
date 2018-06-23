@@ -28,7 +28,7 @@ describe('Board endpoint', () => {
       await addBoardToUser(user.dataValues.id, board.dataValues.id);
    });
 
-   xit('retrieves board information for a given id', done => {
+   it('retrieves board information for a given id', done => {
       const options = {
          url: `${apiUrl}/boards/${user.dataValues.id}`,
       };
@@ -40,7 +40,7 @@ describe('Board endpoint', () => {
       });
    });
 
-   xit('creates a new board when a post request is submitted', done => {
+   it('creates a new board when a post request is submitted', done => {
       request.post(`${apiUrl}/boards/${user.dataValues.id}`, (err, res) => {
          expect(res.statusCode).toEqual(200);
          expect(res.body).toContain('ListIds');
@@ -48,7 +48,7 @@ describe('Board endpoint', () => {
       });
    });
 
-   xit('updates a board when a put request is submitted', done => {
+   it('updates a board when a put request is submitted', done => {
       const boardValues = {
          id: `${board.dataValues.id}`,
          title: 'Edited board',
@@ -70,7 +70,7 @@ describe('Board endpoint', () => {
       });
    });
 
-   xit('deletes a board on request', done => {
+   it('deletes a board on request', done => {
       request.delete(`${apiUrl}/boards/${board.dataValues.id}`, (err, res) => {
          expect(res.statusCode).toEqual(200);
          expect(res.body).toContain('OK');

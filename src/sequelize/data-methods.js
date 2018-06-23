@@ -12,7 +12,7 @@ const Op = Sequelize.Op;
 const getUser = async (userId) => {
    try {
       const user = await User.findById(userId);
-      return user;
+      return user.dataValues;
    } catch (err) {
       throw new Error(err);
    }
@@ -23,6 +23,7 @@ const getUserBoards = async (userId) => {
    try {
       const userBoards = [];
       const user = await User.findById(userId);
+      console.log('user 97', user);
 
       for (let board of user.dataValues.BoardIds) {
          const boardInfo = await Board.findById(board);
@@ -135,26 +136,6 @@ const createBoard = async (userId, title = '', description = '') => {
    }
 };
 
-const addBoardToUser = async (userId, boardId) => {
-   try {
-      const user = await User.update({
-         BoardIds: Sequelize.fn('array_append', Sequelize.col('BoardIds'), boardId),
-      },
-         {
-            returning: true,
-            where: {
-               id: userId,
-            },
-         });
-
-      return Promise.resolve(user);
-
-   } catch (err) {
-      console.error(err.errors);
-      return Promise.reject(err);
-   }
-};
-
 const createList = async (boardId, title, description) => {
    try {
       const list = await List.create({
@@ -172,27 +153,6 @@ const createList = async (boardId, title, description) => {
    }
 };
 
-const addListToBoard = async (boardId, listId) => {
-   try {
-      const boardResponse = await Board.update({
-         ListIds: Sequelize.fn('array_append', Sequelize.col('ListIds'), listId)
-      },
-         {
-            returning: true,
-            where: {
-               id: boardId,
-            },
-         });
-
-      const board = boardResponse[1][0].dataValues;
-
-      return Promise.resolve(board);
-   } catch (err) {
-      console.error(err);
-      return Promise.reject('List could not be added to board.');
-   }
-};
-
 const createCard = async (listId) => {
    const card = Card.create()
 };
@@ -205,8 +165,24 @@ module.exports = {
    getHistories,
    getCardAssignees,
    createBoard,
-   addListToBoard,
+   createList,
 }
+
+// getUser(21)
+//    .then(user => {
+//       console.log(user);
+//    })
+//    .catch(err => {
+//       console.log(err);
+//    });
+
+getUserBoards(21)
+   .then(boards => {
+      console.log(boards);
+   })
+   .catch(err => {
+      console.log(err);
+   })
 
 // createBoard('To-Do', 'Description')
 //    .then(board => {

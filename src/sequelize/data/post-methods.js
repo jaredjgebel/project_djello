@@ -19,11 +19,10 @@ const createBoard = async (userId, title = '', description = '') => {
 
       const user = await addBoardToUser(userId, board.dataValues.id)
 
-      return Promise.resolve([board.dataValues, user]);
+      return [board.dataValues, user];
 
    } catch (err) {
-      console.error(err);
-      return Promise.reject(err);
+      throw new Error(err);
    }
 };
 
@@ -37,11 +36,9 @@ const createList = async (boardId, title = '', description = '') => {
 
       const board = await addListToBoard(boardId, list.dataValues.id);
 
-      return Promise.resolve([list.dataValues, board]);
+      return [list.dataValues, board];
 
    } catch (err) {
-      console.error(err);
-      return Promise.reject(err);
       throw new Error(err);
    }
 };
@@ -65,15 +62,16 @@ const createCard = async (
 
       const list = await addCardToList(listId, card.dataValues.id);
 
-      return Promise.resolve([card.dataValues, list]);
+      return [card.dataValues, list];
 
    } catch (err) {
-      console.error(err);
-      return Promise.reject(err);
+      throw new Error(err);
    }
 };
 
 const createHistory = async (cardId, text = '') => {
+   // figure out history actions and 
+   // what to incorporate there
    try {
       const history = await History.create({
          text,
@@ -81,11 +79,10 @@ const createHistory = async (cardId, text = '') => {
 
       const card = await addHistoryToCard(cardId, history.dataValues.id);
 
-      return Promise.resolve([history.dataValues, card]);
+      return [history.dataValues, card];
 
    } catch (err) {
-      console.error(err);
-      return Promise.reject(err);
+      throw new Error(err);
    }
 };
 
@@ -95,35 +92,3 @@ module.exports = {
    createCard,
    createHistory,
 }
-
-// createBoard(30, 'Functions To Write', '')
-//    .then((array) => {
-//       console.log(array);
-//    })
-//    .catch((err) => {
-//       console.error(err);
-//    })
-
-// createList(30, 'Functions To Write', '')
-//    .then((array) => {
-//       console.log(array);
-//    })
-//    .catch((err) => {
-//       console.error(err);
-//    })
-
-// createCard(30, 'Functions To Write', 'sdf', false)
-//    .then((array) => {
-//       console.log(array);
-//    })
-//    .catch((err) => {
-//       console.error(err);
-//    })
-
-// createHistory(30, 'Functions To Write')
-//    .then((array) => {
-//       console.log(array);
-//    })
-//    .catch((err) => {
-//       console.error(err);
-//    })

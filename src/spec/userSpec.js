@@ -22,7 +22,7 @@ describe('User endpoint', () => {
       user = await userFactory();
    });
 
-   xit('retrieves user information from a given id', done => {
+   it('retrieves user information from a given id', done => {
       request.get(`${apiUrl}/users/${user.dataValues.id}`, (err, res) => {
          expect(res.statusCode).toEqual(200);
          expect(res.body).toContain('first');
