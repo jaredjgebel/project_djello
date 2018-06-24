@@ -2,6 +2,7 @@ const models = require('../models');
 const Board = models.Board;
 const List = models.List;
 const Card = models.Card;
+const History = models.History;
 
 const deleteBoard = async (boardId) => {
    try {
@@ -15,8 +16,7 @@ const deleteBoard = async (boardId) => {
       return `Board successfully deleted.`;
 
    } catch (err) {
-      console.error(err);
-      return 'Board could not be deleted.';
+      throw new Error(err);
    }
 };
 
@@ -31,13 +31,15 @@ const deleteList = async (listId) => {
 
       return 'List successfully deleted.';
    } catch (err) {
-      console.error(err);
-      return 'List could not be deleted.';
+      throw new Error(err);
    }
 };
 
 const deleteCard = async (cardId) => {
    try {
+      const card = await Card.findById(cardId);
+      const histories = card.dataValues.HistoryIds;
+
       await Card.destroy({
          where: {
             id: cardId,
@@ -45,10 +47,20 @@ const deleteCard = async (cardId) => {
          limit: 1,
       });
 
-      return 'Card successfully deleted.';
+      if (histories[0]) {
+         for (history of histories) {
+            await History.destroy({
+               where: {
+                  id: history.id,
+               },
+               limit: 1,
+            });
+         }
+      }
+
+      return 'Card and associated histories successfully deleted.';
    } catch (err) {
-      console.error(err);
-      return 'Card could not be deleted.';
+      throw new Error(err);
    }
 };
 
@@ -57,27 +69,3 @@ module.exports = {
    deleteList,
    deleteCard,
 }
-
-// deleteBoard(22)
-//    .then(success => {
-//       console.log(success);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// deleteList(34)
-//    .then(success => {
-//       console.log(success);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// deleteCard(31)
-//    .then(success => {
-//       console.log(success);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
