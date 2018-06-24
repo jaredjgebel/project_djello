@@ -41,7 +41,7 @@ describe('Database retrieval methods', () => {
 		await addHistoryToCard(card.dataValues.id, history.dataValues.id);
 	});
 
-	it('retrieves a user with a given id', done => {
+	xit('retrieves a user with a given id', done => {
 		getUser(user.dataValues.id)
 			.then(response => {
 				expect(user.dataValues.id).toEqual(response.id);
@@ -53,7 +53,7 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	it('retrieves the boards for a given user', done => {
+	xit('retrieves the boards for a given user', done => {
 		getUserBoards(user.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(board.dataValues.id);
@@ -65,7 +65,7 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	it('retrieves the lists for a given board', done => {
+	xit('retrieves the lists for a given board', done => {
 		getLists(board.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(list.dataValues.id);
@@ -78,7 +78,7 @@ describe('Database retrieval methods', () => {
 	});
 
 
-	it('retrieves the cards for a given list', done => {
+	xit('retrieves the cards for a given list', done => {
 		getCards(list.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(card.dataValues.id);
@@ -90,7 +90,7 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	it('retrieves the assignees for a given card', done => {
+	xit('retrieves the assignees for a given card', done => {
 		getCardAssignees(card.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(user.dataValues.id);
@@ -102,7 +102,7 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	it('retrieves the histories for a given card', done => {
+	xit('retrieves the histories for a given card', done => {
 		getHistories(card.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(history.dataValues.id);

@@ -21,8 +21,7 @@ const editBoard = async (boardId, title = '', description = '') => {
       return board;
 
    } catch (err) {
-      console.error(err);
-      return 'Board could not be edited.';
+      throw new Error(err);
    }
 };
 
@@ -41,11 +40,10 @@ const editList = async (listId, title = '', description = '') => {
 
       const list = listResponse[1][0].dataValues;
 
-      return Promise.resolve(list);
+      return list;
 
    } catch (err) {
-      console.error(err);
-      return Promise.reject('List could not be edited.');
+      throw new Error(err);
    }
 };
 
@@ -65,11 +63,10 @@ const editCard = async (cardId, title = '', description = '', complete = false) 
 
       const card = cardResponse[1][0].dataValues;
 
-      return Promise.resolve(card);
+      return card;
 
    } catch (err) {
-      console.error(err);
-      return Promise.reject('Card could not be edited.');
+      throw new Error(err);
    }
 };
 
@@ -78,28 +75,3 @@ module.exports = {
    editList,
    editCard,
 }
-
-// editBoard(31, 'Functions To Write', 'many functions')
-//    .then(board => {
-//       console.log(board);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// editList(31, 'hakuna', 'matata')
-//    .then(list => {
-//       console.log(list);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// editCard(31, 'hakuna', 'matata', false)
-//    .then(card => {
-//       console.log(card);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
