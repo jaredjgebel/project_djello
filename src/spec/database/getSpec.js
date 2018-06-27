@@ -1,25 +1,29 @@
-const app = require('../../server');
-const userFactory = require('./factories/User');
-const boardFactory = require('./factories/Board');
-const listFactory = require('./factories/List');
-const cardFactory = require('./factories/Card');
-const historyFactory = require('./factories/History');
-const clean = require('./truncate');
+const app = require('../../../server');
+const userFactory = require('../factories/User');
+const boardFactory = require('../factories/Board');
+const listFactory = require('../factories/List');
+const cardFactory = require('../factories/Card');
+const historyFactory = require('../factories/History');
+const clean = require('../truncate');
 const {
 	getUser,
+	getBoard,
 	getUserBoards,
+	getList,
 	getLists,
+	getCard,
 	getCards,
+	getHistory,
 	getHistories,
 	getCardAssignees,
-} = require('../sequelize/data/get-methods');
+} = require('../../sequelize/data/get-methods');
 const {
 	addBoardToUser,
 	addListToBoard,
 	addCardToList,
 	addAssigneeToCard,
 	addHistoryToCard,
-} = require('../sequelize/data/utility-methods');
+} = require('../../sequelize/data/utility-methods');
 
 
 describe('Database retrieval methods', () => {
@@ -41,10 +45,10 @@ describe('Database retrieval methods', () => {
 		await addHistoryToCard(card.dataValues.id, history.dataValues.id);
 	});
 
-	xit('retrieves a user with a given id', done => {
+	it('retrieves a user with a given id', done => {
 		getUser(user.dataValues.id)
 			.then(response => {
-				expect(user.dataValues.id).toEqual(response.id);
+				expect(user.dataValues.id).toBe(response.id);
 				expect(user.dataValues.first).toBe(response.first);
 				done();
 			})
@@ -53,7 +57,19 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	xit('retrieves the boards for a given user', done => {
+	it('retrieves a board with a given id', done => {
+		getBoard(board.dataValues.id)
+			.then(response => {
+				expect(response.id).toBe(board.dataValues.id);
+				expect(response.ListIds[0]).toBe(list.id);
+				done();
+			})
+			.catch(err => {
+				throw new Error(err);
+			});
+	});
+
+	it('retrieves the boards for a given user', done => {
 		getUserBoards(user.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(board.dataValues.id);
@@ -65,7 +81,16 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	xit('retrieves the lists for a given board', done => {
+	it('retrieves a list with a given id', done => {
+		getList(list.dataValues.id)
+			.then(response => {
+				expect(response.id).toBe(list.dataValues.id);
+				expect(response.description).toBe(list.description);
+			});
+		done();
+	});
+
+	it('retrieves the lists for a given board', done => {
 		getLists(board.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(list.dataValues.id);
@@ -77,8 +102,16 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
+	it('retrieves a card with a given id', done => {
+		getCard(card.dataValues.id)
+			.then(response => {
+				expect(response.id).toBe(card.dataValues.id);
+				expect(response.HistoryIds[0]).toBe(history.dataValues.id);
+				done();
+			});
+	});
 
-	xit('retrieves the cards for a given list', done => {
+	it('retrieves the cards for a given list', done => {
 		getCards(list.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(card.dataValues.id);
@@ -90,7 +123,7 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	xit('retrieves the assignees for a given card', done => {
+	it('retrieves the assignees for a given card', done => {
 		getCardAssignees(card.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(user.dataValues.id);
@@ -102,7 +135,16 @@ describe('Database retrieval methods', () => {
 			});
 	});
 
-	xit('retrieves the histories for a given card', done => {
+	it('retrieves a history with a given id', done => {
+		getHistory(history.dataValues.id)
+			.then(response => {
+				expect(response.id).toBe(history.dataValues.id);
+				expect(response.text).toBe(history.dataValues.text);
+				done();
+			});
+	});
+
+	it('retrieves the histories for a given card', done => {
 		getHistories(card.dataValues.id)
 			.then(response => {
 				expect(response[0].id).toBe(history.dataValues.id);

@@ -1,7 +1,7 @@
-const app = require('../../server');
+const app = require('../../../server');
 const request = require('request');
-const clean = require('./truncate');
-const userFactory = require('./factories/User');
+const clean = require('../truncate');
+const userFactory = require('../factories/User');
 
 describe('User endpoint', () => {
    const baseUrl = 'http://localhost:8888';

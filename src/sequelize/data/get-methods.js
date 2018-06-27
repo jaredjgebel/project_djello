@@ -17,6 +17,15 @@ const getUser = async (userId) => {
    }
 }
 
+const getBoard = async (boardId) => {
+   try {
+      const board = await Board.findById(boardId);
+      return board.dataValues;
+   } catch (err) {
+      throw new Error(err);
+   }
+}
+
 // retrieves all boards for user
 const getUserBoards = async (userId) => {
    try {
@@ -40,6 +49,15 @@ const getUserBoards = async (userId) => {
    }
 }
 
+const getList = async (listId) => {
+   try {
+      const list = await List.findById(listId);
+      return list.dataValues;
+   } catch (err) {
+      throw new Error(err);
+   }
+};
+
 const getLists = async (boardId) => {
    try {
       const lists = [];
@@ -59,6 +77,15 @@ const getLists = async (boardId) => {
       throw new Error(err);
    }
 }
+
+const getCard = async (cardId) => {
+   try {
+      const card = await Card.findById(cardId);
+      return card.dataValues;
+   } catch (err) {
+      throw new Error(err);
+   }
+};
 
 const getCards = async (listId) => {
    try {
@@ -103,6 +130,15 @@ const getCardAssignees = async (cardId) => {
    }
 }
 
+const getHistory = async (historyId) => {
+   try {
+      const history = await History.findById(historyId);
+      return history.dataValues;
+   } catch (err) {
+      throw new Error(err);
+   }
+}
+
 const getHistories = async (cardId) => {
    try {
       const histories = [];
@@ -125,9 +161,13 @@ const getHistories = async (cardId) => {
 
 module.exports = {
    getUser,
+   getBoard,
    getUserBoards,
+   getList,
    getLists,
+   getCard,
    getCards,
+   getHistory,
    getHistories,
    getCardAssignees,
 }

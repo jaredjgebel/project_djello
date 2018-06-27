@@ -1,6 +1,6 @@
-const app = require('../../server');
+const app = require('../../../server');
 const request = require('request');
-const clean = require('./truncate');
+const clean = require('../truncate');
 
 describe('App', () => {
    const baseUrl = 'http://localhost:8888';

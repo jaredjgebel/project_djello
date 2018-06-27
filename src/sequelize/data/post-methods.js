@@ -1,94 +1,103 @@
+const Sequelize = require('sequelize');
 const models = require('../models');
 const Board = models.Board;
 const Card = models.Card;
 const History = models.History;
 const List = models.List;
 const {
-   addBoardToUser,
-   addListToBoard,
-   addCardToList,
-   addHistoryToCard,
+	addBoardToUser,
+	addListToBoard,
+	addCardToList,
+	addHistoryToCard,
 } = require('./utility-methods');
 
 const createBoard = async (userId, title = '', description = '') => {
-   try {
-      const board = await Board.create({
-         title,
-         description,
-      });
+	try {
+		const board = await Board.create({
+			title,
+			description,
+		});
 
-      const user = await addBoardToUser(userId, board.dataValues.id)
+		const user = await addBoardToUser(userId, board.dataValues.id);
 
-      return [board.dataValues, user];
+		return {
+			board: board.dataValues,
+			user,
+		};
 
-   } catch (err) {
-      throw new Error(err);
-   }
+	} catch (err) {
+		throw new Error(err);
+	}
 };
 
-
 const createList = async (boardId, title = '', description = '') => {
-   try {
-      const list = await List.create({
-         title,
-         description
-      });
+	try {
+		const list = await List.create({
+			title,
+			description
+		});
 
-      const board = await addListToBoard(boardId, list.dataValues.id);
+		const board = await addListToBoard(boardId, list.dataValues.id);
 
-      return [list.dataValues, board];
+		return {
+			list: list.dataValues,
+			board,
+		};
 
-   } catch (err) {
-      throw new Error(err);
-   }
+	} catch (err) {
+		throw new Error(err);
+	}
 };
 
 const createCard = async (
-   listId,
-   title = '',
-   description = '',
-   complete = false,
-   AssigneeIds = [],
-   HistoryIds = []
+	listId,
+	title = '',
+	description = '',
+	complete = false,
+	AssigneeIds = [],
+	HistoryIds = []
 ) => {
-   try {
-      const card = await Card.create({
-         title,
-         description,
-         complete,
-         AssigneeIds,
-         HistoryIds,
-      });
+	try {
+		const card = await Card.create({
+			title,
+			description,
+			complete,
+			AssigneeIds,
+			HistoryIds,
+		});
+		const list = await addCardToList(listId, card.dataValues.id);
 
-      const list = await addCardToList(listId, card.dataValues.id);
+		return {
+			card: card.dataValues,
+			list,
+		};
 
-      return [card.dataValues, list];
-
-   } catch (err) {
-      throw new Error(err);
-   }
+	} catch (err) {
+		throw new Error(err);
+	}
 };
 
 const createHistory = async (cardId, text = '') => {
-   // figure out history actions and 
-   // what to incorporate there
-   try {
-      const history = await History.create({
-         text,
-      });
+	try {
+		const history = await History.create({
+			text,
+		});
 
-      const card = await addHistoryToCard(cardId, history.dataValues.id);
+		const card = await addHistoryToCard(cardId, history.dataValues.id);
 
-      return [history.dataValues, card];
+		return {
+			history: history.dataValues,
+			card,
+		};
 
-   } catch (err) {
-      throw new Error(err);
-   }
+	} catch (err) {
+		throw new Error(err);
+	}
 };
 
 module.exports = {
-   createBoard,
-   createList,
-   createCard,
-   createHistory,
-}
+	createBoard,
+	createList,
+	createCard,
+	createHistory,
+};
