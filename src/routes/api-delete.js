@@ -11,7 +11,7 @@ router.delete('/boards/:id', (req, res) => {
 
 	deleteBoard(boardId)
 		.then((response) => {
-			console.log(response);
+			// console.log(response);
 			// can't send headers after they are sent error?
 			res.sendStatus(200).json(response);
 		})

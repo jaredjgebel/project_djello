@@ -1,11 +1,21 @@
-require('./style.css');
-require('bootstrap/dist/css/bootstrap.min.css');
-const greeting = 'Hello, Webpack!';
+import "babel-polyfill";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { boards } from './src/redux/reducers'
+import './style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AppContainer from './src/react/containers/AppContainer'
 
-(() => {
-  console.log(greeting);
-  const d = document.createElement('div');
-  d.classList.add('myDiv');
-  d.innerText = greeting;
-  document.body.appendChild(d);
-})();
+let store = createStore(boards,
+  composeWithDevTools(applyMiddleware(thunk)))
+
+ReactDOM.render(
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>,
+  document.getElementById("root")
+);

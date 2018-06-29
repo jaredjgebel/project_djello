@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const port = process.env.PORT || 5000;
 const host = 'localhost';
@@ -13,6 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use(express.static('dist'));
+app.use(cors());
+
+app.options('*', cors());
+
 
 if (process.env.NODE_ENV !== 'test') {
    app.use(morgan('tiny'));
@@ -29,10 +34,6 @@ app.use('/api/v1', apiPutRoutes);
 
 const apiDeleteRoutes = require('./src/routes/api-delete');
 app.use('/api/v1', apiDeleteRoutes);
-
-app.get('/api', (req, res) => {
-   res.json({ "hi": "there" });
-});
 
 app.get('*', (req, res) =>
    res.sendFile(path.join(__dirname, '/dist/index.html'))

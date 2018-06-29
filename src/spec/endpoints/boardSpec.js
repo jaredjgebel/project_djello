@@ -50,9 +50,21 @@ describe('Board endpoint', () => {
    });
 
    it('creates a new board when a post request is submitted', done => {
-      request.post(`${apiUrl}/boards/${user.dataValues.id}`, (err, res) => {
+      const boardValues = {
+         title: 'Board title',
+         description: 'Board description'
+      };
+
+      const options = {
+         url: `${apiUrl}/boards/${user.dataValues.id}`,
+         qs: boardValues,
+      };
+
+      request.post(options, (err, res) => {
+         const body = JSON.parse(res.body);
+
          expect(res.statusCode).toBe(200);
-         expect(res.body).toContain('ListIds');
+         expect(body.board.title).toBe('Board title');
          done();
       });
    });

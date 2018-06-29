@@ -1,6 +1,7 @@
 const app = require('../../../server');
 const request = require('request');
 require('request-debug')(request);
+const qs = require('qs');
 const clean = require('../truncate');
 const boardFactory = require('../factories/Board');
 const listFactory = require('../factories/List');
@@ -65,15 +66,22 @@ describe('List endpoint', () => {
    });
 
    it('creates a new list for a given board', done => {
+      const dataValues = {
+         title: 'New list',
+         description: 'This is a new list.',
+      };
+
       const options = {
-         url: `${apiUrl}/lists/${board.id}`
+         url: `${apiUrl}/boards/${board.id}/lists`,
+         qs: dataValues,
       };
 
       request.post(options, (err, res) => {
          const body = JSON.parse(res.body);
 
          expect(res.statusCode).toBe(200);
-         expect(body[1].ListIds).toContain(body[0].id);
+         expect(body.list.title).toBe('New list');
+         expect(body.board.ListIds).toContain(body.list.id);
          done();
       });
    });

@@ -10,9 +10,11 @@ const {
 
 router.post('/boards/:user_id', (req, res) => {
 	const userId = req.params.user_id;
-	// add query string for title and description
+	const q = qs.parse(req.query);
+	const title = q.title;
+	const description = q.description;
 
-	createBoard(userId)
+	createBoard(userId, title, description)
 		.then(response => {
 			res.status(200).json(response);
 		})
@@ -22,11 +24,13 @@ router.post('/boards/:user_id', (req, res) => {
 		});
 });
 
-router.post('/lists/:board_id', (req, res) => {
+router.post('/boards/:board_id/lists', (req, res) => {
 	const boardId = req.params.board_id;
-	// add querystring for title and description
+	const q = req.query;
+	const title = q.title;
+	const description = q.description;
 
-	createList(boardId)
+	createList(boardId, title, description)
 		.then(response => {
 			res.status(200).json(response);
 		})
