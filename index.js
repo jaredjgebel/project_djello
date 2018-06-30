@@ -5,12 +5,12 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { boards } from './src/redux/reducers'
+import { rootReducer } from './src/redux/reducers'
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppContainer from './src/react/containers/AppContainer'
 
-let store = createStore(boards,
+let store = createStore(rootReducer,
   composeWithDevTools(applyMiddleware(thunk)))
 
 ReactDOM.render(

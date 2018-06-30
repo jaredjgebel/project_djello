@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../../redux/actions'
 import App from '../components/App'
@@ -34,6 +35,13 @@ class AppContainer extends Component {
          error={error}
       />
    }
+}
+
+AppContainer.propTypes = {
+   fetchBoards: PropTypes.func,
+   allBoards: PropTypes.array,
+   currentBoard: PropTypes.object,
+   error: PropTypes.string,
 }
 
 export default connect(

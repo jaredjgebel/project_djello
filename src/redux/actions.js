@@ -25,6 +25,13 @@ export function fetchBoardsFailure(error) {
    }
 }
 
+export function initSwitchBoards(selectedBoard) {
+   return {
+      type: c.SWITCH_BOARD,
+      selectedBoard,
+   }
+}
+
 export function fetchBoards(userId) {
    return (dispatch) => {
       dispatch(fetchBoardsRequest)
@@ -54,3 +61,4 @@ export function fetchBoards(userId) {
          })
    }
 }
+
