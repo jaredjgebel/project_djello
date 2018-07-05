@@ -6,7 +6,8 @@ module.exports = {
   entry: ["babel-polyfill", "./index.js"],
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -17,16 +18,6 @@ module.exports = {
           loader: "babel-loader",
           options: {
             babelrc: true,
-          }
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
           }
         }
       },
@@ -43,7 +34,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
-    port: 9000
+    port: 9000,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

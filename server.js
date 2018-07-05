@@ -4,11 +4,15 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
+const passport = require('passport');
 
 const port = process.env.PORT || 5000;
 const host = 'localhost';
 const app = express();
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -22,6 +26,23 @@ app.options('*', cors());
 if (process.env.NODE_ENV !== 'test') {
    app.use(morgan('tiny'));
 }
+
+// AUTH
+
+
+// ROUTES
+app.get('/', (req, res) => {
+   if (req.user) {
+      res.statusCode(200).json(req.user);
+   } else {
+      res.redirect('/login');
+   }
+})
+
+app.get('/login', (req, res) => {
+   res.send('<p>Login Form</p>')
+})
+
 
 const apiGetRoutes = require('./src/routes/api-get');
 app.use('/api/v1', apiGetRoutes);

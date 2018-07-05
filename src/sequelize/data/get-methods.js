@@ -31,7 +31,7 @@ const getUserBoards = async (userId) => {
    try {
       const userBoards = [];
       const user = await User.findById(userId);
-      if (user.dataValues.BoardIds[0]) {
+      if (user.dataValues.BoardIds) {
          // if a user has boards, iterate and return them
          for (let board of user.dataValues.BoardIds) {
             const boardInfo = await Board.findById(board);
@@ -63,7 +63,7 @@ const getLists = async (boardId) => {
       const lists = [];
       const board = await Board.findById(boardId);
 
-      if (!board.dataValues.ListIds[0]) {
+      if (!board.dataValues.ListIds) {
          return null;
       } else {
          for (let id of board.ListIds) {

@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -29,10 +30,28 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    passwordHash: DataTypes.STRING,
+    password: {
+      type: DataTypes.VIRTUAL,
+      get: function () {
+        return this.password;
+      },
+      set: function (value) {
+        this.password = value;
+      }
+    },
+    passwordHash: {
+      type: DataTypes.STRING,
+      set: function (value) {
+        this.passwordHash = bcrypt.hashSync(value, 8);
+      }
+    },
     photo: DataTypes.STRING,
     BoardIds: DataTypes.ARRAY(DataTypes.INTEGER),
   });
+
+  User.prototype.validatePassword = function (password) {
+    return bcrypt.compareSync(password, this.passwordHash);
+  }
 
   return User;
 };

@@ -1,5 +1,6 @@
 'use strict';
 const faker = require('faker');
+const { addBoardToUser } = require('../data/utility-methods');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -81,7 +82,13 @@ module.exports = {
       });
     }
 
-    return queryInterface.bulkInsert('Boards', boards);
+    await queryInterface.bulkInsert('Boards', boards);
+
+    const boardsQuery = await queryInterface.sequelize.query(`SELECT id from "Boards";`);
+    const boardRows = boardsQuery[0];
+
+    return addBoardToUser(userRows[0], boardRows[0]);
+
   },
 
   down: async (queryInterface, Sequelize) => {

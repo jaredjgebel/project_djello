@@ -164,4 +164,3 @@ router.get('/histories/:id', (req, res) => {
 });
 
 module.exports = router;
-

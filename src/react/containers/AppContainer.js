@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../../redux/actions'
 import App from '../components/App'
+import Auth from '../../auth/Auth'
 
 const mapStateToProps = state => {
    console.log('STATE', state)
@@ -23,7 +24,8 @@ const mapDispatchToProps = dispatch => {
 
 class AppContainer extends Component {
    componentDidMount() {
-      this.props.fetchBoards(33)
+      this.props.fetchBoards(241)
+
    }
 
    render() {
