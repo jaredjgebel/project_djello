@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
 	getUser,
+	getUserByIdToken,
 	getUserBoards,
 	getBoard,
 	getList,
@@ -26,6 +27,21 @@ router.get('/users/:id', async (req, res) => {
 			console.log(err.stack);
 			res.status(404).json('User not found.');
 		})
+});
+
+// get user id by id token
+router.get('/users/token/:id_token', async (req, res) => {
+	const idToken = req.params.id_token;
+
+	getUserByIdToken(idToken)
+		.then(userId => {
+			console.log('userId', userId)
+			res.status(200).json(userId);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json('User not found.');
+		});
 });
 
 // get a single board

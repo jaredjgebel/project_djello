@@ -17,12 +17,10 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      passwordHash: {
-        type: Sequelize.STRING
-      },
       photo: {
         type: Sequelize.STRING
       },
+      idToken: Sequelize.STRING(1000),
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

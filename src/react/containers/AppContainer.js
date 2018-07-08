@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../../redux/actions'
 import App from '../components/App'
-import Auth from '../../auth/Auth'
 
 const mapStateToProps = state => {
    console.log('STATE', state)

@@ -17,6 +17,19 @@ const getUser = async (userId) => {
    }
 }
 
+const getUserByIdToken = async (idToken) => {
+   try {
+      const user = await User.findOne({
+         where: {
+            idToken,
+         }
+      });
+      return user.dataValues.id;
+   } catch (err) {
+      throw new Error(err);
+   }
+}
+
 const getBoard = async (boardId) => {
    try {
       const board = await Board.findById(boardId);
@@ -161,6 +174,7 @@ const getHistories = async (cardId) => {
 
 module.exports = {
    getUser,
+   getUserByIdToken,
    getBoard,
    getUserBoards,
    getList,
