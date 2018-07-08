@@ -8,14 +8,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootReducer } from './src/redux/reducers'
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './src/react/components/App'
+import AppContainer from "./src/react/containers/AppContainer";
 
 let store = createStore(rootReducer,
   composeWithDevTools(applyMiddleware(thunk)))
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <AppContainer />
   </Provider>,
   document.getElementById("root")
 );

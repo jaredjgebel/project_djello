@@ -1,48 +1,54 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchBoards } from '../../redux/actions'
+import { fetchUserByToken } from '../../redux/actions'
 import App from '../components/App'
+import Auth from '../../auth/Auth'
+import { KJUR } from 'jsrsasign'
+
+
+const auth = new Auth();
+
+const handleAuthentication = (nextState, replace) => {
+   if (/access_token|id_token|error/.test(nextState.location.hash)) {
+      auth.handleAuthentication();
+   }
+}
 
 const mapStateToProps = state => {
-   console.log('STATE', state)
    return {
-      allBoards: state.allUserBoards,
-      currentBoard: state.current,
-      error: state.error,
+      userId: state.users.id,
    }
 }
 
 const mapDispatchToProps = dispatch => {
    return {
-      fetchBoards: (userId) => {
-         dispatch(fetchBoards(userId))
-      }
+      fetchUserByToken: (idToken) => {
+         dispatch(fetchUserByToken(idToken))
+      },
    }
 }
 
 class AppContainer extends Component {
    componentDidMount() {
-      this.props.fetchBoards(241)
-
+      const parsedObj = KJUR.jws.JWS.parse(localStorage.id_token)
+      const aud = parsedObj.payloadObj.aud
+      this.props.fetchUserByToken(aud)
    }
 
    render() {
-      const { allBoards, currentBoard, error } = this.props
+      const { userId } = this.props
 
       return <App
-         allBoards={allBoards}
-         currentBoard={currentBoard}
-         error={error}
+         auth={auth}
+         handleAuthentication={handleAuthentication}
+         userId={userId}
       />
    }
 }
 
 AppContainer.propTypes = {
-   fetchBoards: PropTypes.func,
-   allBoards: PropTypes.array,
-   currentBoard: PropTypes.object,
-   error: PropTypes.string,
+   userId: PropTypes.number,
 }
 
 export default connect(
