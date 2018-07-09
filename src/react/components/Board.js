@@ -1,10 +1,16 @@
 import React from 'react'
+import ListContainer from '../containers/ListContainer'
 
-const Board = () => (
-   <div>
-      <h2>Board Title</h2>
-      <p>Board Description</p>
-   </div>
-)
+const Board = ({ allUserBoards, current }) => {
+   return (
+      <div>
+         {/* component to select board */}
+         <h2>{current.title}</h2>
+         <p>{current.description}</p>
+         <ListContainer />
+      </div>
+   )
+}
+
 
 export default Board 

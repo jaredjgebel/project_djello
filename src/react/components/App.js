@@ -6,11 +6,12 @@ import BoardContainer from '../containers/BoardContainer'
 import Callback from './Callback'
 import history from '../../history/history'
 import LoginControl from '../containers/LoginControl'
-import { fetchUser } from '../../redux/actions'
+import { fetchUser } from '../../redux/actions/user'
 
 const mapStateToProps = state => {
    return {
       fetchingUserId: state.users.isFetchingId,
+      userId: state.users.id,
    }
 }
 
@@ -24,14 +25,16 @@ const mapDispatchToProps = dispatch => {
 }
 
 class App extends Component {
-   componentDidMount() {
-      if (!this.props.fetchingUserId) {
-         this.props.fetchUser(this.props.userId)
+   componentDidUpdate(prevProps) {
+      if (this.props.userId !== prevProps.userId) {
+         if (!this.props.fetchingUserId && this.props.userId) {
+            this.props.fetchUser(this.props.userId)
+         }
       }
    }
 
    render() {
-      const { auth, handleAuthentication, userId } = this.props
+      const { auth, handleAuthentication } = this.props
       return (
          <div className="app-container">
             <Router history={history} >
@@ -44,7 +47,6 @@ class App extends Component {
                      path="/home"
                      render={(props) => <BoardContainer
                         auth={auth}
-                        userId={userId}
                         {...props}
                      />
                      }
@@ -67,4 +69,8 @@ export default connect(
 
 App.propTypes = {
    userId: PropTypes.number,
+   fetchingUserId: PropTypes.bool,
+   auth: PropTypes.object,
+   handleAuthentication: PropTypes.func,
+   fetchUser: PropTypes.func,
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchUserByToken } from '../../redux/actions'
+import { fetchUserByToken } from '../../redux/actions/user'
 import App from '../components/App'
 import Auth from '../../auth/Auth'
 import { KJUR } from 'jsrsasign'
@@ -42,16 +42,16 @@ class AppContainer extends Component {
       return <App
          auth={auth}
          handleAuthentication={handleAuthentication}
-         userId={userId}
       />
    }
-}
-
-AppContainer.propTypes = {
-   userId: PropTypes.number,
 }
 
 export default connect(
    mapStateToProps,
    mapDispatchToProps
 )(AppContainer)
+
+AppContainer.propTypes = {
+   userId: PropTypes.number,
+   fetchUserByToken: PropTypes.func,
+}
