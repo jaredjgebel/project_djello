@@ -32,6 +32,27 @@ export function users(state = initialState, action) {
 				isFetchingId: false,
 				error: action.error,
 			}
+		case c.FETCH_USER_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+		case c.FETCH_USER_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+				id: action.user.id,
+				first: action.user.first,
+				last: action.user.last,
+				email: action.user.email,
+				photo: action.user.photo,
+			}
+		case c.FETCH_USER_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.error,
+			}
 		default:
 			return state
 	}

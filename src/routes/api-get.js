@@ -16,7 +16,6 @@ const {
 
 // GET current user info
 router.get('/users/:id', async (req, res) => {
-	// will get from auth token
 	const userId = req.params.id;
 
 	getUser(userId)
