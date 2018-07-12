@@ -19,7 +19,7 @@ export function lists(state = initialState, action) {
 				...state,
 				isFetching: false,
 				current: action.lists,
-				listIds: action.lists.listIds,
+				// listIds: action.lists.listIds,
 			}
 		case c.FETCH_LISTS_FAILURE:
 			return {

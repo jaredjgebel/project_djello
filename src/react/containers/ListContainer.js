@@ -6,10 +6,9 @@ import List from '../components/List'
 
 const mapStateToProps = state => {
    return {
-      boardId: state.boards.current.id,
+      boardId: state.boards.ui.current.id || null,
       isFetching: state.lists.isFetching,
       lists: state.lists.current,
-      listIds: state.lists.listIds,
    }
 }
 
@@ -29,7 +28,7 @@ class ListContainer extends Component {
    }
 
    render() {
-      const { boardId, isFetching, lists, listIds } = this.props
+      const { boardId, isFetching, lists } = this.props
 
       if (isFetching) {
          return (
@@ -42,7 +41,6 @@ class ListContainer extends Component {
          const listElements = []
 
          lists.map(list => {
-            console.log('list', list)
             listElements.push(<List
                title={list.title}
                description={list.description}
@@ -52,7 +50,7 @@ class ListContainer extends Component {
 
          return (
             <div>
-               {lists}
+               {listElements}
             </div>
          )
       }

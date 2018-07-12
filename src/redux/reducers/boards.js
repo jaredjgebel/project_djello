@@ -1,15 +1,44 @@
 import * as c from '../constants'
+import { combineReducers } from 'redux'
 
-const initialState = {
-	allUserBoards: [],
-	current: {},
-	isFetching: false,
+export function boardsById(state = {}, action) {
+	switch (action.type) {
+		case c.FETCH_BOARDS_SUCCESS:
+			const boards = [
+				...action.payload.boards
+			]
+			const obj = boards.reduce((acc, board) => {
+				const key = board.id
+				if (!acc[key]) {
+					acc[key] = board
+				}
+				return acc
+			}, {})
+			return obj
+		default:
+			return state
+	}
+}
+
+export function allIds(state = [], action) {
+	switch (action.type) {
+		case c.FETCH_BOARDS_SUCCESS:
+			const boards = [...action.payload.boards]
+			return boards.map(board => board.id)
+		default:
+			return state
+	}
+}
+
+const initialUiState = {
+	current: null,
+	isFetching: true,
 	error: null,
 }
 
-export function boards(state = initialState, action) {
+export function boardUi(state = initialUiState, action) {
 	switch (action.type) {
-		case c.FETCH_BOARDS:
+		case c.FETCH_BOARDS_REQUEST:
 			return {
 				...state,
 				isFetching: true,
@@ -17,22 +46,52 @@ export function boards(state = initialState, action) {
 		case c.FETCH_BOARDS_SUCCESS:
 			return {
 				...state,
-				allUserBoards: action.data,
-				current: action.data[0],
+				current: action.payload.boards[0],
 				isFetching: false,
 			}
 		case c.FETCH_BOARDS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
-				error: action.error,
-			}
-		case c.SWITCH_BOARD:
-			return {
-				...state,
-				currentBoard: action.selectedBoard,
+				error: action.payload.error,
 			}
 		default:
 			return state
 	}
 }
+
+export const boards = combineReducers({
+	byId: boardsById,
+	allIds: allIds,
+	ui: boardUi,
+})
+
+// export function boards(state = initialState, action) {
+// 	switch (action.type) {
+// 		case c.FETCH_BOARDS:
+// 			return {
+// 				...state,
+// 				isFetching: true,
+// 			}
+// 		case c.FETCH_BOARDS_SUCCESS:
+// 			return {
+// 				...state,
+// 				allUserBoards: action.data,
+// 				current: action.data[0],
+// 				isFetching: false,
+// 			}
+// 		case c.FETCH_BOARDS_FAILURE:
+// 			return {
+// 				...state,
+// 				isFetching: false,
+// 				error: action.error,
+// 			}
+// 		case c.SWITCH_BOARD:
+// 			return {
+// 				...state,
+// 				currentBoard: action.selectedBoard,
+// 			}
+// 		default:
+// 			return state
+// 	}
+// }

@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../../redux/actions/boards'
 import Board from '../components/Board'
 
 const mapStateToProps = state => {
+   const boards = {
+      ...state.boards.byId,
+   }
+   const boardNames = boards !== {} ? Object.keys(boards).map(key => boards[key].title) : []
+
    return {
       userId: state.users.id,
-      allUserBoards: state.boards.allUserBoards,
-      current: state.boards.current,
-      isFetching: state.boards.isFetching,
+      boardNames,
+      current: state.boards.ui.current,
+      isFetching: state.boards.ui.isFetching,
    }
 }
 
@@ -28,7 +34,7 @@ class BoardContainer extends Component {
    }
 
    render() {
-      const { allUserBoards, current, isFetching } = this.props
+      const { isFetching } = this.props
       if (isFetching) {
          return (
             <div>
@@ -36,10 +42,11 @@ class BoardContainer extends Component {
             </div>
          )
       } else {
+         const { boardNames, current, isFetching } = this.props
          return (
             <div>
                <Board
-                  allUserBoards={allUserBoards}
+                  boardNames={boardNames}
                   current={current}
                />
             </div>
@@ -52,3 +59,10 @@ export default connect(
    mapStateToProps,
    mapDispatchToProps
 )(BoardContainer)
+
+BoardContainer.propTypes = {
+   userId: PropTypes.number,
+   boardNames: PropTypes.array,
+   current: PropTypes.object,
+   isFetching: PropTypes.bool,
+}

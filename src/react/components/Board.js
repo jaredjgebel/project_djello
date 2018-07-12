@@ -1,7 +1,7 @@
 import React from 'react'
 import ListContainer from '../containers/ListContainer'
 
-const Board = ({ allUserBoards, current }) => {
+const Board = ({ boardNames, current }) => {
    return (
       <div>
          {/* component to select board */}
@@ -13,4 +13,4 @@ const Board = ({ allUserBoards, current }) => {
 }
 
 
-export default Board 
+export default Board
