@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchUserByToken } from '../../redux/actions/user'
+import { fetchTokenAndUser } from '../../redux/actions/user'
 import App from '../components/App'
 import Auth from '../../auth/Auth'
 import { KJUR } from 'jsrsasign'
 
+const port = process.env.PORT || 5000;
+const host = 'localhost';
+const apiUrl = `http://${host}:${port}/api/v1`
 
 const auth = new Auth();
 
@@ -23,22 +26,25 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
    return {
-      fetchUserByToken: (idToken) => {
-         dispatch(fetchUserByToken(idToken))
-      },
+      fetchTokenAndUser: (idToken) => {
+         dispatch(fetchTokenAndUser(idToken))
+      }
    }
 }
 
 class AppContainer extends Component {
    componentDidMount() {
-      const parsedObj = KJUR.jws.JWS.parse(localStorage.id_token)
-      const aud = parsedObj.payloadObj.aud
-      this.props.fetchUserByToken(aud)
+      const parsedIdToken = KJUR.jws.JWS.parse(localStorage.id_token)
+      const sub = parsedIdToken.payloadObj.sub
+      console.log(sub)
+      this.props.fetchTokenAndUser(sub)
+      // this.props.fetchToken()
+      // this.props.fetchUserByToken(sub)
+
+
    }
 
    render() {
-      const { userId } = this.props
-
       return <App
          auth={auth}
          handleAuthentication={handleAuthentication}

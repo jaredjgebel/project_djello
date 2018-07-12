@@ -18,7 +18,7 @@ describe('App', () => {
    it('renders the home page', done => {
       request.get(baseUrl, (err, res, body) => {
          expect(res.statusCode).toBe(200);
-         expect(body).toMatch(/body/i);
+         expect(body).toMatch(/p/i);
          done();
       });
    });

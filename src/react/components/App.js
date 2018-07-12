@@ -26,6 +26,7 @@ const mapDispatchToProps = dispatch => {
 
 class App extends Component {
    componentDidUpdate(prevProps) {
+      // change this
       if (this.props.userId !== prevProps.userId) {
          if (!this.props.fetchingUserId && this.props.userId) {
             this.props.fetchUser(this.props.userId)

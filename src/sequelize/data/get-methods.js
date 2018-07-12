@@ -24,6 +24,7 @@ const getUserByIdToken = async (idToken) => {
             idToken,
          }
       });
+      console.log('user', user)
       return user.dataValues.id;
    } catch (err) {
       throw new Error(err);

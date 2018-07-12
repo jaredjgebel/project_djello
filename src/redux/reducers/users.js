@@ -1,6 +1,7 @@
 import * as c from '../constants'
 
 const initialState = {
+	isFetchingToken: true,
 	isFetching: false,
 	isFetchingId: true,
 	error: null,
@@ -9,16 +10,35 @@ const initialState = {
 	last: '',
 	email: '',
 	photo: '',
-	token: '',
+	idToken: '',
+	accessToken: '',
 }
 
 export function users(state = initialState, action) {
 	switch (action.type) {
+		case c.FETCH_TOKEN_REQUEST:
+			return {
+				...state,
+				isFetchingToken: true,
+			}
+		case c.FETCH_TOKEN_SUCCESS:
+			return {
+				...state,
+				isFetchingToken: false,
+				accessToken: action.token,
+			}
+		case c.FETCH_TOKEN_FAILURE:
+			return {
+				...state,
+				isFetchingToken: false,
+				error: action.error,
+			}
 		case c.FETCH_USER_BY_TOKEN_REQUEST:
 			return {
 				...state,
 				isFetchingId: true,
-				token: action.idToken,
+				idToken: action.idToken,
+				accessToken: action.accessToken,
 			}
 		case c.FETCH_USER_BY_TOKEN_SUCCESS:
 			return {

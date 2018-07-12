@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const qs = require('qs');
+const { checkJwt } = require('../auth');
 const {
 	createBoard,
 	createList,
 	createCard,
 	createHistory,
-} = require('../sequelize/data/post-methods');
+} = require('../../src/sequelize/data/post-methods');
 
 router.post('/boards/:user_id', (req, res) => {
 	const userId = req.params.user_id;

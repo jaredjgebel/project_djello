@@ -20,6 +20,7 @@ describe('User endpoint', () => {
       await clean();
 
       user = await userFactory();
+      console.log(user.dataValues)
    });
 
    it('retrieves user information from a given id', done => {

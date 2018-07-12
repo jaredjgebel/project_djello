@@ -1,5 +1,8 @@
+const rp = require('request-promise-native');
 const express = require('express');
+const KJUR = require('jsrsasign');
 const router = express.Router();
+const { checkJwt } = require('../auth');
 const {
 	getUser,
 	getUserByIdToken,
@@ -12,10 +15,10 @@ const {
 	getHistory,
 	getHistories,
 	getCardAssignees
-} = require('../sequelize/data/get-methods');
+} = require('../../src/sequelize/data/get-methods');
 
 // GET current user info
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id', checkJwt, async (req, res) => {
 	const userId = req.params.id;
 
 	getUser(userId)
@@ -29,8 +32,8 @@ router.get('/users/:id', async (req, res) => {
 });
 
 // get user id by id token
-router.get('/users/token/:id_token', async (req, res) => {
-	const idToken = req.params.id_token;
+router.get('/user/token', checkJwt, async (req, res) => {
+	const idToken = req.header('X-idToken');
 
 	getUserByIdToken(idToken)
 		.then(userId => {
@@ -41,10 +44,13 @@ router.get('/users/token/:id_token', async (req, res) => {
 			console.log(err);
 			res.status(404).json('User not found.');
 		});
+
+
+
 });
 
 // get a single board
-router.get('/boards/:id', (req, res) => {
+router.get('/boards/:id', checkJwt, (req, res) => {
 	const boardId = req.params.id;
 
 	getBoard(boardId)
@@ -58,7 +64,7 @@ router.get('/boards/:id', (req, res) => {
 });
 
 // GET all boards for given user
-router.get('/users/:user_id/boards', (req, res) => {
+router.get('/users/:user_id/boards', checkJwt, (req, res) => {
 	// get userId from auth token
 	const userId = req.params.user_id;
 
@@ -78,7 +84,7 @@ router.get('/users/:user_id/boards', (req, res) => {
 })
 
 // get a single list
-router.get('/lists/:id', (req, res) => {
+router.get('/lists/:id', checkJwt, (req, res) => {
 	const listId = req.params.id;
 
 	getList(listId)
@@ -92,7 +98,7 @@ router.get('/lists/:id', (req, res) => {
 })
 
 // GET all lists for given board
-router.get('/boards/:board_id/lists', (req, res) => {
+router.get('/boards/:board_id/lists', checkJwt, (req, res) => {
 	const boardId = req.params.board_id;
 
 	getLists(boardId)
@@ -108,7 +114,7 @@ router.get('/boards/:board_id/lists', (req, res) => {
 });
 
 // get information for a single card
-router.get('/cards/:card_id', (req, res) => {
+router.get('/cards/:card_id', checkJwt, (req, res) => {
 	const cardId = req.params.card_id;
 
 	getCard(cardId)
@@ -122,7 +128,7 @@ router.get('/cards/:card_id', (req, res) => {
 });
 
 // GET all cards AND card assignees for given list
-router.get('/lists/:list_id/cards', (req, res) => {
+router.get('/lists/:list_id/cards', checkJwt, (req, res) => {
 	const listId = req.params.list_id;
 
 	getCards(listId)
@@ -150,7 +156,7 @@ router.get('/lists/:list_id/cards', (req, res) => {
 });
 
 // GET all histories for given card
-router.get('/cards/:card_id/histories', (req, res) => {
+router.get('/cards/:card_id/histories', checkJwt, (req, res) => {
 	const cardId = req.params.card_id;
 
 	getHistories(cardId)
@@ -164,7 +170,7 @@ router.get('/cards/:card_id/histories', (req, res) => {
 });
 
 // get a single history
-router.get('/histories/:id', (req, res) => {
+router.get('/histories/:id', checkJwt, (req, res) => {
 	const historyId = req.params.id;
 
 	getHistory(historyId)

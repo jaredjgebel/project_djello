@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const qs = require('qs');
+const { checkJwt } = require('../auth');
 const {
 	editBoard,
 	editList,
 	editCard,
-} = require('../sequelize/data/put-methods');
+} = require('../../src/sequelize/data/put-methods');
 
 router.put('/boards', (req, res) => {
 	const q = qs.parse(req.query);

@@ -18,7 +18,6 @@ export default class Auth {
       this.logout = this.logout.bind(this);
       this.handleAuthentication = this.handleAuthentication.bind(this);
       this.isAuthenticated = this.isAuthenticated.bind(this);
-      this.getProfile = this.getProfile.bind(this)
    }
 
    getAccessToken() {
@@ -29,16 +28,6 @@ export default class Auth {
       }
 
       return accessToken
-   }
-
-   getProfile(callback) {
-      let accessToken = this.getAccessToken();
-      this.auth0.client.userInfo(accessToken, (err, profile) => {
-         if (profile) {
-            this.userProfile = profile
-         }
-         callback(err, profile)
-      })
    }
 
    handleAuthentication() {

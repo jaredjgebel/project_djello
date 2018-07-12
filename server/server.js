@@ -5,8 +5,7 @@ const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const expressSession = require('express-session');
-const passport = require('passport');
+require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 const host = 'localhost';
@@ -18,47 +17,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use(express.static('dist'));
-app.use(cors());
 
-app.options('*', cors());
+app.use(cors({
+   origin: `http://${host}:9000`,
+   credentials: true,
+}));
 
-
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' || 'production') {
    app.use(morgan('tiny'));
 }
 
-// AUTH
-
-
 // ROUTES
-app.get('/', (req, res) => {
-   if (req.user) {
-      res.statusCode(200).json(req.user);
-   } else {
-      res.redirect('/login');
-   }
-})
+// First route does not use JWT auth
+// It gets the API access token
+const getToken = require('./routes/api-token');
+app.use('/api/v1', getToken);
 
-app.get('/login', (req, res) => {
-   res.send('<p>Login Form</p>')
-})
-
-
-const apiGetRoutes = require('./src/routes/api-get');
+const apiGetRoutes = require('./routes/api-get');
 app.use('/api/v1', apiGetRoutes);
 
-const apiPostRoutes = require('./src/routes/api-post');
+const apiPostRoutes = require('./routes/api-post');
 app.use('/api/v1', apiPostRoutes);
 
-const apiPutRoutes = require('./src/routes/api-put');
+const apiPutRoutes = require('./routes/api-put');
 app.use('/api/v1', apiPutRoutes);
 
-const apiDeleteRoutes = require('./src/routes/api-delete');
+const apiDeleteRoutes = require('./routes/api-delete');
 app.use('/api/v1', apiDeleteRoutes);
-
-app.get('*', (req, res) =>
-   res.sendFile(path.join(__dirname, '/dist/index.html'))
-);
 
 let args;
 process.env.NODE_ENV === 'production' ?
@@ -70,7 +55,7 @@ args.push(() => {
    console.log(`Listening: http://${host}:${port}\n`);
 });
 
-// If file is being run directly start the server
+// If file is being run directly, start the server
 if (require.main === module) {
    app.listen.apply(app, args);
 }

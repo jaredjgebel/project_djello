@@ -42,6 +42,7 @@ class ListContainer extends Component {
          const listElements = []
 
          lists.map(list => {
+            console.log('list', list)
             listElements.push(<List
                title={list.title}
                description={list.description}

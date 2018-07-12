@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const { checkJwt } = require('../auth');
 const {
 	deleteBoard,
 	deleteList,
 	deleteCard,
-} = require('../sequelize/data/delete-methods');
+} = require('../../src/sequelize/data/delete-methods');
 
 router.delete('/boards/:id', (req, res) => {
 	const boardId = req.params.id;
