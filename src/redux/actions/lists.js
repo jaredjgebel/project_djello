@@ -6,21 +6,27 @@ const apiUrl = `http://${host}:${port}/api/v1`
 export function fetchListsRequest(boardId) {
 	return {
 		type: c.FETCH_LISTS_REQUEST,
-		boardId,
+		payload: {
+			boardId,
+		}
 	}
 }
 
 export function fetchListsSuccess(lists) {
 	return {
 		type: c.FETCH_LISTS_SUCCESS,
-		lists,
+		payload: {
+			lists,
+		}
 	}
 }
 
 export function fetchListsFailure(error) {
 	return {
 		type: c.FETCH_LISTS_FAILURE,
-		error,
+		payload: {
+			error,
+		}
 	}
 }
 
@@ -39,7 +45,6 @@ export function fetchLists(boardId) {
 			}
 		})
 			.then(response => {
-				console.log('RESPONSE', response)
 				if (!response.ok) {
 					throw new Error(`${response.status} ${response.statusText}`)
 				}
@@ -47,7 +52,6 @@ export function fetchLists(boardId) {
 				return response.json()
 			})
 			.then(json => {
-				console.log('JSON', json)
 				dispatch(fetchListsSuccess(json))
 			})
 			.catch(err => {

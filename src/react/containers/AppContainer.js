@@ -36,12 +36,7 @@ class AppContainer extends Component {
    componentDidMount() {
       const parsedIdToken = KJUR.jws.JWS.parse(localStorage.id_token)
       const sub = parsedIdToken.payloadObj.sub
-      console.log(sub)
       this.props.fetchTokenAndUser(sub)
-      // this.props.fetchToken()
-      // this.props.fetchUserByToken(sub)
-
-
    }
 
    render() {

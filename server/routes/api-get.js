@@ -37,7 +37,6 @@ router.get('/user/token', checkJwt, async (req, res) => {
 
 	getUserByIdToken(idToken)
 		.then(userId => {
-			console.log('userId', userId)
 			res.status(200).json(userId);
 		})
 		.catch(err => {
@@ -70,7 +69,6 @@ router.get('/users/:user_id/boards', checkJwt, (req, res) => {
 
 	getUserBoards(userId)
 		.then(boards => {
-			console.log('Boards', boards);
 			if (boards) {
 				res.status(200).json(boards);
 			} else {
@@ -103,7 +101,6 @@ router.get('/boards/:board_id/lists', checkJwt, (req, res) => {
 
 	getLists(boardId)
 		.then(lists => {
-			console.log('lists', lists);
 			res.status(200).json(lists);
 
 		})
@@ -133,8 +130,6 @@ router.get('/lists/:list_id/cards', checkJwt, (req, res) => {
 
 	getCards(listId)
 		.then(async (cards) => {
-			console.log('CARDZ', cards);
-
 			const cardsResponse = [];
 			for (let card of cards) {
 				const assignees = await getCardAssignees(card.id);
