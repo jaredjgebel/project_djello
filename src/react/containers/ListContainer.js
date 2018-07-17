@@ -9,7 +9,7 @@ const mapStateToProps = state => {
       boardId: state.boards.ui.current && state.boards.ui.current.id,
       isFetching: state.lists.ui.isFetching,
       lists: state.lists && state.lists.byId,
-      listIds: state.lists && state.lists.allIds && state.lists.allIds,
+      listIds: state.lists && state.lists.allIds,
    }
 }
 
@@ -31,7 +31,6 @@ class ListContainer extends Component {
    render() {
       const { isFetching } = this.props
 
-
       if (isFetching) {
          return (
             <p>Retrieving list data.</p>
@@ -48,6 +47,7 @@ class ListContainer extends Component {
                <List
                   title={lists[id].title}
                   description={lists[id].description}
+                  listId={id}
                   key={id}
                />
             )
@@ -68,3 +68,10 @@ export default connect(
    mapStateToProps,
    mapDispatchToProps
 )(ListContainer)
+
+ListContainer.propTypes = {
+   boardId: PropTypes.number,
+   isFetching: PropTypes.bool,
+   lists: PropTypes.object,
+   listIds: PropTypes.array,
+}

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../../redux/actions/boards'
 import Board from '../components/Board'
-import ErrorBoundary from '../containers/ErrorBoundary'
 
 const mapStateToProps = state => {
    const boards = {
