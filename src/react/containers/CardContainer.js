@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchCards } from '../../redux/actions/cards'
+import Card from '../components/Card'
 
 const mapStateToProps = state => {
    return {
@@ -25,11 +26,37 @@ class CardContainer extends Component {
    }
 
    render() {
-      return (
-         <div>
-            <p>Cards</p>
-         </div>
-      )
+      const { isFetching, cards, cardIds } = this.props
+
+      if (isFetching) {
+         return (
+            <div>
+               <p>Loading cards.</p>
+            </div>
+         )
+      }
+
+      if (cards !== {}) {
+         const cardElements = []
+
+         cardIds.map(id => {
+            cardElements.push(
+               <Card
+                  title={cards[id].title}
+                  description={cards[id].description}
+                  updatedAt={cards[id].updatedAt}
+                  cardId={id}
+                  key={id}
+               />
+            )
+         })
+
+         return (
+            <div>
+               {cardElements}
+            </div>
+         )
+      }
    }
 }
 
@@ -37,3 +64,10 @@ export default connect(
    mapStateToProps,
    mapDispatchToProps
 )(CardContainer)
+
+CardContainer.propTypes = {
+   listId: PropTypes.number,
+   isFetching: PropTypes.bool,
+   cards: PropTypes.object,
+   cardIds: PropTypes.array,
+}
