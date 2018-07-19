@@ -57,6 +57,11 @@ export function boardUi(state = initialUiState, action) {
 				isFetching: false,
 				error: action.payload.error,
 			}
+		case c.SWITCH_BOARD:
+			return {
+				...state,
+				current: action.payload.selectedBoard
+			}
 		default:
 			return state
 	}

@@ -8,6 +8,7 @@ const mapStateToProps = state => {
    const boards = {
       ...state.boards.byId,
    }
+
    const boardNames = boards !== {} ? Object.keys(boards).map(key => boards[key].title) : []
 
    return {
@@ -42,7 +43,7 @@ class BoardContainer extends Component {
             </div>
          )
       } else {
-         const { boardNames, current, isFetching } = this.props
+         const { boardNames, current } = this.props
          return (
             <div>
                <Board

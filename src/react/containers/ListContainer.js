@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchLists } from '../../redux/actions/lists'
 import List from '../components/List'
+import { Button, CardDeck, Container, } from 'reactstrap'
 
 const mapStateToProps = state => {
    return {
@@ -55,7 +56,12 @@ class ListContainer extends Component {
 
          return (
             <div>
-               {listElements}
+               <Button>New List</Button>
+               <Container fluid>
+                  <CardDeck>
+                     {listElements}
+                  </CardDeck>
+               </Container>
             </div>
          )
       } else {

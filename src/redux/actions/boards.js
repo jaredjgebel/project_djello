@@ -37,7 +37,6 @@ export function fetchBoards(userId) {
 
 		const accessToken = getState().users.accessToken
 
-
 		fetch(`${apiUrl}/users/${userId}/boards`, {
 			method: 'GET',
 			credentials: "include",
@@ -64,11 +63,70 @@ export function fetchBoards(userId) {
 	}
 }
 
-export function initSwitchBoards(selectedBoard) {
+export function switchBoards(selectedBoard) {
 	return {
 		type: c.SWITCH_BOARD,
 		payload: {
 			selectedBoard
 		},
+	}
+}
+
+function createBoardRequest(userId) {
+	return {
+		type: c.CREATE_BOARD_REQUEST,
+		payload: {
+			userId,
+		}
+	}
+}
+
+function createBoardSuccess(board) {
+	return {
+		type: c.CREATE_BOARD_SUCCESS,
+		payload: {
+			board,
+		}
+	}
+}
+
+function createBoardFailure(error) {
+	return {
+		type: c.CREATE_BOARD_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function createBoard(userId) {
+	return (dispatch, getState) => {
+		dispatch(createBoardRequest(userId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/boards/${userId}`, {
+			method: 'POST',
+			credentials: "include",
+			headers: {
+				'Content-Type': 'application/json',
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				console.log('RESPONSE', response)
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(json => {
+				console.log('JSON', json)
+				dispatch(createBoardSuccess(json))
+			})
+			.catch(err => {
+				dispatch(createBoardFailure(err))
+			})
 	}
 }

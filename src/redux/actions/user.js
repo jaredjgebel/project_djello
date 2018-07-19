@@ -136,7 +136,6 @@ export function fetchUser(userId) {
 			}
 		})
 			.then(response => {
-				console.log('RESPONSE', response)
 				if (!response.ok) {
 					throw new Error(`${response.status} ${response.statusText}`)
 				}
@@ -144,7 +143,6 @@ export function fetchUser(userId) {
 				return response.json()
 			})
 			.then(json => {
-				console.log('JSON', json)
 				dispatch(fetchUserSuccess(json))
 			})
 			.catch(err => {

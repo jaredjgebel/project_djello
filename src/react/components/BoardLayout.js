@@ -19,10 +19,10 @@ const BoardLayout = () => (
 
 export default BoardLayout
 
-Container.propTypes = {
-   fluid: PropTypes.bool
-   // applies .container-fluid class
-}
+// Container.propTypes = {
+//    fluid: PropTypes.bool
+//    // applies .container-fluid class
+// }
 
 const columnProps = PropTypes.oneOfType([
    PropTypes.string,

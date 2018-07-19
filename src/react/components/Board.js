@@ -1,22 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ListContainer from '../containers/ListContainer'
-import ErrorBoundary from '../containers/ErrorBoundary'
+import BoardInputContainer from '../containers/BoardInputContainer'
+import { Button, Container } from 'reactstrap'
 
 const Board = ({ boardNames, current }) => {
    return (
       <div>
-         {/* component to select board */}
-         <h2>{current.title}</h2>
-         <p>{current.description}</p>
-         <ListContainer />
+         <Container fluid="true">
+            {/* <BoardInputContainer /> */}
+            <h2>{current.title}</h2>
+            <p>{current.description}</p>
+            <Button>New Board</Button>
+            <ListContainer />
+
+         </Container>
       </div>
    )
 }
-
 
 export default Board
 
 Board.propTypes = {
    current: PropTypes.object,
+}
+
+Container.propTypes = {
+   fluid: PropTypes.string,
 }
