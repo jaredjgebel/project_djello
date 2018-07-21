@@ -1,17 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ListContainer from '../containers/ListContainer'
-import BoardInputContainer from '../containers/BoardInputContainer'
+import BoardFormContainer from '../containers/BoardFormContainer'
+import ModalContainer from '../containers/ModalContainer'
 import { Button, Container } from 'reactstrap'
 
 const Board = ({ boardNames, current }) => {
    return (
       <div>
          <Container fluid="true">
-            {/* <BoardInputContainer /> */}
             <h2>{current.title}</h2>
             <p>{current.description}</p>
-            <Button>New Board</Button>
+
+            <ModalContainer
+               action="New Board"
+               header="New Board"
+            >
+               <BoardFormContainer />
+            </ModalContainer>
+
             <ListContainer />
 
          </Container>

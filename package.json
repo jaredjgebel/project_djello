@@ -72,6 +72,7 @@
     "pg-hstore": "^2.3.2",
     "qs": "^6.5.2",
     "react": "^16.4.0",
+    "react-auto-form": "^2.0.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

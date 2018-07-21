@@ -60,3 +60,60 @@ export function fetchLists(boardId) {
 			})
 	}
 }
+
+function createListRequest(boardId) {
+	return {
+		type: c.CREATE_LIST_REQUEST,
+		payload: {
+			boardId,
+		}
+	}
+}
+
+function createListSuccess(list) {
+	return {
+		type: c.CREATE_LIST_SUCCESS,
+		payload: {
+			list,
+		}
+	}
+}
+
+function createListFailure(error) {
+	return {
+		type: c.CREATE_LIST_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function createList(boardId, title, description) {
+	return (dispatch, getState) => {
+		dispatch(createListRequest(boardId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/boards/${boardId}/lists?title=${title}&description=${description}`, {
+			method: 'POST',
+			credentials: "include",
+			headers: {
+				'Content-Type': 'application/json',
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(json => {
+				dispatch(createListSuccess(json))
+			})
+			.catch(err => {
+				dispatch(createListFailure(err))
+			})
+	}
+}

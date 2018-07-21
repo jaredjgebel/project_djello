@@ -17,6 +17,13 @@ export function boardsById(state = {}, action) {
 			}, {})
 
 			return obj
+		case c.CREATE_BOARD_SUCCESS:
+			const board = { ...action.payload.board }
+
+			return {
+				...state,
+				[board.board.id]: board.board,
+			}
 		default:
 			return state
 	}
@@ -27,6 +34,8 @@ export function allIds(state = [], action) {
 		case c.FETCH_BOARDS_SUCCESS:
 			const boards = [...action.payload.boards]
 			return boards.map(board => board.id)
+		case c.CREATE_BOARD_SUCCESS:
+			return [...state, action.payload.board.board.id]
 		default:
 			return state
 	}
@@ -60,7 +69,12 @@ export function boardUi(state = initialUiState, action) {
 		case c.SWITCH_BOARD:
 			return {
 				...state,
-				current: action.payload.selectedBoard
+				current: action.payload.selectedBoard,
+			}
+		case c.CREATE_BOARD_FAILURE:
+			return {
+				...state,
+				error: action.payload.error,
 			}
 		default:
 			return state

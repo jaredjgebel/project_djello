@@ -38,8 +38,6 @@ class AssigneeContainer extends Component {
          />
       ))
 
-      console.log('assigneeElements', assigneeElements)
-
       return (
          <div>
             <p style={{ fontWeight: "bold" }}>Assigned to Card</p>

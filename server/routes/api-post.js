@@ -9,7 +9,7 @@ const {
 	createHistory,
 } = require('../../src/sequelize/data/post-methods');
 
-router.post('/boards/:user_id', (req, res) => {
+router.post('/boards/:user_id', checkJwt, (req, res) => {
 	const userId = req.params.user_id;
 	const q = qs.parse(req.query);
 	const title = q.title;
@@ -25,7 +25,7 @@ router.post('/boards/:user_id', (req, res) => {
 		});
 });
 
-router.post('/boards/:board_id/lists', (req, res) => {
+router.post('/boards/:board_id/lists', checkJwt, (req, res) => {
 	const boardId = req.params.board_id;
 	const q = req.query;
 	const title = q.title;
@@ -41,7 +41,7 @@ router.post('/boards/:board_id/lists', (req, res) => {
 		});
 });
 
-router.post('/lists/:list_id/cards', (req, res) => {
+router.post('/lists/:list_id/cards', checkJwt, (req, res) => {
 	const listId = req.params.list_id;
 	const q = qs.parse(req.query);
 	const title = q.title;
@@ -57,7 +57,7 @@ router.post('/lists/:list_id/cards', (req, res) => {
 		});
 });
 
-router.post('/cards/:card_id/histories', (req, res) => {
+router.post('/cards/:card_id/histories', checkJwt, (req, res) => {
 	const cardId = req.params.card_id;
 	const q = qs.parse(req.query);
 	const text = q.text;

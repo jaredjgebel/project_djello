@@ -99,13 +99,13 @@ function createBoardFailure(error) {
 	}
 }
 
-export function createBoard(userId) {
+export function createBoard(userId, title, description) {
 	return (dispatch, getState) => {
 		dispatch(createBoardRequest(userId))
 
 		const accessToken = getState().users.accessToken
 
-		fetch(`${apiUrl}/boards/${userId}`, {
+		fetch(`${apiUrl}/boards/${userId}?title=${title}&description=${description}`, {
 			method: 'POST',
 			credentials: "include",
 			headers: {
@@ -114,7 +114,6 @@ export function createBoard(userId) {
 			}
 		})
 			.then(response => {
-				console.log('RESPONSE', response)
 				if (!response.ok) {
 					throw new Error(`${response.status} ${response.statusText}`)
 				}
@@ -122,7 +121,6 @@ export function createBoard(userId) {
 				return response.json()
 			})
 			.then(json => {
-				console.log('JSON', json)
 				dispatch(createBoardSuccess(json))
 			})
 			.catch(err => {

@@ -15,6 +15,13 @@ export function listsById(state = {}, action) {
 			}, {})
 
 			return obj
+		case c.CREATE_LIST_SUCCESS:
+			const list = { ...action.payload.list }
+
+			return {
+				...state,
+				[list.list.id]: list.list,
+			}
 		default:
 			return state
 	}
@@ -25,6 +32,8 @@ export function allIds(state = [], action) {
 		case c.FETCH_LISTS_SUCCESS:
 			const lists = [...action.payload.lists]
 			return lists.map(list => list.id)
+		case c.CREATE_LIST_SUCCESS:
+			return [...state, action.payload.list.list.id]
 		default:
 			return state
 	}
@@ -51,6 +60,11 @@ export function listUi(state = initialUiState, action) {
 			return {
 				...state,
 				isFetching: false,
+				error: action.payload.error,
+			}
+		case c.CREATE_LIST_SUCCESS:
+			return {
+				...state,
 				error: action.payload.error,
 			}
 		default:
