@@ -12,7 +12,7 @@ export function listsById(state = {}, action) {
 					acc[key] = list
 				}
 				return acc
-			}, {})
+			}, { ...state })
 
 			return obj
 		case c.CREATE_LIST_SUCCESS:
@@ -62,7 +62,7 @@ export function listUi(state = initialUiState, action) {
 				isFetching: false,
 				error: action.payload.error,
 			}
-		case c.CREATE_LIST_SUCCESS:
+		case c.CREATE_LIST_FAILURE:
 			return {
 				...state,
 				error: action.payload.error,

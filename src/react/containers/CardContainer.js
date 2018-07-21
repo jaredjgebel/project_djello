@@ -10,6 +10,7 @@ const mapStateToProps = state => {
       isFetching: state.cards.ui.isFetching,
       cards: state.cards && state.cards.byId,
       cardIds: state.cards && state.cards.allIds,
+      lists: state.lists,
    }
 }
 
@@ -40,7 +41,7 @@ class CardContainer extends Component {
    }
 
    render() {
-      const { isFetching, cards, cardIds } = this.props
+      const { isFetching, cards, cardIds, listId, lists } = this.props
 
       if (isFetching) {
          return (
@@ -54,18 +55,20 @@ class CardContainer extends Component {
          const cardElements = []
 
          cardIds.map(id => {
-            cardElements.push(
-               <CardBody key={id}>
-                  <Card
-                     title={cards[id].title}
-                     description={cards[id].description}
-                     updatedAt={cards[id].updatedAt}
-                     cardId={id}
-                     visibleHistory={this.state.visibleHistory}
-                     onDetailsClick={this.onDetailsClick}
-                  />
-               </CardBody>
-            )
+            if (lists.byId[listId].CardIds && lists.byId[listId].CardIds.includes(id)) {
+               cardElements.push(
+                  <CardBody key={id}>
+                     <Card
+                        title={cards[id].title}
+                        description={cards[id].description}
+                        updatedAt={cards[id].updatedAt}
+                        cardId={id}
+                        visibleHistory={this.state.visibleHistory}
+                        onDetailsClick={this.onDetailsClick}
+                     />
+                  </CardBody>
+               )
+            }
          })
 
          return (

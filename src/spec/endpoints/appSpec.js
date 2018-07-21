@@ -1,4 +1,4 @@
-const app = require('../../../server');
+const app = require('../../../server/server');
 const request = require('request');
 const clean = require('../truncate');
 

@@ -1,4 +1,3 @@
-const app = require('../../../server');
 const userFactory = require('../factories/User');
 const boardFactory = require('../factories/Board');
 const listFactory = require('../factories/List');

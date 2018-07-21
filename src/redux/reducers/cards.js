@@ -14,7 +14,7 @@ function cardsById(state = {}, action) {
 				}
 
 				return acc
-			}, {})
+			}, { ...state })
 
 			return obj
 		default:
@@ -25,7 +25,7 @@ function cardsById(state = {}, action) {
 function allCardIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_CARDS_SUCCESS:
-			const cards = [...action.payload.cards]
+			const cards = [...state, ...action.payload.cards]
 			return cards.map(card => card.card.id)
 		default:
 			return state

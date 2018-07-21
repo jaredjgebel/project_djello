@@ -14,7 +14,7 @@ export function boardsById(state = {}, action) {
 					acc[key] = board
 				}
 				return acc
-			}, {})
+			}, { ...state })
 
 			return obj
 		case c.CREATE_BOARD_SUCCESS:
@@ -32,7 +32,7 @@ export function boardsById(state = {}, action) {
 export function allIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_BOARDS_SUCCESS:
-			const boards = [...action.payload.boards]
+			const boards = [...state, ...action.payload.boards]
 			return boards.map(board => board.id)
 		case c.CREATE_BOARD_SUCCESS:
 			return [...state, action.payload.board.board.id]

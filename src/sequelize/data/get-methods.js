@@ -106,8 +106,8 @@ const getCards = async (listId) => {
       const cards = [];
       const list = await List.findById(listId);
 
-      if (!list.dataValues.CardIds[0]) {
-         return null;
+      if (!list.dataValues.CardIds) {
+         return [];
       } else {
          for (let id of list.CardIds) {
             const card = await Card.findById(id);

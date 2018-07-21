@@ -61,8 +61,8 @@ class ListContainer extends Component {
                <Container fluid>
                   <CardDeck>
                      <ModalContainer
-                        action="New Post"
-                        header="New Post"
+                        action="New List"
+                        header="New List"
                      >
                         <ListFormContainer />
                      </ModalContainer>

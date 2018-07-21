@@ -141,6 +141,7 @@ router.get('/lists/:list_id/cards', checkJwt, (req, res) => {
 
 				cardsResponse.push(obj);
 			}
+			console.log('cardsResponse', cardsResponse);
 
 			res.status(200).json(cardsResponse);
 		})

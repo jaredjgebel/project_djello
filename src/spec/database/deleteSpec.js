@@ -1,4 +1,3 @@
-const app = require('../../../server');
 const boardFactory = require('../factories/Board');
 const listFactory = require('../factories/List');
 const cardFactory = require('../factories/Card');
