@@ -4,7 +4,12 @@ import { combineReducers } from 'redux'
 export function listsById(state = {}, action) {
 	switch (action.type) {
 		case c.FETCH_LISTS_SUCCESS:
-			const lists = [...action.payload.lists,]
+
+			const lists = action.payload && action.payload.lists
+
+			if (lists === [] || !lists) {
+				return {}
+			}
 
 			const obj = lists.reduce((acc, list) => {
 				const key = list.id
@@ -30,10 +35,17 @@ export function listsById(state = {}, action) {
 export function allIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_LISTS_SUCCESS:
-			const lists = [...action.payload.lists]
+			const lists = action.payload && action.payload.lists
+
+			if (lists === [] || !lists) {
+				return []
+			}
+
 			return lists.map(list => list.id)
 		case c.CREATE_LIST_SUCCESS:
-			return [...state, action.payload.list.list.id]
+			const listId = action.payload.list && action.payload.list.list && action.payload.list.list.id
+
+			return [...state, listId]
 		default:
 			return state
 	}

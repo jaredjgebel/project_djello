@@ -60,3 +60,60 @@ export function fetchCards(listId) {
 			})
 	}
 }
+
+function createCardRequest(listId) {
+	return {
+		type: c.CREATE_LIST_REQUEST,
+		payload: {
+			listId,
+		}
+	}
+}
+
+function createCardSuccess(card) {
+	return {
+		type: c.CREATE_CARD_SUCCESS,
+		payload: {
+			card,
+		}
+	}
+}
+
+function createCardFailure(error) {
+	return {
+		type: c.CREATE_CARD_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function createCard(listId, title, description) {
+	return (dispatch, getState) => {
+		dispatch(createCardRequest(listId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/lists/${listId}/cards?title=${title}&description=${description}`, {
+			method: 'POST',
+			credentials: "include",
+			headers: {
+				'Content-Type': 'application/json',
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(json => {
+				dispatch(createCardSuccess(json))
+			})
+			.catch(err => {
+				dispatch(createCardFailure(err))
+			})
+	}
+}

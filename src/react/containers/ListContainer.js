@@ -42,8 +42,8 @@ class ListContainer extends Component {
 
       const { lists, listIds } = this.props
 
+      const listElements = []
       if (listIds.length !== 0) {
-         const listElements = []
 
          listIds.map(id => {
             listElements.push(
@@ -55,25 +55,23 @@ class ListContainer extends Component {
                />
             )
          })
-
-         return (
-            <div>
-               <Container fluid>
-                  <CardDeck>
-                     <ModalContainer
-                        action="New List"
-                        header="New List"
-                     >
-                        <ListFormContainer />
-                     </ModalContainer>
-                     {listElements}
-                  </CardDeck>
-               </Container>
-            </div>
-         )
-      } else {
-         return 'Error. Lists could not be rendered'
       }
+
+      return (
+         <div>
+            <Container fluid>
+               <CardDeck>
+                  <ModalContainer
+                     action="New List"
+                     header="New List"
+                  >
+                     <ListFormContainer />
+                  </ModalContainer>
+                  {listElements === [] ? 'No lists yet. Create a new one!' : listElements}
+               </CardDeck>
+            </Container>
+         </div>
+      )
    }
 }
 

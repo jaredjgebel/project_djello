@@ -5,17 +5,10 @@ import { fetchBoards } from '../../redux/actions/boards'
 import Board from '../components/Board'
 
 const mapStateToProps = state => {
-   const boards = {
-      ...state.boards.byId,
-   }
-
-   const boardNames = boards !== {} ? Object.keys(boards).map(key => boards[key].title) : []
-
    return {
       userId: state.users.id,
-      boardNames,
-      current: state.boards.ui.current,
-      isFetching: state.boards.ui.isFetching,
+      current: state.boards.ui && state.boards.ui.current,
+      isFetching: state.boards.ui && state.boards.ui.isFetching,
    }
 }
 
@@ -43,11 +36,10 @@ class BoardContainer extends Component {
             </div>
          )
       } else {
-         const { boardNames, current } = this.props
+         const { current } = this.props
          return (
             <div>
                <Board
-                  boardNames={boardNames}
                   current={current}
                />
             </div>
@@ -63,7 +55,6 @@ export default connect(
 
 BoardContainer.propTypes = {
    userId: PropTypes.number,
-   boardNames: PropTypes.array,
    current: PropTypes.object,
    isFetching: PropTypes.bool,
 }

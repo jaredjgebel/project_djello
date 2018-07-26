@@ -25,8 +25,8 @@ function cardsById(state = {}, action) {
 function allCardIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_CARDS_SUCCESS:
-			const cards = [...state, ...action.payload.cards]
-			return cards.map(card => card.card.id)
+			const cards = [...action.payload.cards]
+			return cards.map(card => card.card.id).concat([...state])
 		default:
 			return state
 	}

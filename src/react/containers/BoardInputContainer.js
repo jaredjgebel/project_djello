@@ -8,16 +8,21 @@ import {
    InputGroup,
    InputGroupButtonDropdown,
 } from 'reactstrap'
-import { switchBoards } from '../../redux/actions/boards'
-import BoardInput from '../components/BoardInput'
+import { switchBoards, fetchBoards } from '../../redux/actions/boards'
+import { fetchLists } from '../../redux/actions/lists'
 
 const mapStateToProps = state => {
-   const allIds = state.boards.allIds
+   const boards = state.boards
+   const allIds = state.boards && state.boards.allIds
+   const current = state.boards && state.boards.ui && state.boards.ui.current
 
    const boardNames = allIds.map(id => state.boards.byId[id].title)
 
    return {
+      allIds,
+      boards,
       boardNames,
+      current,
    }
 }
 
@@ -25,7 +30,10 @@ const mapDispatchToProps = dispatch => {
    return {
       switchBoards: (name) => {
          dispatch(switchBoards(name))
-      }
+      },
+      fetchLists: (boardId) => {
+         dispatch(fetchLists(boardId))
+      },
    }
 }
 
@@ -41,8 +49,9 @@ class BoardInputContainer extends Component {
       }
    }
 
-   selectBoard(name) {
-      this.props.switchBoards(name)
+   selectBoard(board) {
+      this.props.switchBoards(board)
+      this.props.fetchLists(board.id)
    }
 
    toggleDropDown() {
@@ -51,14 +60,22 @@ class BoardInputContainer extends Component {
       })
    }
    render() {
-      const { boardNames } = this.props
+      const { allIds, boards, current } = this.props
 
-      const dropdownItems = boardNames.map((name, i) => (
+      const dropdownIds = allIds.filter(id => {
+         if (id === current.id) {
+            return false
+         }
+
+         return true
+      })
+
+      const dropdownItems = dropdownIds.map((id, i) => (
          <DropdownItem
-            onSelect={() => this.selectBoard(name)}
+            onClick={() => this.selectBoard(boards.byId[id])}
             key={i}
          >
-            {name}
+            {boards.byId[id].title}
          </DropdownItem>
       ))
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CardContainer from '../containers/CardContainer'
+import ModalContainer from '../containers/ModalContainer'
+import CardFormContainer from '../containers/CardFormContainer'
 import { Card, CardSubtitle, CardHeader, CardFooter, Button, Col } from 'reactstrap';
 
 const List = ({ listId, title, description }) => {
@@ -13,7 +15,12 @@ const List = ({ listId, title, description }) => {
             </CardHeader>
             <CardContainer listId={listId} />
             <CardFooter>
-               <Button>New Card</Button>
+               <ModalContainer
+                  action="New Card"
+                  header="New Card"
+               >
+                  <CardFormContainer listId={listId} />
+               </ModalContainer>
             </CardFooter>
          </Card>
       </Col>

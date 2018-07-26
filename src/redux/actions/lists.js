@@ -12,7 +12,7 @@ export function fetchListsRequest(boardId) {
 	}
 }
 
-export function fetchListsSuccess(lists) {
+export function fetchListsSuccess(lists = []) {
 	return {
 		type: c.FETCH_LISTS_SUCCESS,
 		payload: {
@@ -52,6 +52,7 @@ export function fetchLists(boardId) {
 				return response.json()
 			})
 			.then(json => {
+				console.log('lists', json)
 				dispatch(fetchListsSuccess(json))
 			})
 			.catch(err => {

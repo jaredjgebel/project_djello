@@ -9,6 +9,7 @@
     "build": "node_modules/.bin/webpack --progress",
     "start": "node_modules/.bin/webpack-dev-server --open",
     "jasmine": "node node_modules/jasmine/bin/jasmine",
+    "server": "node server/server.js",
     "whichnodemon": "which nodemon > /dev/null"
   },
   "repository": {
