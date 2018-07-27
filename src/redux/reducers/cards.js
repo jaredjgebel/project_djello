@@ -4,7 +4,11 @@ import { combineReducers } from 'redux'
 function cardsById(state = {}, action) {
 	switch (action.type) {
 		case c.FETCH_CARDS_SUCCESS:
-			const cards = [...action.payload.cards]
+			const cards = action.payload && action.payload.cards
+
+			if (cards === [] || !cards) {
+				return {}
+			}
 
 			const obj = cards.reduce((acc, card) => {
 				const key = card.card.id
@@ -25,8 +29,17 @@ function cardsById(state = {}, action) {
 function allCardIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_CARDS_SUCCESS:
-			const cards = [...action.payload.cards]
-			return cards.map(card => card.card.id).concat([...state])
+			const cards = action.payload && action.payload.cards
+
+			if (cards === [] || !cards) {
+				return []
+			}
+
+			const newCardIds = cards.map(card => card.card.id)
+
+			const unique = [...new Set([...state, ...newCardIds])]
+
+			return unique
 		default:
 			return state
 	}

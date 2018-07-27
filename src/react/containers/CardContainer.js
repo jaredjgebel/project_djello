@@ -8,7 +8,7 @@ import { Button, CardBody } from 'reactstrap'
 const mapStateToProps = state => {
    return {
       isFetching: state.cards.ui.isFetching,
-      cards: state.cards && state.cards.byId,
+      cardsById: state.cards && state.cards.byId,
       cardIds: state.cards && state.cards.allIds,
       lists: state.lists,
    }
@@ -23,25 +23,13 @@ const mapDispatchToProps = dispatch => {
 }
 
 class CardContainer extends Component {
-   constructor() {
-      super()
-      this.state = { visibleHistory: false }
-
-      this.onDetailsClick = this.onDetailsClick.bind(this);
-   }
-
    componentDidMount() {
       this.props.fetchCards(this.props.listId)
    }
 
-   onDetailsClick() {
-      this.setState(prevState => ({
-         visibleHistory: !prevState.visibleHistory
-      }))
-   }
 
    render() {
-      const { isFetching, cards, cardIds, listId, lists } = this.props
+      const { isFetching, cardsById, cardIds, listId, lists } = this.props
 
       if (isFetching) {
          return (
@@ -51,7 +39,7 @@ class CardContainer extends Component {
          )
       }
 
-      if (cards !== {}) {
+      if (cardsById !== {}) {
          const cardElements = []
 
          cardIds.map(id => {
@@ -59,12 +47,10 @@ class CardContainer extends Component {
                cardElements.push(
                   <CardBody key={id}>
                      <Card
-                        title={cards[id].title}
-                        description={cards[id].description}
-                        updatedAt={cards[id].updatedAt}
+                        title={cardsById[id].title}
+                        description={cardsById[id].description}
+                        updatedAt={cardsById[id].updatedAt}
                         cardId={id}
-                        visibleHistory={this.state.visibleHistory}
-                        onDetailsClick={this.onDetailsClick}
                      />
                   </CardBody>
                )

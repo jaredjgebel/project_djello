@@ -4,7 +4,6 @@ import { combineReducers } from 'redux'
 export function listsById(state = {}, action) {
 	switch (action.type) {
 		case c.FETCH_LISTS_SUCCESS:
-
 			const lists = action.payload && action.payload.lists
 
 			if (lists === [] || !lists) {

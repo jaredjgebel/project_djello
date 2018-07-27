@@ -4,8 +4,11 @@ import { combineReducers } from 'redux'
 function assigneesById(state = {}, action) {
 	switch (action.type) {
 		case c.FETCH_CARDS_SUCCESS:
-			console.log('CARDS', action.payload.cards)
-			const cards = [...action.payload.cards]
+			const cards = action.payload && action.payload.cards
+
+			if (cards === [] || !cards) {
+				return {}
+			}
 
 			const assignees = []
 
@@ -19,7 +22,6 @@ function assigneesById(state = {}, action) {
 			})
 
 			const obj = assignees.reduce((acc, assignee) => {
-				console.log('ASSIGNEE', assignee)
 				const key = assignee.id
 				if (!acc[key]) {
 					acc[key] = assignee
@@ -38,7 +40,11 @@ function assigneesById(state = {}, action) {
 function allAssigneeIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_CARDS_SUCCESS:
-			const cards = [...action.payload.cards]
+			const cards = action.payload && action.payload.cards
+
+			if (cards === [] || !cards) {
+				return {}
+			}
 
 			const assignees = [...state]
 			cards.forEach((card) => {

@@ -9,6 +9,7 @@ const mapStateToProps = state => {
       isFetching: state.histories.ui.isFetching,
       histories: state.histories && state.histories.byId,
       historyIds: state.histories && state.histories.allIds,
+      cardsById: state.cards && state.cards.byId,
    }
 }
 
@@ -26,7 +27,7 @@ class HistoryContainer extends Component {
    }
 
    render() {
-      const { isFetching, histories, historyIds } = this.props
+      const { cardId, cardsById, isFetching, histories, historyIds } = this.props
 
       if (isFetching) {
          return (
@@ -40,13 +41,15 @@ class HistoryContainer extends Component {
          const historyElements = []
 
          historyIds.map(id => {
-            historyElements.push(
-               <History
-                  text={histories[id].text}
-                  updatedAt={histories[id].updatedAt}
-                  key={id}
-               />
-            )
+            if (cardsById[cardId].HistoryIds.includes(id)) {
+               historyElements.push(
+                  <History
+                     text={histories[id].text}
+                     updatedAt={histories[id].updatedAt}
+                     key={id}
+                  />
+               )
+            }
          })
 
          return (
@@ -57,7 +60,7 @@ class HistoryContainer extends Component {
       } else {
          return (
             <div>
-               <p>Histories could not be loaded.</p>
+               <p>No current histories.</p>
             </div>
          )
       }
