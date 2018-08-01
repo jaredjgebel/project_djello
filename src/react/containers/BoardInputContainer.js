@@ -8,7 +8,7 @@ import {
    InputGroup,
    InputGroupButtonDropdown,
 } from 'reactstrap'
-import { switchBoards, fetchBoards } from '../../redux/actions/boards'
+import { switchBoards } from '../../redux/actions/boards'
 import { fetchLists } from '../../redux/actions/lists'
 
 const mapStateToProps = state => {

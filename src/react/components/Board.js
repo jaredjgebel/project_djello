@@ -22,6 +22,20 @@ const Board = ({ current }) => {
                <BoardFormContainer />
             </ModalContainer>
 
+            <ModalContainer
+               action="Edit Board"
+               header="Edit Board"
+            >
+               <BoardFormContainer boardId={current.id} />
+            </ModalContainer>
+
+            <ModalContainer
+               action="Delete Board"
+               header="Delete Board"
+            >
+               <BoardFormContainer boardId={current.id} />
+            </ModalContainer>
+
             <ListContainer />
 
          </Container>

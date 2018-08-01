@@ -19,10 +19,15 @@ class ModalContainer extends Component {
    }
 
    render() {
-      // const { children } = this.props
-      // const childrenWithProps = React.Children.map((children, child => React.cloneElement(child, { toggle: this.toggle })))
+      const { children } = this.props
+      // Action prop copied to each element
+      // indicates which Redux action to dispatch
+      // in BoardFormContainer
+      const childrenWithProps = React.Children.map(children, child => {
+         return React.cloneElement(child, { action: this.props.action })
+      })
 
-      // console.log(children)
+      // console.log('childrenWithProps', childrenWithProps)
 
       return (
          <div>
@@ -37,7 +42,7 @@ class ModalContainer extends Component {
                </ModalHeader>
 
                <ModalBody>
-                  {this.props.children}
+                  {childrenWithProps}
                </ModalBody>
 
                <ModalFooter>

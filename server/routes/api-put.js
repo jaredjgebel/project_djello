@@ -8,9 +8,9 @@ const {
 	editCard,
 } = require('../../src/sequelize/data/put-methods');
 
-router.put('/boards', (req, res) => {
+router.put('/boards/:id', checkJwt, (req, res) => {
+	const boardId = req.params.id;
 	const q = qs.parse(req.query);
-	const boardId = q.id;
 	const title = q.title;
 	const description = q.description;
 
@@ -24,7 +24,7 @@ router.put('/boards', (req, res) => {
 		});
 });
 
-router.put('/lists/:id', (req, res) => {
+router.put('/lists/:id', checkJwt, (req, res) => {
 	const listId = req.params.id;
 	const q = qs.parse(req.query);
 	const title = q.title;
@@ -40,7 +40,7 @@ router.put('/lists/:id', (req, res) => {
 		});
 });
 
-router.put('/cards/:id', (req, res) => {
+router.put('/cards/:id', checkJwt, (req, res) => {
 	const cardId = req.params.id;
 	const q = qs.parse(req.query);
 	const title = q.title;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { CardText, Col, Card as RsCard, CardBody, Button, Row } from 'reactstrap'
+import { CardText, Card as RsCard, Button, } from 'reactstrap'
 import '../stylesheets/Card.css'
 import HistoryContainer from '../containers/HistoryContainer'
 import AssigneesContainer from '../containers/AssigneesContainer'

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
-import { createBoard } from '../../redux/actions/boards'
+import { createBoard, editBoard } from '../../redux/actions/boards'
 
 const mapStateToProps = state => {
    return {
@@ -14,6 +14,9 @@ const mapDispatchToProps = dispatch => {
    return {
       createBoard: (userId, title, description) => {
          dispatch(createBoard(userId, title, description))
+      },
+      editBoard: (boardId, title, description) => {
+         dispatch(editBoard(boardId, title, description))
       }
    }
 }
@@ -34,6 +37,8 @@ class BoardFormContainer extends Component {
    handleSubmit(event) {
       event.preventDefault()
 
+      const { action, boardId } = this.props
+
       const title = this.title.current.value
       const description = this.description.current.value
 
@@ -45,9 +50,17 @@ class BoardFormContainer extends Component {
 
 
       if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
-         // dispatch action
-         // if "mode" is edit and not create, dispatch a different action???
-         this.props.createBoard(this.props.userId, title, description)
+         // check for which action to dispatch
+         if (action === "New Board") {
+            this.props.createBoard(this.props.userId, title, description)
+         } else if (action === "Edit Board") {
+            this.props.editBoard(boardId, title, description)
+         } else if (action === "Delete Board") {
+            // show confirmation modal
+            // delete board
+         } else {
+
+         }
          // close modal ????
          // this.props.toggle()
       }
@@ -104,5 +117,5 @@ export default connect(
 
 BoardFormContainer.propTypes = {
    userId: PropTypes.number,
-   createBoard: PropTypes.function,
+   createBoard: PropTypes.func,
 }

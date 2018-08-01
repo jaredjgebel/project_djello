@@ -128,3 +128,60 @@ export function createBoard(userId, title, description) {
 			})
 	}
 }
+
+function editBoardRequest(boardId) {
+	return {
+		type: c.EDIT_BOARD_REQUEST,
+		payload: {
+			boardId,
+		}
+	}
+}
+
+function editBoardSuccess(board) {
+	return {
+		type: c.EDIT_BOARD_SUCCESS,
+		payload: {
+			board,
+		}
+	}
+}
+
+function editBoardFailure(error) {
+	return {
+		type: c.EDIT_BOARD_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function editBoard(boardId, title, description) {
+	return (dispatch, getState) => {
+		dispatch(editBoardRequest(boardId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/boards/${boardId}?title=${title}&description=${description}`, {
+			method: "PUT",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(json => {
+				dispatch(editBoardSuccess(json))
+			})
+			.catch(err => {
+				dispatch(editBoardFailure(err))
+			})
+	}
+}
