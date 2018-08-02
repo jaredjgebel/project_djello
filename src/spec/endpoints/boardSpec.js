@@ -5,6 +5,7 @@ const clean = require('../truncate');
 const boardFactory = require('../factories/Board');
 const userFactory = require('../factories/User');
 const { addBoardToUser } = require('../../sequelize/data/utility-methods');
+require('dotenv').config();
 
 describe('Board endpoint', () => {
    const baseUrl = 'http://localhost:8888';

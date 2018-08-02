@@ -3,8 +3,9 @@ const Board = models.Board;
 const List = models.List;
 const Card = models.Card;
 const History = models.History;
+const { removeBoardFromUser } = require('./utility-methods');
 
-const deleteBoard = async (boardId) => {
+const deleteBoard = async (userId, boardId) => {
    try {
       await Board.destroy({
          where: {
@@ -13,7 +14,9 @@ const deleteBoard = async (boardId) => {
          limit: 1,
       });
 
-      return `Board successfully deleted.`;
+      const user = await removeBoardFromUser(userId, boardId);
+
+      return user;
 
    } catch (err) {
       throw new Error(err);

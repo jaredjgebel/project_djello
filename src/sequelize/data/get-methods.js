@@ -45,11 +45,12 @@ const getUserBoards = async (userId) => {
    try {
       const userBoards = [];
       const user = await User.findById(userId);
+      console.log('e44', user.dataValues);
+      // if a user has boards, iterate and return them
       if (user.dataValues.BoardIds) {
-         // if a user has boards, iterate and return them
          for (let board of user.dataValues.BoardIds) {
             const boardInfo = await Board.findById(board);
-            userBoards.push(boardInfo.dataValues);
+            userBoards.push(boardInfo && boardInfo.dataValues);
          }
 
          return userBoards;

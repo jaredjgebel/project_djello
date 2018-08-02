@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -5,7 +6,6 @@ const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 const host = 'localhost';

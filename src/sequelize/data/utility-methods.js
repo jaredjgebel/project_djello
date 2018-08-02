@@ -8,8 +8,9 @@ const List = models.List;
 const Op = Sequelize.Op;
 
 // NOTE: returning promises with these methods
-// so they can be 'await'ed in post methods
+// so they can be 'await'ed in post  and delete methods
 
+// Add resource ID to parent resource
 const addBoardToUser = async (userId, boardId) => {
    try {
       const userResponse = await User.update({
@@ -28,7 +29,7 @@ const addBoardToUser = async (userId, boardId) => {
       return Promise.resolve(user);
 
    } catch (err) {
-      console.error(err.errors);
+      console.error(err);
       return Promise.reject(err);
    }
 };
@@ -120,50 +121,34 @@ const addHistoryToCard = async (cardId, historyId) => {
    }
 }
 
+// Remove id from parent resource
+const removeBoardFromUser = async (userId, boardId) => {
+   console.log('boardId', boardId);
+   try {
+      const response = await User.update({
+         BoardIds: Sequelize.fn('array_remove', Sequelize.col('BoardIds'), boardId)
+      }, {
+            returning: true,
+            where: {
+               id: userId,
+            }
+         });
+
+      const user = response[1][0].dataValues;
+
+      return Promise.resolve(user);
+   } catch (err) {
+      console.error(err);
+      return Promise.reject(err);
+   }
+}
+
+
 module.exports = {
    addBoardToUser,
    addListToBoard,
    addCardToList,
    addAssigneeToCard,
    addHistoryToCard,
+   removeBoardFromUser,
 };
-
-// addCardToList(22, 23)
-//    .then(list => {
-//       console.log(list);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    })
-
-// addListToBoard(21, 23)
-//    .then(board => {
-//       console.log(board);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// addAssigneeToCard(24, 25)
-//    .then(board => {
-//       console.log(board);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// addHistoryToCard(24, 25)
-//    .then(card => {
-//       console.log(card);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });
-
-// addCardToUser(24, 25)
-//    .then(user => {
-//       console.log(user);
-//    })
-//    .catch(err => {
-//       console.error(err);
-//    });

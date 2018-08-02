@@ -1,3 +1,4 @@
+const userFactory = require('../factories/User');
 const boardFactory = require('../factories/Board');
 const listFactory = require('../factories/List');
 const cardFactory = require('../factories/Card');
@@ -8,31 +9,46 @@ const {
 	deleteList,
 	deleteCard,
 } = require('../../sequelize/data/delete-methods');
-const { addHistoryToCard } = require('../../sequelize/data/utility-methods');
+const {
+	addBoardToUser,
+	addListToBoard,
+	addCardToList,
+	addAssigneeToCard,
+	addHistoryToCard,
+} = require('../../sequelize/data/utility-methods');
 
 describe('Entity delete methods', () => {
-	let board, list, card, history, newBoard, newList, newCard, newHistory;
+	let user, board, list, card, history, newUser, newBoard, newList, newCard, newHistory;
 
 	beforeEach(async () => {
 		await clean();
 
+		newUser = await userFactory();
 		newBoard = await boardFactory();
+		newBoardTwo = await boardFactory();
 		newList = await listFactory();
 		newCard = await cardFactory();
 		newHistory = await historyFactory();
 
+		user = newUser.dataValues;
 		board = newBoard.dataValues;
+		boardTwo = newBoardTwo.dataValues;
 		list = newList.dataValues;
 		card = newCard.dataValues;
 		history = newHistory.dataValues;
 
+		await addBoardToUser(user.id, board.id);
+		await addBoardToUser(user.id, boardTwo.id);
+		await addListToBoard(board.id, list.id);
+		await addCardToList(list.id, card.id);
+		await addAssigneeToCard(card.id, user.id);
 		await addHistoryToCard(card.id, history.id);
 	});
 
 	it('deletes a given board', done => {
-		deleteBoard(board.id)
-			.then(response => {
-				expect(response).toBe('Board successfully deleted.');
+		deleteBoard(user.id, board.id)
+			.then(user => {
+				expect(user.BoardIds).not.toEqual(jasmine.arrayContaining([board.id]));
 				done();
 			})
 			.catch(err => {
@@ -42,8 +58,8 @@ describe('Entity delete methods', () => {
 
 	it('deletes a given list', done => {
 		deleteList(list.id)
-			.then(response => {
-				expect(response).toBe('List successfully deleted.');
+			.then(user => {
+				expect(user.BoardIds).not.toEqual(jasmine.arrayContaining(list.id))
 				done();
 			})
 			.catch(err => {
