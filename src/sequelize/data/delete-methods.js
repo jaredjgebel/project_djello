@@ -3,7 +3,11 @@ const Board = models.Board;
 const List = models.List;
 const Card = models.Card;
 const History = models.History;
-const { removeBoardFromUser } = require('./utility-methods');
+const {
+   removeBoardFromUser,
+   removeListFromBoard,
+   removeCardFromList,
+} = require('./utility-methods');
 
 const deleteBoard = async (userId, boardId) => {
    try {
@@ -23,7 +27,7 @@ const deleteBoard = async (userId, boardId) => {
    }
 };
 
-const deleteList = async (listId) => {
+const deleteList = async (boardId, listId) => {
    try {
       await List.destroy({
          where: {
@@ -32,13 +36,15 @@ const deleteList = async (listId) => {
          limit: 1,
       });
 
-      return 'List successfully deleted.';
+      const board = await removeListFromBoard(boardId, listId);
+
+      return board;
    } catch (err) {
       throw new Error(err);
    }
 };
 
-const deleteCard = async (cardId) => {
+const deleteCard = async (listId, cardId) => {
    try {
       const card = await Card.findById(cardId);
       const histories = card.dataValues.HistoryIds;
@@ -61,7 +67,9 @@ const deleteCard = async (cardId) => {
          }
       }
 
-      return 'Card and associated histories successfully deleted.';
+      const list = await removeCardFromList(listId, cardId);
+
+      return list;
    } catch (err) {
       throw new Error(err);
    }
