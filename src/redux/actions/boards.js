@@ -185,3 +185,65 @@ export function editBoard(boardId, title, description) {
 			})
 	}
 }
+
+function deleteBoardRequest(userId, boardId) {
+	return {
+		type: c.DELETE_BOARD_REQUEST,
+		payload: {
+			boardId,
+		}
+	}
+}
+
+function deleteBoardSuccess(user, boardId) {
+	return {
+		type: c.DELETE_BOARD_SUCCESS,
+		payload: {
+			user,
+			boardId,
+		}
+	}
+}
+
+function deleteBoardFailure(error) {
+	return {
+		type: c.DELETE_BOARD_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function deleteBoard(userId, boardId) {
+	return (dispatch, getState) => {
+		dispatch(deleteBoardRequest(userId, boardId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/users/${userId}/boards/${boardId}`, {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(user => {
+				// must be dispatched in order
+				return dispatch(deleteBoardSuccess(user, boardId))
+			})
+			.then(() => {
+				dispatch(fetchBoards(userId))
+			})
+			.catch(err => {
+				dispatch(deleteBoardFailure(err))
+			})
+	}
+}

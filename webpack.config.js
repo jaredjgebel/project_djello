@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
+// const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 
 module.exports = {
   mode: "development",

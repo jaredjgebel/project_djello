@@ -15,11 +15,29 @@ const mapStateToProps = state => {
    const boards = state.boards
    const allIds = state.boards && state.boards.allIds
    const current = state.boards && state.boards.ui && state.boards.ui.current
+   const byId = state.boards && state.boards.byId
 
-   const boardNames = allIds.map(id => state.boards.byId[id].title)
+   let boardNames
+   // console.log('allids', allIds)
+   // allIds is gaining two undefined values here, not sure why!!
+   const newAllIds = allIds.filter(id => {
+      if (!id) {
+         return false
+      }
+      return true
+   })
+
+
+   if (current === !null) {
+      if (allIds !== [] && byId) {
+         boardNames = allIds.map(id => byId[id].title)
+      } else {
+         boardNames = []
+      }
+   }
 
    return {
-      allIds,
+      allIds: newAllIds,
       boards,
       boardNames,
       current,
@@ -61,23 +79,32 @@ class BoardInputContainer extends Component {
    }
    render() {
       const { allIds, boards, current } = this.props
+      // console.log('boards', boards)
+
+      if (current === null) {
+         return null
+      }
 
       const dropdownIds = allIds.filter(id => {
-         if (id === current.id) {
+         if (id === current.id || !id) {
             return false
          }
 
          return true
       })
 
-      const dropdownItems = dropdownIds.map((id, i) => (
-         <DropdownItem
-            onClick={() => this.selectBoard(boards.byId[id])}
-            key={i}
-         >
-            {boards.byId[id].title}
-         </DropdownItem>
-      ))
+      const dropdownItems = dropdownIds.map((id, i) => {
+         // console.log('id', id)
+         return (
+            <DropdownItem
+               onClick={() => this.selectBoard(boards.byId[id])}
+               key={i}
+            >
+               {boards.byId[id].title}
+            </DropdownItem>
+         )
+      }
+      )
 
       return (
          <InputGroup>

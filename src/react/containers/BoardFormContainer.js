@@ -55,11 +55,6 @@ class BoardFormContainer extends Component {
             this.props.createBoard(this.props.userId, title, description)
          } else if (action === "Edit Board") {
             this.props.editBoard(boardId, title, description)
-         } else if (action === "Delete Board") {
-            // show confirmation modal
-            // delete board
-         } else {
-
          }
          // close modal ????
          // this.props.toggle()

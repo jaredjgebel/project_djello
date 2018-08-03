@@ -7,12 +7,13 @@ const {
 	deleteCard,
 } = require('../../src/sequelize/data/delete-methods');
 
-router.delete('/boards/:id', checkJwt, (req, res) => {
-	const boardId = req.params.id;
+router.delete('/users/:user_id/boards/:board_id', checkJwt, (req, res) => {
+	const boardId = req.params.board_id;
+	const userId = req.params.user_id;
 
-	deleteBoard(boardId)
-		.then((response) => {
-			res.status(200).json(response);
+	deleteBoard(userId, boardId)
+		.then((user) => {
+			res.status(200).json(user);
 		})
 		.catch(err => {
 			console.error(err);
@@ -20,12 +21,13 @@ router.delete('/boards/:id', checkJwt, (req, res) => {
 		});
 });
 
-router.delete('/lists/:id', checkJwt, (req, res) => {
-	const listId = req.params.id;
+router.delete('/boards/:board_id/lists/:list_id', checkJwt, (req, res) => {
+	const listId = req.params.list_id;
+	const boardId = req.params.board_id;
 
-	deleteList(listId)
-		.then(response => {
-			res.status(200).json(response);
+	deleteList(boardId, listId)
+		.then(board => {
+			res.status(200).json(board);
 		})
 		.catch(err => {
 			console.error(err);
@@ -33,13 +35,13 @@ router.delete('/lists/:id', checkJwt, (req, res) => {
 		});
 });
 
-router.delete('/cards/:id', checkJwt, (req, res) => {
-	const cardId = req.params.id;
-	// keeps submitting body: 'OK' ?????
-	deleteCard(cardId)
-		.then(response => {
-			console.log('Response', response);
-			res.status(200).json({ response });
+router.delete('lists/:list_id/cards/:card_id', checkJwt, (req, res) => {
+	const cardId = req.params.card_id;
+	const listId = req.params.list_id;
+
+	deleteCard(listId, cardId)
+		.then(list => {
+			res.status(200).json(list);
 		})
 		.catch(err => {
 			console.error(err);

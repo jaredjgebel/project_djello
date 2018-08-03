@@ -17,6 +17,7 @@ export function boardsById(state = {}, action) {
 			}, { ...state })
 
 			return obj
+
 		case c.CREATE_BOARD_SUCCESS:
 			const board = { ...action.payload.board }
 
@@ -24,6 +25,21 @@ export function boardsById(state = {}, action) {
 				...state,
 				[board.board.id]: board.board,
 			}
+		case c.EDIT_BOARD_SUCCESS:
+			const editedBoard = { ...action.payload.board }
+
+			return {
+				...state,
+				[editedBoard.id]: editedBoard,
+			}
+
+		case c.DELETE_BOARD_SUCCESS:
+			const boardId = action.payload.boardId
+
+			let copy = Object.assign({}, state)
+			delete copy[boardId]
+
+			return copy
 		default:
 			return state
 	}
@@ -34,8 +50,13 @@ export function allIds(state = [], action) {
 		case c.FETCH_BOARDS_SUCCESS:
 			const boards = [...state, ...action.payload.boards]
 			return boards.map(board => board.id)
+
 		case c.CREATE_BOARD_SUCCESS:
 			return [...state, action.payload.board.board.id]
+
+		case c.DELETE_BOARD_SUCCESS:
+			return state.filter(id => id !== action.payload.boardId)
+
 		default:
 			return state
 	}
@@ -54,28 +75,87 @@ export function boardUi(state = initialUiState, action) {
 				...state,
 				isFetching: true,
 			}
+
 		case c.FETCH_BOARDS_SUCCESS:
 			return {
 				...state,
 				current: action.payload.boards[0],
 				isFetching: false,
 			}
+
 		case c.FETCH_BOARDS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
 				error: action.payload.error,
 			}
+
 		case c.SWITCH_BOARD:
 			return {
 				...state,
 				current: action.payload.selectedBoard,
 			}
+
+		case c.CREATE_BOARD_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
 		case c.CREATE_BOARD_FAILURE:
 			return {
 				...state,
 				error: action.payload.error,
+				isFetching: false,
 			}
+
+		case c.CREATE_BOARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+				current: action.payload.board.board,
+			}
+
+		case c.EDIT_BOARD_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
+		case c.EDIT_BOARD_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error,
+			}
+
+		case c.EDIT_BOARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+				current: action.payload.board,
+			}
+
+		case c.DELETE_BOARD_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
+		case c.DELETE_BOARD_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error,
+			}
+
+		case c.DELETE_BOARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+				current: null,
+			}
+
 		default:
 			return state
 	}

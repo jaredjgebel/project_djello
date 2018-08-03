@@ -5,8 +5,17 @@ import BoardFormContainer from '../containers/BoardFormContainer'
 import ModalContainer from '../containers/ModalContainer'
 import { Container } from 'reactstrap'
 import BoardInputContainer from '../containers/BoardInputContainer'
+import BoardDeleteContainer from '../containers/BoardDeleteContainer'
 
 const Board = ({ current }) => {
+   if (!current) {
+      return (
+         <div>
+            <p>Retrieving boards.</p>
+         </div>
+      )
+   }
+
    return (
       <div>
          <Container fluid="true">
@@ -33,7 +42,7 @@ const Board = ({ current }) => {
                action="Delete Board"
                header="Delete Board"
             >
-               <BoardFormContainer boardId={current.id} />
+               <BoardDeleteContainer boardId={current.id} />
             </ModalContainer>
 
             <ListContainer />
@@ -47,8 +56,4 @@ export default Board
 
 Board.propTypes = {
    current: PropTypes.object,
-}
-
-Container.propTypes = {
-   fluid: PropTypes.string,
 }
