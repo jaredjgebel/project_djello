@@ -53,7 +53,6 @@ class ListFormContainer extends Component {
          if (action === "New List") {
             this.props.createList(boardId, title, description)
          } else if (action === "Edit List") {
-            console.log(listId, boardId, title, description)
             this.props.editList(listId, boardId, title, description)
          }
          // close modal ????

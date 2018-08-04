@@ -147,7 +147,6 @@ function editListFailure(error) {
 }
 
 export function editList(listId, boardId, title = "", description = "") {
-	console.log(listId, boardId, title, description)
 	return (dispatch, getState) => {
 		dispatch(editListRequest(listId))
 
@@ -176,6 +175,68 @@ export function editList(listId, boardId, title = "", description = "") {
 			})
 			.catch(err => {
 				dispatch(editListFailure(err))
+			})
+	}
+}
+
+function deleteListRequest(boardId, listId) {
+	return {
+		type: c.DELETE_LIST_REQUEST,
+		payload: {
+			boardId,
+			listId,
+		}
+	}
+}
+
+function deleteListSuccess(listId, board) {
+	return {
+		type: c.DELETE_LIST_SUCCESS,
+		payload: {
+			listId,
+			board,
+		}
+	}
+}
+
+function deleteListFailure(error) {
+	return {
+		type: c.DELETE_LIST_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function deleteList(boardId, listId) {
+	return (dispatch, getState) => {
+		dispatch(deleteListRequest(boardId, listId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/boards/${boardId}/lists/${listId}`, {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(board => {
+				return dispatch(deleteListSuccess(listId, board))
+			})
+			.then(() => {
+				dispatch(fetchLists(boardId))
+			})
+			.catch(err => {
+				dispatch(deleteListFailure(err))
 			})
 	}
 }

@@ -4,6 +4,7 @@ import CardContainer from '../containers/CardContainer'
 import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
 import CardFormContainer from '../containers/CardFormContainer'
+import ListDeleteContainer from '../containers/ListDeleteContainer'
 import { Card, CardSubtitle, CardHeader, CardFooter, Button, Col } from 'reactstrap';
 
 const List = ({ listId, title, description }) => {
@@ -19,6 +20,13 @@ const List = ({ listId, title, description }) => {
                   header="Edit List"
                >
                   <ListFormContainer listId={listId} />
+               </ModalContainer>
+
+               <ModalContainer
+                  action="Delete List"
+                  header="Delete List"
+               >
+                  <ListDeleteContainer listId={listId} />
                </ModalContainer>
                <ModalContainer
                   action="New Card"

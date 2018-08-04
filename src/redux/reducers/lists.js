@@ -33,6 +33,13 @@ export function listsById(state = {}, action) {
 				...state,
 				[editedList.id]: editedList,
 			}
+		case c.DELETE_LIST_SUCCESS:
+			const deletedListId = action.payload.listId
+
+			let copy = Object.assign({}, state)
+			delete copy[deletedListId]
+
+			return copy
 		default:
 			return state
 	}
@@ -52,6 +59,10 @@ export function allIds(state = [], action) {
 			const listId = action.payload.list && action.payload.list.list && action.payload.list.list.id
 
 			return [...state, listId]
+		case c.DELETE_LIST_SUCCESS:
+			const listIds = action.payload.board && action.payload.board.ListIds
+
+			return listIds
 		default:
 			return state
 	}
@@ -110,6 +121,21 @@ export function listUi(state = initialUiState, action) {
 				...state,
 				isFetching: false,
 				error: action.payload.error
+			}
+		case c.DELETE_LIST_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+		case c.DELETE_LIST_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+			}
+		case c.DELETE_LIST_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
 			}
 		default:
 			return state
