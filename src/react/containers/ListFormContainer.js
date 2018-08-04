@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
-import { createList } from '../../redux/actions/lists'
+import { createList, editList } from '../../redux/actions/lists'
 
 const mapStateToProps = state => {
    return {
-      boardId: state.boards && state.boards.ui && state.boards.ui.current && state.boards.ui.current.id 
+      boardId: state.boards && state.boards.ui && state.boards.ui.current && state.boards.ui.current.id
    }
 }
 
@@ -14,6 +14,9 @@ const mapDispatchToProps = dispatch => {
    return {
       createList: (boardId, title, description) => {
          dispatch(createList(boardId, title, description))
+      },
+      editList: (listId, boardId, title, description) => {
+         dispatch(editList(listId, boardId, title, description))
       }
    }
 }
@@ -32,7 +35,9 @@ class ListFormContainer extends Component {
    }
 
    handleSubmit(e) {
-      e.preventDefault() 
+      e.preventDefault()
+
+      const { action, boardId, listId } = this.props
 
       const title = this.title.current.value
       const description = this.description.current.value
@@ -45,22 +50,26 @@ class ListFormContainer extends Component {
 
       if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
          // dispatch action
-         // if "mode" is edit and not create, dispatch a different action???
-         this.props.createList(this.props.boardId, title, description)
+         if (action === "New List") {
+            this.props.createList(boardId, title, description)
+         } else if (action === "Edit List") {
+            console.log(listId, boardId, title, description)
+            this.props.editList(listId, boardId, title, description)
+         }
          // close modal ????
          // this.props.toggle()
       }
    }
    render() {
       const titleInvalidDiv = this.state.titleFeedback === "is-invalid" ? <div className="invalid-feedback">List title must be less than 255 characters.</div> : null
-      
+
       const descriptionInvalidDiv = this.state.descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">List description must be less than 255 characters.</div> : null
 
       return (
          <div>
             <Form>
                <FormGroup>
-                  <input 
+                  <input
                      type="text"
                      name="title"
                      id="listTitle"
@@ -71,7 +80,7 @@ class ListFormContainer extends Component {
                   {titleInvalidDiv}
                </FormGroup>
                <FormGroup>
-                  <input 
+                  <input
                      type="text"
                      name="description"
                      id="listDescription"

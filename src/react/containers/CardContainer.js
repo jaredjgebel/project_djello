@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchCards } from '../../redux/actions/cards'
 import Card from '../components/Card'
 import { Button, CardBody } from 'reactstrap'
+import { fetchCards } from '../../redux/actions/cards'
 
 const mapStateToProps = state => {
    return {

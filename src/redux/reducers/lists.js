@@ -26,6 +26,13 @@ export function listsById(state = {}, action) {
 				...state,
 				[list.list.id]: list.list,
 			}
+		case c.EDIT_LIST_SUCCESS:
+			const editedList = { ...action.payload.list }
+
+			return {
+				...state,
+				[editedList.id]: editedList,
+			}
 		default:
 			return state
 	}
@@ -73,10 +80,36 @@ export function listUi(state = initialUiState, action) {
 				isFetching: false,
 				error: action.payload.error,
 			}
+		case c.CREATE_LIST_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+		case c.CREATE_LIST_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+			}
 		case c.CREATE_LIST_FAILURE:
 			return {
 				...state,
 				error: action.payload.error,
+			}
+		case c.EDIT_LIST_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+		case c.EDIT_LIST_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+			}
+		case c.EDIT_LIST_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error
 			}
 		default:
 			return state

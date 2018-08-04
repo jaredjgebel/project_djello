@@ -89,7 +89,7 @@ function createListFailure(error) {
 	}
 }
 
-export function createList(boardId, title, description) {
+export function createList(boardId, title = "", description = "") {
 	return (dispatch, getState) => {
 		dispatch(createListRequest(boardId))
 
@@ -115,6 +115,67 @@ export function createList(boardId, title, description) {
 			})
 			.catch(err => {
 				dispatch(createListFailure(err))
+			})
+	}
+}
+
+function editListRequest(listId) {
+	return {
+		type: c.EDIT_LIST_REQUEST,
+		payload: {
+			listId,
+		}
+	}
+}
+
+function editListSuccess(list) {
+	return {
+		type: c.EDIT_LIST_SUCCESS,
+		payload: {
+			list,
+		}
+	}
+}
+
+function editListFailure(error) {
+	return {
+		type: c.EDIT_LIST_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function editList(listId, boardId, title = "", description = "") {
+	console.log(listId, boardId, title, description)
+	return (dispatch, getState) => {
+		dispatch(editListRequest(listId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/lists/${listId}?title=${title}&description=${description}`, {
+			method: "PUT",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(list => {
+				return dispatch(editListSuccess(list))
+			})
+			.then(() => {
+				dispatch(fetchLists(boardId))
+			})
+			.catch(err => {
+				dispatch(editListFailure(err))
 			})
 	}
 }

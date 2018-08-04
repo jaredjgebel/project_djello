@@ -5,7 +5,7 @@ import { fetchLists } from '../../redux/actions/lists'
 import List from '../components/List'
 import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
-import { Button, CardDeck, Container, } from 'reactstrap'
+import { CardDeck, Container, } from 'reactstrap'
 
 const mapStateToProps = state => {
    return {
@@ -44,7 +44,8 @@ class ListContainer extends Component {
 
       const listElements = []
       if (listIds.length !== 0) {
-
+         console.log('lists', lists)
+         console.log('listIds', listIds)
          listIds.map(id => {
             listElements.push(
                <List

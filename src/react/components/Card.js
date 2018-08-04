@@ -26,10 +26,16 @@ class Card extends Component {
          <div>
             <RsCard>
                <ul>
-                  <li><CardText>{title}</CardText></li>
+                  <li>
+                     <CardText>
+                        {title}
+                     </CardText>
+                  </li>
                   <ul>
                      <li>
-                        <CardText>{description}</CardText>
+                        <CardText>
+                           {description}
+                        </CardText>
                      </li>
                   </ul>
                </ul>
@@ -38,6 +44,8 @@ class Card extends Component {
                   <small className="card-update text-muted float-left align-bottom">
                      Updated at {updatedAt}
                   </small>
+                  <Button className="float-right">Delete Card</Button>
+                  <Button className="float-right">Edit Card</Button>
                   <Button className="float-right" onClick={this.onDetailsClick}>Show Details</Button>
                </div>
 

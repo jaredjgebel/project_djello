@@ -35,7 +35,11 @@ const Board = ({ current }) => {
                action="Edit Board"
                header="Edit Board"
             >
-               <BoardFormContainer boardId={current.id} />
+               <BoardFormContainer 
+                  boardId={current.id} 
+                  boardTitle={current.title}
+                  boardDescription={current.description}
+               />
             </ModalContainer>
 
             <ModalContainer
