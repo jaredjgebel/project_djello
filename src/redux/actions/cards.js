@@ -174,3 +174,64 @@ export function editCard(cardId, title, description) {
 			})
 	}
 }
+
+function deleteCardRequest(listId, cardId) {
+	return {
+		type: c.DELETE_CARD_REQUEST,
+		payload: {
+			listId,
+			cardId,
+		}
+	}
+}
+
+function deleteCardSuccess(list) {
+	return {
+		type: c.DELETE_CARD_SUCCESS,
+		payload: {
+			list,
+		}
+	}
+}
+
+function deleteCardFailure(error) {
+	return {
+		type: c.DELETE_CARD_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function deleteCard(listId, cardId) {
+	return (dispatch, getState) => {
+		dispatch(deleteCardRequest(listId, cardId))
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/lists/${listId}/cards/${cardId}`, {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(list => {
+				return dispatch(deleteCardSuccess(list))
+			})
+			.then(() => {
+				dispatch(fetchCards(listId))
+			})
+			.catch(err => {
+				dispatch(deleteCardFailure(err))
+			})
+	}
+}

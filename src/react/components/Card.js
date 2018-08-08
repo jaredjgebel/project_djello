@@ -21,42 +21,51 @@ class Card extends Component {
    render() {
       const { cardId, title, description, updatedAt } = this.props
       const visibleHistory = this.state.visibleHistory
+      const parsedDate = updatedAt.slice(0, 10)
+      const parsedTime = updatedAt.slice(11, 16)
 
       return (
          <div>
             <RsCard>
-               <ul>
-                  <li>
-                     <CardText>
-                        {title}
-                     </CardText>
-                  </li>
+               <div className="card-interior">
                   <ul>
                      <li>
                         <CardText>
-                           {description}
+                           {title}
                         </CardText>
                      </li>
+                     <ul>
+                        <li>
+                           <CardText>
+                              {description}
+                           </CardText>
+                        </li>
+                     </ul>
                   </ul>
-               </ul>
 
-               <div className="card-details clearfix">
-                  <small className="card-update text-muted float-left align-bottom">
-                     Updated at {updatedAt}
-                  </small>
-                  <Button className="float-right">Delete Card</Button>
-                  <Button className="float-right">Edit Card</Button>
-                  <Button className="float-right" onClick={this.onDetailsClick}>Show Details</Button>
+                  <div className="card-details clearfix">
+                     <div className="card-update float-left align-bottom">
+                        <small className="text-muted" >Updated at {parsedTime} on {parsedDate}</small>
+                     </div>
+                     <Button className="float-right">Delete Card</Button>
+                     <Button className="float-right">Edit Card</Button>
+                     <Button className="float-right" onClick={this.onDetailsClick}>
+                        {visibleHistory ? "Hide Details" : "Show Details"}
+                     </Button>
+                  </div>
+
+                  {visibleHistory ?
+                     <div>
+                        <HistoryContainer
+                           cardId={cardId}
+                        />
+                        <AssigneesContainer
+                           cardId={cardId}
+                        />
+                     </div> : null
+                  }
+
                </div>
-
-               <AssigneesContainer
-                  cardId={cardId}
-               />
-
-               {visibleHistory && <HistoryContainer
-                  cardId={cardId}
-               />
-               }
             </RsCard>
 
          </div>

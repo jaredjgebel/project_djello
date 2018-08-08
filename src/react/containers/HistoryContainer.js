@@ -54,6 +54,7 @@ class HistoryContainer extends Component {
 
          return (
             <div>
+               <h6>History</h6>
                {historyElements}
             </div>
          )

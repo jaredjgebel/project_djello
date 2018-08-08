@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import '../stylesheets/Assignee.css'
 
 const Assignee = ({ assignee }) => {
    return (
-      <div>
-         <img src={assignee.photo} className="assignee-photo" />
+      <div className="assignee">
+         <img src={assignee.photo} className="assignee-photo" style={{ height: "75px", width: "75px" }} />
          <p>{assignee.first}</p>
          <p>{assignee.last}</p>
 

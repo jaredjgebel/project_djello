@@ -31,7 +31,7 @@ class BoardContainer extends Component {
       const { isFetching } = this.props
       if (isFetching) {
          return (
-            <div>
+            <div className="board-loading">
                <p>Loading boards.</p>
             </div>
          )

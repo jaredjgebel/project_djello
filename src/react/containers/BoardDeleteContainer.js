@@ -43,7 +43,7 @@ class BoardDeleteContainer extends Component {
 				<button
 					type="submit"
 					onClick={this.handleSubmit}
-					className="btn btn-warning"
+					className="btn btn-danger"
 				>
 					Delete Board
          </button>

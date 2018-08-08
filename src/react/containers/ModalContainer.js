@@ -31,7 +31,7 @@ class ModalContainer extends Component {
 
       return (
          <div>
-            <Button color="primary" onClick={this.toggle}>{this.props.action}</Button>
+            <Button color="primary" onClick={this.toggle}>{this.props.button}</Button>
             <Modal
                isOpen={this.state.modal}
                toggle={this.toggle}
@@ -46,7 +46,7 @@ class ModalContainer extends Component {
                </ModalBody>
 
                <ModalFooter>
-                  <Button color="danger" onClick={this.toggle}>Cancel</Button>
+                  <Button color="warning" onClick={this.toggle}>Cancel</Button>
                </ModalFooter>
             </Modal>
          </div>

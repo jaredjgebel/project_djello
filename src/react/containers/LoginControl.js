@@ -23,7 +23,7 @@ class LoginControl extends Component {
 
       return (
          <div>
-            <Navbar fluid="true">
+            <Navbar fluid="true" fixed="top" dark={true}>
                <NavbarBrand>
                   Djello Task Management
                </NavbarBrand>

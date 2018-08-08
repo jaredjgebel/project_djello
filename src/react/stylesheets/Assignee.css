@@ -1,0 +1,15 @@
+.assignee-elements {
+   display: flex;
+   flex-direction: row;
+}
+
+.assignee {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 5px 5px 5px 5px;
+}
+
+.assignee p {
+   margin: 0px 0px 0px 0px;
+}

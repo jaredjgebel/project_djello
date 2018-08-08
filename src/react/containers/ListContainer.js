@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchLists } from '../../redux/actions/lists'
 import List from '../components/List'
-import ModalContainer from '../containers/ModalContainer'
-import ListFormContainer from '../containers/ListFormContainer'
 import { CardDeck, Container, } from 'reactstrap'
 
 const mapStateToProps = state => {
@@ -62,12 +60,6 @@ class ListContainer extends Component {
          <div>
             <Container fluid>
                <CardDeck>
-                  <ModalContainer
-                     action="New List"
-                     header="New List"
-                  >
-                     <ListFormContainer />
-                  </ModalContainer>
                   {listElements === [] ? 'No lists yet. Create a new one!' : listElements}
                </CardDeck>
             </Container>

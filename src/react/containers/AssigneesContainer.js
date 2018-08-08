@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Assignee from '../components/Assignee'
 import { Button } from 'reactstrap'
+import '../stylesheets/Assignee.css'
 
 const mapStateToProps = state => {
    return {
@@ -40,9 +41,11 @@ class AssigneeContainer extends Component {
 
       return (
          <div>
-            <p style={{ fontWeight: "bold" }}>Assigned to Card</p>
-            {assigneeElements}
-            <Button>Add Assignee To Card</Button>
+            <h6>Assigned to Card</h6>
+            <div className="assignee-elements">
+               {assigneeElements}
+            </div>
+            <Button className="float-right">Add Assignee To Card</Button>
          </div>
       )
    }

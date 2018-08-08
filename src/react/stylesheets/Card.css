@@ -1,3 +1,11 @@
+.card {
+   background-color: rgba(255,255,255,0.6);
+}
+
+.card-interior {
+   padding: 1rem;
+}
+
 .card-details {
    padding: .5rem;
 }
