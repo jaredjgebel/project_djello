@@ -71,11 +71,12 @@ function createListRequest(boardId) {
 	}
 }
 
-function createListSuccess(list) {
+function createListSuccess(response) {
 	return {
 		type: c.CREATE_LIST_SUCCESS,
 		payload: {
-			list,
+			list: response.list,
+			board: response.board,
 		}
 	}
 }
@@ -110,8 +111,11 @@ export function createList(boardId, title = "", description = "") {
 
 				return response.json()
 			})
-			.then(json => {
-				dispatch(createListSuccess(json))
+			.then(response => {
+				return dispatch(createListSuccess(response))
+			})
+			.then(() => {
+				dispatch(fetchLists(boardId))
 			})
 			.catch(err => {
 				dispatch(createListFailure(err))

@@ -21,6 +21,16 @@ function cardsById(state = {}, action) {
 			}, { ...state })
 
 			return obj
+
+		case c.CREATE_CARD_SUCCESS:
+			const card = { ...action.payload.card }
+			console.log('card', card)
+
+			return {
+				...state,
+				[card.card.id]: card.card,
+			}
+
 		default:
 			return state
 	}
@@ -40,6 +50,12 @@ function allCardIds(state = [], action) {
 			const unique = [...new Set([...state, ...newCardIds])]
 
 			return unique
+
+		case c.CREATE_CARD_SUCCESS:
+			const cardId = action.payload.card && action.payload.card.card && action.payload.card.card.id
+
+			return [...state, cardId]
+
 		default:
 			return state
 	}
@@ -57,17 +73,39 @@ function cardsUi(state = initialUiState, action) {
 				...state,
 				isFetching: true,
 			}
+
 		case c.FETCH_CARDS_SUCCESS:
 			return {
 				...state,
 				isFetching: false,
 			}
+
 		case c.FETCH_CARDS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
 				error: action.payload.error,
 			}
+
+		case c.CREATE_CARD_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
+		case c.CREATE_BOARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+			}
+
+		case c.CREATE_CARD_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error,
+			}
+
 		default:
 			return state
 	}

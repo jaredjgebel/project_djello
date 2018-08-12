@@ -63,7 +63,7 @@ export function fetchCards(listId) {
 
 function createCardRequest(listId) {
 	return {
-		type: c.CREATE_LIST_REQUEST,
+		type: c.CREATE_CARD_REQUEST,
 		payload: {
 			listId,
 		}
@@ -110,7 +110,10 @@ export function createCard(listId, title, description) {
 				return response.json()
 			})
 			.then(json => {
-				dispatch(createCardSuccess(json))
+				return dispatch(createCardSuccess(json))
+			})
+			.then(() => {
+				dispatch(fetchCards(listId))
 			})
 			.catch(err => {
 				dispatch(createCardFailure(err))

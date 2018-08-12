@@ -69,7 +69,6 @@ router.get('/users/:user_id/boards', checkJwt, (req, res) => {
 
 	getUserBoards(userId)
 		.then(boards => {
-			console.log('BOARDS', boards)
 			if (boards) {
 				res.status(200).json(boards);
 			} else {

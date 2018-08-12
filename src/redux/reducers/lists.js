@@ -19,13 +19,15 @@ export function listsById(state = {}, action) {
 			}, { ...state })
 
 			return obj
+
 		case c.CREATE_LIST_SUCCESS:
 			const list = { ...action.payload.list }
 
 			return {
 				...state,
-				[list.list.id]: list.list,
+				[list.id]: list,
 			}
+
 		case c.EDIT_LIST_SUCCESS:
 			const editedList = { ...action.payload.list }
 
@@ -33,6 +35,7 @@ export function listsById(state = {}, action) {
 				...state,
 				[editedList.id]: editedList,
 			}
+
 		case c.DELETE_LIST_SUCCESS:
 			const deletedListId = action.payload.listId
 
@@ -48,21 +51,24 @@ export function listsById(state = {}, action) {
 export function allIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_LISTS_SUCCESS:
-			const lists = action.payload && action.payload.lists
-
-			if (lists === [] || !lists) {
+			if (!action.payload.lists) {
 				return []
 			}
 
+			const lists = [...action.payload.lists]
+
 			return lists.map(list => list.id)
+
 		case c.CREATE_LIST_SUCCESS:
-			const listId = action.payload.list && action.payload.list.list && action.payload.list.list.id
+			const listId = action.payload.list && action.payload.list.id
 
 			return [...state, listId]
+
 		case c.DELETE_LIST_SUCCESS:
 			const listIds = action.payload.board && action.payload.board.ListIds
 
 			return listIds
+
 		default:
 			return state
 	}

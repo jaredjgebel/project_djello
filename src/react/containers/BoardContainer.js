@@ -9,6 +9,7 @@ const mapStateToProps = state => {
       userId: state.users.id,
       current: state.boards.ui && state.boards.ui.current,
       isFetching: state.boards.ui && state.boards.ui.isFetching,
+      listIds: state.lists.allIds,
    }
 }
 
@@ -16,7 +17,7 @@ const mapDispatchToProps = dispatch => {
    return {
       fetchBoards: (userId) => {
          dispatch(fetchBoards(userId))
-      }
+      },
    }
 }
 
@@ -28,23 +29,24 @@ class BoardContainer extends Component {
    }
 
    render() {
-      const { isFetching } = this.props
+      const { isFetching, listIds } = this.props
+      console.log('listIds', listIds)
       if (isFetching) {
          return (
             <div className="board-loading">
-               <p>Loading boards.</p>
-            </div>
-         )
-      } else {
-         const { current } = this.props
-         return (
-            <div>
-               <Board
-                  current={current}
-               />
+               <p>Loading lists.</p>
             </div>
          )
       }
+
+      const { current } = this.props
+      return (
+         <div>
+            <Board
+               current={current}
+            />
+         </div>
+      )
    }
 }
 

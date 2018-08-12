@@ -24,6 +24,7 @@ const Board = ({ current }) => {
                <div className="board-menu-background">
                </div>
                <Row className="board-menu">
+                  {/* <div > */}
                   <Col xs="12" sm="6">
                      <div className="board-title">
                         <h3>{current.title}</h3>
@@ -65,6 +66,7 @@ const Board = ({ current }) => {
                         </ButtonGroup>
                      </div>
                   </Col>
+                  {/* </div> */}
                </Row>
             </div>
             <Row xs="12">

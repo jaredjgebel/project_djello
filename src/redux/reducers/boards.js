@@ -25,6 +25,7 @@ export function boardsById(state = {}, action) {
 				...state,
 				[board.board.id]: board.board,
 			}
+
 		case c.EDIT_BOARD_SUCCESS:
 			const editedBoard = { ...action.payload.board }
 
