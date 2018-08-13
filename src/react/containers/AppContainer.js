@@ -50,6 +50,6 @@ export default connect(
 )(AppContainer)
 
 AppContainer.propTypes = {
-   userId: PropTypes.number.isRequired,
-   fetchUserByToken: PropTypes.func.isRequired,
+   userId: PropTypes.number,
+   fetchUserByToken: PropTypes.func,
 }

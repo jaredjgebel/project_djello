@@ -188,11 +188,12 @@ function deleteCardRequest(listId, cardId) {
 	}
 }
 
-function deleteCardSuccess(list) {
+function deleteCardSuccess(list, cardId) {
 	return {
 		type: c.DELETE_CARD_SUCCESS,
 		payload: {
 			list,
+			cardId,
 		}
 	}
 }
@@ -228,7 +229,7 @@ export function deleteCard(listId, cardId) {
 				return response.json()
 			})
 			.then(list => {
-				return dispatch(deleteCardSuccess(list))
+				return dispatch(deleteCardSuccess(list, cardId))
 			})
 			.then(() => {
 				dispatch(fetchCards(listId))

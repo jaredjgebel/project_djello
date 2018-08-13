@@ -28,6 +28,8 @@ class CardFormContainer extends Component {
 	handleSubmit(e) {
 		e.preventDefault()
 
+		const { action, listId } = this.props
+
 		const title = this.title.current.value
 		const description = this.description.current.value
 
@@ -39,7 +41,8 @@ class CardFormContainer extends Component {
 
 		if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
 			// dispatch action
-			this.props.createCard(this.props.listId, title, description)
+			if (action === "New Card")
+				this.props.createCard(listId, title, description)
 			// close modal ????
 			// this.props.toggle()
 		}
@@ -77,7 +80,7 @@ class CardFormContainer extends Component {
 				<button
 					type="submit"
 					onClick={this.handleSubmit}
-					className="btn btn-primary"
+					className="btn btn-primary float-right"
 				>
 					Submit Card
                </button>

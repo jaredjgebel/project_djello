@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import Assignee from '../components/Assignee'
 import { Button } from 'reactstrap'
 import '../stylesheets/Assignee.css'
+import { getAllAssignees } from '../../redux/selectors/assigneeSelectors';
+import { getAllCards } from '../../redux/selectors/cardSelectors';
 
 const mapStateToProps = state => {
    return {
-      assignees: state.assignees,
-      cards: state.cards,
+      assignees: getAllAssignees(state),
+      cards: getAllCards(state),
    }
 }
 

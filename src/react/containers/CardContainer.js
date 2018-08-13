@@ -53,6 +53,7 @@ class CardContainer extends Component {
                         description={cardsById[id].description}
                         updatedAt={cardsById[id].updatedAt}
                         cardId={id}
+                        listId={listId}
                      />
                   </CardBody>
                )

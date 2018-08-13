@@ -7,7 +7,7 @@ import { getBoardId } from '../../redux/selectors/boardSelectors';
 
 const mapStateToProps = state => {
    return {
-      boardId: getBoardId(state) 
+      boardId: getBoardId(state)
    }
 }
 

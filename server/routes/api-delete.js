@@ -35,7 +35,7 @@ router.delete('/boards/:board_id/lists/:list_id', checkJwt, (req, res) => {
 		});
 });
 
-router.delete('lists/:list_id/cards/:card_id', checkJwt, (req, res) => {
+router.delete('/lists/:list_id/cards/:card_id', checkJwt, (req, res) => {
 	const cardId = req.params.card_id;
 	const listId = req.params.list_id;
 

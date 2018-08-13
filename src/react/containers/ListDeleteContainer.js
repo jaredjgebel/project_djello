@@ -22,14 +22,7 @@ const mapDispatchToProps = dispatch => {
 class ListDeleteContainer extends Component {
 	constructor() {
 		super()
-		this.state = {
-			titleFeedback: null,
-			descriptonFeedback: null,
-		}
-
 		this.handleSubmit = this.handleSubmit.bind(this)
-		this.title = React.createRef()
-		this.description = React.createRef()
 	}
 
 	handleSubmit(e) {

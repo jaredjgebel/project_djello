@@ -31,6 +31,13 @@ function cardsById(state = {}, action) {
 				[card.card.id]: card.card,
 			}
 
+		case c.DELETE_CARD_SUCCESS:
+			const deletedCardId = action.payload.cardId
+
+			let copy = Object.assign({}, state)
+			delete copy[deletedCardId]
+
+			return copy
 		default:
 			return state
 	}
@@ -56,6 +63,10 @@ function allCardIds(state = [], action) {
 
 			return [...state, cardId]
 
+		case c.DELETE_CARD_SUCCESS:
+			const cardIds = action.payload.list && action.payload.list.CardIds
+
+			return cardIds
 		default:
 			return state
 	}
@@ -104,6 +115,25 @@ function cardsUi(state = initialUiState, action) {
 				...state,
 				isFetching: false,
 				error: action.payload.error,
+			}
+
+		case c.DELETE_CARD_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
+		case c.DELETE_CARD_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error,
+			}
+
+		case c.DELETE_CARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
 			}
 
 		default:

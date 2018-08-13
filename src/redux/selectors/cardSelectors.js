@@ -2,6 +2,8 @@ export const areCardsFetching = state => {
    return state.cards && state.cards.ui && state.cards.ui.isFetching
 }
 
+export const getAllCards = state => (state.cards)
+
 export const getCards = state => {
    return state.cards && state.cards.byId
 }

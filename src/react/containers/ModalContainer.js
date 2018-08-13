@@ -31,7 +31,7 @@ class ModalContainer extends Component {
 
       return (
          <div>
-            <Button color="primary" onClick={this.toggle}>{this.props.button}</Button>
+            <Button color="primary" onClick={this.toggle} className={this.props.buttonClasses}>{this.props.button}</Button>
             <Modal
                isOpen={this.state.modal}
                toggle={this.toggle}

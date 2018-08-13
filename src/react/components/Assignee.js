@@ -15,3 +15,7 @@ const Assignee = ({ assignee }) => {
 
 export default Assignee
 
+Assignee.propTypes = {
+   assignee: PropTypes.object
+}
+

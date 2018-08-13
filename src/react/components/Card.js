@@ -4,6 +4,9 @@ import { CardText, Card as RsCard, Button, } from 'reactstrap'
 import '../stylesheets/Card.css'
 import HistoryContainer from '../containers/HistoryContainer'
 import AssigneesContainer from '../containers/AssigneesContainer'
+import ModalContainer from '../containers/ModalContainer'
+import CardFormContainer from '../containers/CardFormContainer'
+import CardDeleteContainer from '../containers/CardDeleteContainer'
 
 class Card extends Component {
    constructor() {
@@ -19,7 +22,7 @@ class Card extends Component {
    }
 
    render() {
-      const { cardId, title, description, updatedAt } = this.props
+      const { cardId, title, description, updatedAt, listId } = this.props
       const visibleHistory = this.state.visibleHistory
       const parsedDate = updatedAt.slice(0, 10)
       const parsedTime = updatedAt.slice(11, 16)
@@ -47,8 +50,31 @@ class Card extends Component {
                      <div className="card-update float-left align-bottom">
                         <small className="text-muted" >Updated at {parsedTime} on {parsedDate}</small>
                      </div>
-                     <Button className="float-right">Delete Card</Button>
-                     <Button className="float-right">Edit Card</Button>
+
+                     <ModalContainer
+                        action="Delete Card"
+                        header="Delete Card"
+                        button="Delete Card"
+                        buttonClasses="float-right btn-secondary"
+                     >
+                        <CardDeleteContainer
+                           cardId={cardId}
+                           listId={listId}
+                        />
+                     </ModalContainer>
+
+
+                     <ModalContainer
+                        action="Edit Card"
+                        header="Edit Card"
+                        button="Edit Card"
+                        buttonClasses="float-right btn-secondary"
+                     >
+                        <CardFormContainer
+                           cardId={cardId}
+                        />
+                     </ModalContainer>
+
                      <Button className="float-right" onClick={this.onDetailsClick}>
                         {visibleHistory ? "Hide Details" : "Show Details"}
                      </Button>
