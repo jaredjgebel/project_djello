@@ -24,7 +24,6 @@ function cardsById(state = {}, action) {
 
 		case c.CREATE_CARD_SUCCESS:
 			const card = { ...action.payload.card }
-			console.log('card', card)
 
 			return {
 				...state,
@@ -38,6 +37,7 @@ function cardsById(state = {}, action) {
 			delete copy[deletedCardId]
 
 			return copy
+
 		default:
 			return state
 	}

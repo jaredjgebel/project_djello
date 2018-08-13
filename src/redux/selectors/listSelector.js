@@ -9,3 +9,7 @@ export const getLists = state => {
 export const getListIds = state => {
    return state.lists && state.lists.allIds
 }
+
+export const getVisibleListIds = state => {
+   return state.boards && state.boards.ui && state.boards.ui.current && state.boards.ui.current.ListIds
+}

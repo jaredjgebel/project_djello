@@ -70,11 +70,12 @@ function createCardRequest(listId) {
 	}
 }
 
-function createCardSuccess(card) {
+function createCardSuccess(card, listId) {
 	return {
 		type: c.CREATE_CARD_SUCCESS,
 		payload: {
 			card,
+			listId,
 		}
 	}
 }
@@ -110,7 +111,7 @@ export function createCard(listId, title, description) {
 				return response.json()
 			})
 			.then(json => {
-				return dispatch(createCardSuccess(json))
+				return dispatch(createCardSuccess(json, listId))
 			})
 			.then(() => {
 				dispatch(fetchCards(listId))

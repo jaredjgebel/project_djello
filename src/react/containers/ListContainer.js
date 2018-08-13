@@ -8,14 +8,16 @@ import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
 import array from 'lodash/array'
 import { getBoardId } from '../../redux/selectors/boardSelectors';
-import { areListsFetching, getLists, getListIds } from '../../redux/selectors/listSelector';
+import { areListsFetching, getLists, getVisibleListIds } from '../../redux/selectors/listSelector';
 
 const mapStateToProps = state => {
    return {
       boardId: getBoardId(state),
       isFetching: areListsFetching(state),
       lists: getLists(state),
-      listIds: getListIds(state),
+      // note listIds variable here contains the 
+      // list ids only for the given board
+      listIds: getVisibleListIds(state),
    }
 }
 
@@ -29,14 +31,15 @@ const mapDispatchToProps = dispatch => {
 
 class ListContainer extends Component {
    componentDidMount() {
-      if (this.props.boardId) {
-         this.props.fetchLists(this.props.boardId)
+      const { boardId, fetchLists } = this.props
+      if (boardId) {
+         fetchLists(boardId)
       }
    }
 
    componentDidUpdate(prevProps) {
       const { boardId, fetchLists, listIds } = this.props
-      console.log('difference', array.difference(listIds, prevProps.listIds))
+      // console.log('difference', array.difference(listIds, prevProps.listIds))
 
       if (array.difference(listIds, prevProps.listIds).length !== 0) {
          fetchLists(boardId)
@@ -50,8 +53,9 @@ class ListContainer extends Component {
          return (
             <p>Retrieving list data.</p>
          )
-
-      } else if (!isFetching && listIds === []) {
+         // not working because all list Ids stored
+         // check to see if current board has any listIds
+      } else if (!isFetching && !listIds) {
          return (
             <div>
                <p>No lists yet. Create a new one!</p>
@@ -64,7 +68,7 @@ class ListContainer extends Component {
                </ModalContainer>
             </div>
          )
-         
+
       } else {
          const { lists } = this.props
 

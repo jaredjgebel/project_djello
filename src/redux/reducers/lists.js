@@ -43,6 +43,21 @@ export function listsById(state = {}, action) {
 			delete copy[deletedListId]
 
 			return copy
+
+		// update List.CardIds on creation of new card
+		case c.CREATE_CARD_SUCCESS:
+			const cardId = action.payload.card && action.payload.card.card && action.payload.card.card.id
+
+			const listId = action.payload.listId
+
+			return {
+				...state,
+				[listId]: {
+					...state[listId],
+					CardIds: state[listId].CardIds.concat(cardId)
+				}
+			}
+
 		default:
 			return state
 	}
