@@ -7,7 +7,7 @@ export function listsById(state = {}, action) {
 			const lists = action.payload && action.payload.lists
 
 			if (lists === [] || !lists) {
-				return {}
+				return state
 			}
 
 			const obj = lists.reduce((acc, list) => {
@@ -67,7 +67,7 @@ export function allIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_LISTS_SUCCESS:
 			if (!action.payload.lists) {
-				return []
+				return state
 			}
 
 			const lists = [...action.payload.lists]

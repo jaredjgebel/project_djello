@@ -7,7 +7,7 @@ function cardsById(state = {}, action) {
 			const cards = action.payload && action.payload.cards
 
 			if (cards === [] || !cards) {
-				return {}
+				return state
 			}
 
 			const obj = cards.reduce((acc, card) => {
@@ -49,7 +49,7 @@ function allCardIds(state = [], action) {
 			const cards = action.payload && action.payload.cards
 
 			if (cards === [] || !cards) {
-				return []
+				return state
 			}
 
 			const newCardIds = cards.map(card => card.card.id)

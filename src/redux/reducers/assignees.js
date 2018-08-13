@@ -7,7 +7,7 @@ function assigneesById(state = {}, action) {
 			const cards = action.payload && action.payload.cards
 
 			if (cards === [] || !cards) {
-				return {}
+				return state
 			}
 
 			const assignees = []
@@ -43,7 +43,7 @@ function allAssigneeIds(state = [], action) {
 			const cards = action.payload && action.payload.cards
 
 			if (cards === [] || !cards) {
-				return {}
+				return state
 			}
 
 			const assignees = [...state]

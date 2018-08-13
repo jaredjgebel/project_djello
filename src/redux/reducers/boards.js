@@ -50,7 +50,7 @@ export function boardsById(state = {}, action) {
 export function allIds(state = [], action) {
 	switch (action.type) {
 		case c.FETCH_BOARDS_SUCCESS:
-			const boards = [...state, ...action.payload.boards]
+			const boards = [...action.payload.boards]
 			return boards.map(board => board.id)
 
 		case c.CREATE_BOARD_SUCCESS:

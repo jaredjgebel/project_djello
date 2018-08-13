@@ -47,14 +47,16 @@ class ListContainer extends Component {
    }
 
    render() {
-      const { isFetching, listIds } = this.props
+      const { isFetching, listIds, boardId, lists } = this.props
 
-      if (isFetching) {
+      console.log('LISTIDS', listIds)
+      console.log('LISTS', lists)
+
+      if (isFetching || !boardId || lists === {}) {
          return (
             <p>Retrieving list data.</p>
          )
-         // not working because all list Ids stored
-         // check to see if current board has any listIds
+
       } else if (!isFetching && !listIds) {
          return (
             <div>
@@ -70,10 +72,11 @@ class ListContainer extends Component {
          )
 
       } else {
-         const { lists } = this.props
+         const { lists, listIds } = this.props
 
          const listElements = []
          if (listIds && listIds.length !== 0) {
+
             listIds.map(id => {
                listElements.push(
                   <List
