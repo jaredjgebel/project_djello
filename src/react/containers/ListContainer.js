@@ -7,13 +7,15 @@ import { CardDeck, Container, } from 'reactstrap'
 import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
 import array from 'lodash/array'
+import { getBoardId } from '../../redux/selectors/boardSelectors';
+import { areListsFetching, getLists, getListIds } from '../../redux/selectors/listSelector';
 
 const mapStateToProps = state => {
    return {
-      boardId: state.boards.ui.current && state.boards.ui.current.id,
-      isFetching: state.lists.ui.isFetching,
-      lists: state.lists && state.lists.byId,
-      listIds: state.lists.allIds,
+      boardId: getBoardId(state),
+      isFetching: areListsFetching(state),
+      lists: getLists(state),
+      listIds: getListIds(state),
    }
 }
 
@@ -43,12 +45,12 @@ class ListContainer extends Component {
 
    render() {
       const { isFetching, listIds } = this.props
-      console.log('listIds', listIds)
-      console.log('isFetching', isFetching)
+
       if (isFetching) {
          return (
             <p>Retrieving list data.</p>
          )
+
       } else if (!isFetching && listIds === []) {
          return (
             <div>
@@ -62,6 +64,7 @@ class ListContainer extends Component {
                </ModalContainer>
             </div>
          )
+         
       } else {
          const { lists } = this.props
 
@@ -102,4 +105,5 @@ ListContainer.propTypes = {
    isFetching: PropTypes.bool,
    lists: PropTypes.object,
    listIds: PropTypes.array,
+   fetchLists: PropTypes.func,
 }

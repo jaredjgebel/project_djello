@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchTokenAndUser } from '../../redux/actions/user'
 import App from '../components/App'
 import Auth from '../../auth/Auth'
 import { KJUR } from 'jsrsasign'
-
-const port = process.env.PORT || 5000;
-const host = 'localhost';
-const apiUrl = `http://${host}:${port}/api/v1`
+import { fetchTokenAndUser } from '../../redux/actions/user'
+import { getUserId } from '../../redux/selectors/userSelectors'
 
 const auth = new Auth();
 
@@ -20,7 +17,7 @@ const handleAuthentication = (nextState, replace) => {
 
 const mapStateToProps = state => {
    return {
-      userId: state.users.id,
+      userId: getUserId(state),
    }
 }
 
@@ -53,6 +50,6 @@ export default connect(
 )(AppContainer)
 
 AppContainer.propTypes = {
-   userId: PropTypes.number,
-   fetchUserByToken: PropTypes.func,
+   userId: PropTypes.number.isRequired,
+   fetchUserByToken: PropTypes.func.isRequired,
 }

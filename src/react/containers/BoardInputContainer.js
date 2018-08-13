@@ -10,37 +10,15 @@ import {
 } from 'reactstrap'
 import { switchBoards } from '../../redux/actions/boards'
 import { fetchLists } from '../../redux/actions/lists'
+import { getCurrentBoard, getAllBoards, getAllBoardIds, getBoardsById, getBoardNames } from '../../redux/selectors/boardSelectors';
 
 const mapStateToProps = state => {
-   const boards = state.boards
-   const allIds = state.boards && state.boards.allIds
-   const current = state.boards && state.boards.ui && state.boards.ui.current
-   const byId = state.boards && state.boards.byId
-
-   let boardNames
-   // console.log('allids', allIds)
-   // allIds is gaining two undefined values here, not sure why!!
-   const newAllIds = allIds.filter(id => {
-      if (!id) {
-         return false
-      }
-      return true
-   })
-
-
-   if (current === !null) {
-      if (allIds !== [] && byId) {
-         boardNames = allIds.map(id => byId[id].title)
-      } else {
-         boardNames = []
-      }
-   }
-
    return {
-      allIds: newAllIds,
-      boards,
-      boardNames,
-      current,
+      allIds: getAllBoardIds(state),
+      boardNames: getBoardNames(state),
+      current: getCurrentBoard(state),
+      boardsById: getBoardsById(state),
+      boards: getAllBoards(state),
    }
 }
 
@@ -132,8 +110,16 @@ export default connect(
    mapDispatchToProps
 )(BoardInputContainer)
 
+BoardInputContainer.propTypes = {
+   boards: PropTypes.object,
+   allIds: PropTypes.array,
+   current: PropTypes.object,
+   byId: PropTypes.object,
+   boardNames: PropTypes.array,
+}
+
 InputGroup.propTypes = {
    tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
    size: PropTypes.string,
    className: PropTypes.string
-};
+}

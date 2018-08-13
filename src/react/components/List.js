@@ -63,6 +63,7 @@ const List = ({ listId, title, description }) => {
 export default List
 
 List.propTypes = {
+   listId: PropTypes.number,
    title: PropTypes.string,
    description: PropTypes.string,
 }

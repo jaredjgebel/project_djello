@@ -7,11 +7,12 @@ import Callback from './Callback'
 import history from '../../history/history'
 import LoginControl from '../containers/LoginControl'
 import { fetchUser } from '../../redux/actions/user'
+import { getUserId, isFetchingId } from '../../redux/selectors/userSelectors'
 
 const mapStateToProps = state => {
    return {
-      fetchingUserId: state.users.isFetchingId,
-      userId: state.users.id,
+      fetchingUserId: isFetchingId(state),
+      userId: getUserId(state),
    }
 }
 

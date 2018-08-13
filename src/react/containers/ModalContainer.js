@@ -59,4 +59,5 @@ export default ModalContainer
 ModalContainer.propTypes = {
    action: PropTypes.string,
    header: PropTypes.string,
+   button: PropTypes.string,
 }

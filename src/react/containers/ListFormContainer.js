@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
 import { createList, editList } from '../../redux/actions/lists'
+import { getBoardId } from '../../redux/selectors/boardSelectors';
 
 const mapStateToProps = state => {
    return {
-      boardId: state.boards && state.boards.ui && state.boards.ui.current && state.boards.ui.current.id
+      boardId: getBoardId(state) 
    }
 }
 
@@ -106,3 +107,9 @@ export default connect(
    mapStateToProps,
    mapDispatchToProps
 )(ListFormContainer)
+
+ListFormContainer.propTypes = {
+   boardId: PropTypes.number,
+   createList: PropTypes.func,
+   editList: PropTypes.func,
+}

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
 import { deleteBoard } from '../../redux/actions/boards'
+import { getUserId } from '../../redux/selectors/userSelectors';
 
 const mapStateToProps = state => {
 	return {
-		userId: state.users && state.users.id
+		userId: getUserId(state)
 	}
 }
 

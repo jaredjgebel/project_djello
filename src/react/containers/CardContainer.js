@@ -4,13 +4,15 @@ import { connect } from 'react-redux'
 import Card from '../components/Card'
 import { Button, CardBody } from 'reactstrap'
 import { fetchCards } from '../../redux/actions/cards'
+import { areCardsFetching, getCards, getCardIds } from '../../redux/selectors/cardSelectors';
+import { getLists } from '../../redux/selectors/listSelector'
 
 const mapStateToProps = state => {
    return {
-      isFetching: state.cards.ui.isFetching,
-      cardsById: state.cards && state.cards.byId,
-      cardIds: state.cards && state.cards.allIds,
-      lists: state.lists,
+      isFetching: areCardsFetching(state),
+      cardsById: getCards(state),
+      cardIds: getCardIds(state),
+      lists: getLists(state),
    }
 }
 
@@ -43,7 +45,7 @@ class CardContainer extends Component {
          const cardElements = []
 
          cardIds.map(id => {
-            if (lists.byId[listId].CardIds && lists.byId[listId].CardIds.includes(id)) {
+            if (lists[listId].CardIds && lists[listId].CardIds.includes(id)) {
                cardElements.push(
                   <CardBody key={id}>
                      <Card

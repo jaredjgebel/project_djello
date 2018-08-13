@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
 import { createBoard, editBoard } from '../../redux/actions/boards'
+import { getUserId } from '../../redux/selectors/userSelectors'
 
 const mapStateToProps = state => {
    return {
-      userId: state.users && state.users.id
+      userId: getUserId(state)
    }
 }
 
@@ -115,5 +116,6 @@ export default connect(
 
 BoardFormContainer.propTypes = {
    userId: PropTypes.number,
-   createBoard: PropTypes.func,
+   createBoard: PropTypes.func.isRequired,
+   editBoard: PropTypes.func.isRequired,
 }

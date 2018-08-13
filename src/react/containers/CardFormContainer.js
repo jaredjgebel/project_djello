@@ -90,3 +90,8 @@ export default connect(
 	null,
 	mapDispatchToProps
 )(CardFormContainer)
+
+CardFormContainer.propTypes = {
+	listId: PropTypes.number,
+	createCard: PropTypes.func,
+}

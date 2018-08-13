@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchHistories } from '../../redux/actions/histories'
 import History from '../components/History'
+import { areHistoriesFetching, getHistories, getHistoryIds } from '../../redux/selectors/historySelectors'
+import { getCards } from '../../redux/selectors/cardSelectors';
 
 const mapStateToProps = state => {
    return {
-      isFetching: state.histories.ui.isFetching,
-      histories: state.histories && state.histories.byId,
-      historyIds: state.histories && state.histories.allIds,
-      cardsById: state.cards && state.cards.byId,
+      isFetching: areHistoriesFetching(state),
+      histories: getHistories(state),
+      historyIds: getHistoryIds(state),
+      cardsById: getCards(state),
    }
 }
 
@@ -78,4 +80,5 @@ HistoryContainer.propTypes = {
    isFetching: PropTypes.bool,
    histories: PropTypes.object,
    historyIds: PropTypes.array,
+   fetchHistories: PropTypes.func,
 }
