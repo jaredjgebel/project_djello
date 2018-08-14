@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
-import { createCard } from '../../redux/actions/cards'
+import { createCard, editCard } from '../../redux/actions/cards'
 
 const mapDispatchToProps = dispatch => {
 	return {
 		createCard: (listId, title, description) => {
 			dispatch(createCard(listId, title, description))
-		}
+		},
+		editCard: (cardId, title, description) => {
+			dispatch(editCard(cardId, title, description))
+		},
 	}
 }
 
@@ -28,7 +31,7 @@ class CardFormContainer extends Component {
 	handleSubmit(e) {
 		e.preventDefault()
 
-		const { action, listId } = this.props
+		const { action, cardId, listId } = this.props
 
 		const title = this.title.current.value
 		const description = this.description.current.value
@@ -41,10 +44,11 @@ class CardFormContainer extends Component {
 
 		if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
 			// dispatch action
-			if (action === "New Card")
+			if (action === "New Card") {
 				this.props.createCard(listId, title, description)
-			// close modal ????
-			// this.props.toggle()
+			} else if (action === "Edit Card") {
+				this.props.editCard(cardId, title, description)
+			}
 		}
 	}
 

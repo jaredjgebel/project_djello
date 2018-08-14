@@ -30,6 +30,14 @@ function cardsById(state = {}, action) {
 				[card.card.id]: card.card,
 			}
 
+		case c.EDIT_CARD_SUCCESS:
+			const editedCard = action.payload.card
+
+			return {
+				...state,
+				[editedCard.id]: editedCard,
+			}
+
 		case c.DELETE_CARD_SUCCESS:
 			const deletedCardId = action.payload.cardId
 
@@ -62,6 +70,7 @@ function allCardIds(state = [], action) {
 			const cardId = action.payload.card && action.payload.card.card && action.payload.card.card.id
 
 			return [...state, cardId]
+
 
 		case c.DELETE_CARD_SUCCESS:
 			const cardIds = action.payload.list && action.payload.list.CardIds
@@ -115,6 +124,25 @@ function cardsUi(state = initialUiState, action) {
 				...state,
 				isFetching: false,
 				error: action.payload.error,
+			}
+
+		case c.EDIT_CARD_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
+		case c.EDIT_CARD_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error,
+			}
+
+		case c.EDIT_BOARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
 			}
 
 		case c.DELETE_CARD_REQUEST:

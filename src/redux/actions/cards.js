@@ -171,7 +171,10 @@ export function editCard(cardId, title, description) {
 				return response.json()
 			})
 			.then(card => {
-				dispatch(editCardSuccess(card))
+				return dispatch(editCardSuccess(card))
+			})
+			.then(() => {
+				dispatch(fetchCards(listId))
 			})
 			.catch(err => {
 				dispatch(editCardFailure(err))

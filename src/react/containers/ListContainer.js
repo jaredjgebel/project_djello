@@ -73,20 +73,23 @@ class ListContainer extends Component {
 
       } else {
          const { lists, listIds } = this.props
+         let listElements = []
 
-         const listElements = []
          if (listIds && listIds.length !== 0) {
-
-            listIds.map(id => {
-               listElements.push(
-                  <List
+            listElements = listIds.map(id => {
+               if (!lists[id]) {
+                  return null
+               } else {
+                  return <List
                      title={lists[id].title}
                      description={lists[id].description}
                      listId={id}
                      key={id}
                   />
-               )
-            })
+               }
+            });
+
+            array.compact(listElements);
          }
 
          return (

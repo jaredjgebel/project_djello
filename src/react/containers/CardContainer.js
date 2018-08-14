@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Card from '../components/Card'
-import { Button, CardBody } from 'reactstrap'
+import { CardBody } from 'reactstrap'
 import { fetchCards } from '../../redux/actions/cards'
 import { areCardsFetching, getCards, getCardIds } from '../../redux/selectors/cardSelectors';
 import { getLists } from '../../redux/selectors/listSelector'
