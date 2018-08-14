@@ -1,6 +1,4 @@
-const rp = require('request-promise-native');
 const express = require('express');
-const KJUR = require('jsrsasign');
 const router = express.Router();
 const { checkJwt } = require('../auth');
 const {
@@ -14,7 +12,8 @@ const {
 	getCards,
 	getHistory,
 	getHistories,
-	getCardAssignees
+	getCardAssignees,
+	getExampleAssignees,
 } = require('../../src/sequelize/data/get-methods');
 
 // GET current user info
@@ -177,6 +176,20 @@ router.get('/histories/:id', checkJwt, (req, res) => {
 		.catch(err => {
 			console.log(err.stack);
 			res.status(404).json('History not found.');
+		});
+});
+
+// get options for add assignee to card
+router.get('/assignees/:user_id', checkJwt, (req, res) => {
+	const userId = req.params.user_id;
+
+	getExampleAssignees(userId)
+		.then(assignees => {
+			console.log('ASSIGNEES', assignees)
+			res.status(200).json(assignees);
+		})
+		.catch(err => {
+			console.log(err);
 		});
 });
 

@@ -1,2 +1,2 @@
-export const getAllAssignees = state => (state.assignees)
+export const getAllAssignees = state => (state.assignees.byId)
 

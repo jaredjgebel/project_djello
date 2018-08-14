@@ -1,5 +1,5 @@
 import * as c from '../constants'
-const port = process.env.PORT || 5000;
+const port = 5000;
 const host = 'localhost';
 const apiUrl = `http://${host}:${port}/api/v1`
 

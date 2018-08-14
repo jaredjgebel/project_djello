@@ -1,5 +1,6 @@
 import * as c from '../constants'
 import { combineReducers } from 'redux'
+import array from 'lodash/array'
 
 function assigneesById(state = {}, action) {
 	switch (action.type) {
@@ -46,16 +47,58 @@ function allAssigneeIds(state = [], action) {
 				return state
 			}
 
-			const assignees = [...state]
-			cards.forEach((card) => {
-				if (card.assignees !== [] || card.assignees) {
-					const cardAssignees = card.assignees || []
-					const ids = cardAssignees.map(assignee => assignee.id)
-					ids.forEach(id => assignees.concat(id))
+			const assigneeIds = cards.map(card => {
+				if (card.assignees) {
+					return card.assignees.map((assignee => assignee.id))
 				}
 			})
 
-			return assignees
+			return array.compact(assigneeIds)
+
+		// const assignees = [...state]
+		// cards.forEach((card) => {
+		// 	if (card.assignees !== [] || card.assignees) {
+		// 		const cardAssignees = card.assignees || []
+		// 		const ids = cardAssignees.map(assignee => assignee.id)
+		// 		ids.forEach(id => assignees.concat(id))
+		// 	}
+		// })
+
+		// return assignees
+
+		default:
+			return state
+	}
+}
+
+const initState = {
+	isFetching: false,
+	exampleUsers: [],
+	error: null,
+}
+
+function examples(state = initState, action) {
+	switch (action.type) {
+		case c.FETCH_EXAMPLE_USERS_REQUEST:
+			return {
+				...state,
+				isFetching: true,
+			}
+
+		case c.FETCH_EXAMPLE_USERS_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
+				exampleUsers: action.payload.users,
+			}
+
+		case c.FETCH_EXAMPLE_USERS_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.payload.error,
+			}
+
 		default:
 			return state
 	}
@@ -64,4 +107,5 @@ function allAssigneeIds(state = [], action) {
 export const assignees = combineReducers({
 	byId: assigneesById,
 	allIds: allAssigneeIds,
+	examples,
 })

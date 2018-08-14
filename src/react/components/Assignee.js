@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import '../stylesheets/Assignee.css'
 
 const Assignee = ({ assignee }) => {
+   console.log(assignee)
    return (
       <div className="assignee">
          <img src={assignee.photo} className="assignee-photo" style={{ height: "75px", width: "75px" }} />

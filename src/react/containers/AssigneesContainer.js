@@ -5,12 +5,14 @@ import Assignee from '../components/Assignee'
 import { Button } from 'reactstrap'
 import '../stylesheets/Assignee.css'
 import { getAllAssignees } from '../../redux/selectors/assigneeSelectors';
-import { getAllCards } from '../../redux/selectors/cardSelectors';
+import { getCards } from '../../redux/selectors/cardSelectors';
+import ModalContainer from '../containers/ModalContainer'
+import AssigneesFormContainer from '../containers/AssigneesFormContainer'
 
 const mapStateToProps = state => {
    return {
-      assignees: getAllAssignees(state),
-      cards: getAllCards(state),
+      assigneesById: getAllAssignees(state),
+      cardsById: getCards(state),
    }
 }
 
@@ -20,34 +22,38 @@ class AssigneeContainer extends Component {
    }
 
    render() {
-      const { assignees, cardId, cards } = this.props
+      const { assigneesById, cardId, cardsById } = this.props
 
-      const allCardAssignees = cards.byId[cardId].AssigneeIds
+      console.log('cardsById', cardsById)
+      console.log('assigneesById', assigneesById)
+      const allCardAssignees = cardsById[cardId] && cardsById[cardId].AssigneeIds
 
+      let assigneeElements = []
 
-      if (allCardAssignees === []) {
-         return (
-            <div>
-               <p style={{ fontWeight: "bold" }}>Assigned to Card</p>
-               <Button>Add Assignee To Card</Button>
-            </div>
-         )
+      console.log('allCardAssignees', allCardAssignees)
+      if (allCardAssignees) {
+         assigneeElements = allCardAssignees.map(id => (
+            <Assignee
+               assignee={assigneesById[id]}
+               key={id}
+            />
+         ))
       }
-
-      const assigneeElements = allCardAssignees.map(id => (
-         <Assignee
-            assignee={assignees.byId[id]}
-            key={id}
-         />
-      ))
 
       return (
          <div>
             <h6>Assigned to Card</h6>
             <div className="assignee-elements">
-               {assigneeElements}
+               {allCardAssignees !== [] ? assigneeElements : null}
             </div>
-            <Button className="float-right">Add Assignee To Card</Button>
+            <ModalContainer
+               header="Add Assignee To Card"
+               button="Add Assignee To Card"
+
+            >
+               <AssigneesFormContainer />
+               {/* <Button className="float-right">Add Assignee To Card</Button> */}
+            </ModalContainer>
          </div>
       )
    }
@@ -56,3 +62,9 @@ class AssigneeContainer extends Component {
 export default connect(
    mapStateToProps
 )(AssigneeContainer)
+
+AssigneeContainer.propTypes = {
+   assigneesById: PropTypes.object,
+   cardId: PropTypes.number,
+   cardsById: PropTypes.object,
+}

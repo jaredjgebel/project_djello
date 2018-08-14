@@ -174,6 +174,25 @@ const getHistories = async (cardId) => {
    }
 };
 
+const getExampleAssignees = async (userId) => {
+   try {
+      const exampleUsers = await User.findAll({
+         where: {
+            id: {
+               [Op.ne]: userId
+            }
+         },
+         limit: 4,
+      })
+
+      const users = exampleUsers.map(user => (user.dataValues))
+
+      return users
+   } catch (err) {
+      throw new Error(err);
+   }
+};
+
 module.exports = {
    getUser,
    getUserByIdToken,
@@ -186,4 +205,5 @@ module.exports = {
    getHistory,
    getHistories,
    getCardAssignees,
+   getExampleAssignees,
 }
