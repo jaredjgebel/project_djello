@@ -17,22 +17,15 @@ const mapStateToProps = state => {
 }
 
 class AssigneeContainer extends Component {
-   constructor() {
-      super()
-   }
-
    render() {
       const { assigneesById, cardId, cardsById } = this.props
 
-      console.log('cardsById', cardsById)
-      console.log('assigneesById', assigneesById)
       const allCardAssignees = cardsById[cardId] && cardsById[cardId].AssigneeIds
 
       let assigneeElements = []
 
-      console.log('allCardAssignees', allCardAssignees)
       if (allCardAssignees) {
-         assigneeElements = allCardAssignees.map(id => (
+         assigneeElements = allCardAssignees.map((id, i) => (
             <Assignee
                assignee={assigneesById[id]}
                key={id}
@@ -51,8 +44,7 @@ class AssigneeContainer extends Component {
                button="Add Assignee To Card"
 
             >
-               <AssigneesFormContainer />
-               {/* <Button className="float-right">Add Assignee To Card</Button> */}
+               <AssigneesFormContainer cardId={cardId} />
             </ModalContainer>
          </div>
       )

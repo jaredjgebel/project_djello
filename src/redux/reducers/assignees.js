@@ -109,3 +109,20 @@ export const assignees = combineReducers({
 	allIds: allAssigneeIds,
 	examples,
 })
+
+
+// const cards = action.payload && action.payload.cards
+
+// const newAssigneeIds = cards.map(card => {
+// 	let assigneeIds = card.card.AssigneeIds 
+// 	if (assigneeIds === []) return state
+
+// 	return assigneeIds 
+// })
+
+// // const newAssigneeIds = cards.map(card => {
+// // 	return card.assignees.map(assignee => (assignee.id))
+// // })
+
+// array.flatten(newAssigneeIds) 
+// array.compact(newAssigneeIds) 

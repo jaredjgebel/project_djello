@@ -1,0 +1,12 @@
+.border-inset {
+   border-style: inset;
+}
+
+.border {
+   border-width: 3px !important;
+}
+
+.assignee-border {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
