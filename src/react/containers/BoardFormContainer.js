@@ -63,9 +63,11 @@ class BoardFormContainer extends Component {
    }
 
    render() {
-      const titleInvalidDiv = this.state.titleFeedback === "is-invalid" ? <div className="invalid-feedback">Board title must be less than 255 characters.</div> : null
+      const { titleFeedback, descriptionFeedback } = this.state
 
-      const descriptionInvalidDiv = this.state.descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">Board description must be less than 255 characters.</div> : null
+      const titleInvalidDiv = titleFeedback === "is-invalid" ? <div className="invalid-feedback">Board title must be less than 255 characters.</div> : null
+
+      const descriptionInvalidDiv = descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">Board description must be less than 255 characters.</div> : null
 
       const titlePlaceholder = !this.props.boardTitle ? "Title" : this.props.boardTitle
 
@@ -80,7 +82,7 @@ class BoardFormContainer extends Component {
                      name="title"
                      id="boardTitle"
                      placeholder={titlePlaceholder}
-                     className={`form-control ${this.state.titleFeedback}`}
+                     className={`form-control ${titleFeedback}`}
                      ref={this.title}
                   />
                   {titleInvalidDiv}
@@ -91,7 +93,7 @@ class BoardFormContainer extends Component {
                      name="description"
                      id="boardDescription"
                      placeholder={descriptionPlaceholder}
-                     className={`form-control ${this.state.descriptionFeedback}`}
+                     className={`form-control ${descriptionFeedback}`}
                      ref={this.description}
                   />
                   {descriptionInvalidDiv}

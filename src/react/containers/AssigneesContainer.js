@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Assignee from '../components/Assignee'
-import { Button } from 'reactstrap'
 import '../stylesheets/Assignee.css'
 import { getAllAssignees } from '../../redux/selectors/assigneeSelectors';
 import { getCards } from '../../redux/selectors/cardSelectors';
@@ -40,9 +39,8 @@ class AssigneeContainer extends Component {
                {allCardAssignees !== [] ? assigneeElements : null}
             </div>
             <ModalContainer
-               header="Add Assignee To Card"
-               button="Add Assignee To Card"
-
+               header="Add or Remove Assignee To Card"
+               button="Add or Remove Assignee"
             >
                <AssigneesFormContainer cardId={cardId} />
             </ModalContainer>

@@ -82,9 +82,7 @@ class HoverBorder extends Component {
                >
                   {children}
                </div>
-
             </div>
-
          </div>
       )
    }

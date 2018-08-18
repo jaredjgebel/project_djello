@@ -46,6 +46,18 @@ function cardsById(state = {}, action) {
 
 			return copy
 
+		case c.ADD_ASSIGNEE_TO_CARD_SUCCESS:
+			const thisCard = action.payload.card
+			const assigneeId = action.payload.assigneeId
+
+			return {
+				...state,
+				[thisCard.id]: {
+					...state[thisCard.id],
+					AssigneeIds: state[thisCard.id].AssigneeIds.concat([assigneeId])
+				}
+			}
+
 		default:
 			return state
 	}

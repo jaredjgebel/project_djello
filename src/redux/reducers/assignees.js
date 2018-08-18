@@ -33,6 +33,22 @@ function assigneesById(state = {}, action) {
 
 			return obj
 
+		case c.ADD_ASSIGNEE_TO_CARD_SUCCESS:
+			const assigneeId = action.payload.assigneeId
+
+			// if assignee is already in obj
+			if (Object.keys(state).includes(assigneeId)) {
+				return state
+			}
+
+			return {
+				...state,
+				[assigneeId]: {
+					...state[assigneeId],
+
+				}
+			}
+
 		default:
 			return state
 	}
@@ -53,18 +69,16 @@ function allAssigneeIds(state = [], action) {
 				}
 			})
 
-			return array.compact(assigneeIds)
+			return array.compact([...state, ...assigneeIds])
 
-		// const assignees = [...state]
-		// cards.forEach((card) => {
-		// 	if (card.assignees !== [] || card.assignees) {
-		// 		const cardAssignees = card.assignees || []
-		// 		const ids = cardAssignees.map(assignee => assignee.id)
-		// 		ids.forEach(id => assignees.concat(id))
-		// 	}
-		// })
+		case c.ADD_ASSIGNEE_TO_CARD_SUCCESS:
+			const cardId = action.payload.card && action.payload.card.id
 
-		// return assignees
+			if (!state.includes(cardId)) {
+				return [...state, ...cardId]
+			}
+
+			return state
 
 		default:
 			return state
@@ -80,6 +94,7 @@ const initState = {
 function examples(state = initState, action) {
 	switch (action.type) {
 		case c.FETCH_EXAMPLE_USERS_REQUEST:
+		case c.ADD_ASSIGNEE_TO_CARD_REQUEST:
 			return {
 				...state,
 				isFetching: true,
@@ -93,10 +108,17 @@ function examples(state = initState, action) {
 			}
 
 		case c.FETCH_EXAMPLE_USERS_FAILURE:
+		case c.ADD_ASSIGNEE_TO_CARD_FAILURE:
 			return {
 				...state,
 				isFetching: false,
 				error: action.payload.error,
+			}
+
+		case c.ADD_ASSIGNEE_TO_CARD_SUCCESS:
+			return {
+				...state,
+				isFetching: false,
 			}
 
 		default:
@@ -109,20 +131,3 @@ export const assignees = combineReducers({
 	allIds: allAssigneeIds,
 	examples,
 })
-
-
-// const cards = action.payload && action.payload.cards
-
-// const newAssigneeIds = cards.map(card => {
-// 	let assigneeIds = card.card.AssigneeIds 
-// 	if (assigneeIds === []) return state
-
-// 	return assigneeIds 
-// })
-
-// // const newAssigneeIds = cards.map(card => {
-// // 	return card.assignees.map(assignee => (assignee.id))
-// // })
-
-// array.flatten(newAssigneeIds) 
-// array.compact(newAssigneeIds) 
