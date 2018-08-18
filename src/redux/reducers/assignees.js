@@ -35,6 +35,7 @@ function assigneesById(state = {}, action) {
 
 		case c.ADD_ASSIGNEE_TO_CARD_SUCCESS:
 			const assigneeId = action.payload.assigneeId
+			const assignee = action.payload.assignee
 
 			// if assignee is already in obj
 			if (Object.keys(state).includes(assigneeId)) {
@@ -43,11 +44,16 @@ function assigneesById(state = {}, action) {
 
 			return {
 				...state,
-				[assigneeId]: {
-					...state[assigneeId],
-
-				}
+				[assigneeId]: assignee,
 			}
+
+		case c.REMOVE_ASSIGNEE_FROM_CARD_SUCCESS:
+			const deletedAssigneeId = action.payload.assigneeId
+
+			let copy = Object.assign({}, state)
+			delete copy[deletedAssigneeId]
+
+			return copy
 
 		default:
 			return state
@@ -80,6 +86,9 @@ function allAssigneeIds(state = [], action) {
 
 			return state
 
+		case c.REMOVE_ASSIGNEE_FROM_CARD_SUCCESS:
+			return action.payload.card && action.payload.card.AssigneeIds
+
 		default:
 			return state
 	}
@@ -95,6 +104,7 @@ function examples(state = initState, action) {
 	switch (action.type) {
 		case c.FETCH_EXAMPLE_USERS_REQUEST:
 		case c.ADD_ASSIGNEE_TO_CARD_REQUEST:
+		case c.REMOVE_ASSIGNEE_FROM_CARD_REQUEST:
 			return {
 				...state,
 				isFetching: true,
@@ -109,6 +119,7 @@ function examples(state = initState, action) {
 
 		case c.FETCH_EXAMPLE_USERS_FAILURE:
 		case c.ADD_ASSIGNEE_TO_CARD_FAILURE:
+		case c.REMOVE_ASSIGNEE_FROM_CARD_FAILURE:
 			return {
 				...state,
 				isFetching: false,
@@ -116,6 +127,7 @@ function examples(state = initState, action) {
 			}
 
 		case c.ADD_ASSIGNEE_TO_CARD_SUCCESS:
+		case c.REMOVE_ASSIGNEE_FROM_CARD_SUCCESS:
 			return {
 				...state,
 				isFetching: false,

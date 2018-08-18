@@ -58,6 +58,18 @@ function cardsById(state = {}, action) {
 				}
 			}
 
+		case c.REMOVE_ASSIGNEE_FROM_CARD_SUCCESS:
+			const thiscard = action.payload.card
+			const deletedAssigneeId = action.payload.assigneeId
+
+			return {
+				...state,
+				[thiscard.id]: {
+					...state[thiscard.id],
+					AssigneeIds: state[thiscard.id].AssigneeIds.filter(assigneeId => (assigneeId !== deletedAssigneeId))
+				}
+			}
+
 		default:
 			return state
 	}

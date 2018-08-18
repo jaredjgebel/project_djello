@@ -94,7 +94,7 @@ const addAssigneeToCard = async (cardId, userId) => {
 		return Promise.resolve(card);
 
 	} catch (err) {
-		console.error(err.errors);
+		console.error(err);
 		return Promise.reject('Assignee was not added to card.');
 	}
 };
@@ -182,6 +182,27 @@ const removeCardFromList = async (listId, cardId) => {
 	}
 }
 
+const removeAssigneeFromCard = async (cardId, userId) => {
+	try {
+		const cardResponse = await Card.update({
+			AssigneeIds: Sequelize.fn('array_remove', Sequelize.col('AssigneeIds'), userId),
+		}, {
+				returning: true,
+				where: {
+					id: cardId,
+				},
+			})
+
+		const card = cardResponse[1][0].dataValues
+
+		return Promise.resolve(card)
+
+	} catch (err) {
+		console.error(err);
+		return Promise.reject('Assignee was not added to card.');
+	}
+}
+
 
 module.exports = {
 	addBoardToUser,
@@ -192,4 +213,5 @@ module.exports = {
 	removeBoardFromUser,
 	removeListFromBoard,
 	removeCardFromList,
+	removeAssigneeFromCard,
 };

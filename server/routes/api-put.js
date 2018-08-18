@@ -7,7 +7,7 @@ const {
 	editList,
 	editCard,
 } = require('../../src/sequelize/data/put-methods');
-const { addAssigneeToCard } = require('../../src/sequelize/data/utility-methods')
+const { addAssigneeToCard, removeAssigneeFromCard } = require('../../src/sequelize/data/utility-methods')
 
 router.put('/boards/:id', checkJwt, (req, res) => {
 	const boardId = req.params.id;
@@ -68,6 +68,20 @@ router.put('/addassignee/:card_id/:user_id', checkJwt, (req, res) => {
 		.catch(err => {
 			console.log(err);
 			res.status(404).json('Assignee not added to card.');
+		});
+});
+
+router.put('/removeassignee/:card_id/:user_id', checkJwt, (req, res) => {
+	const cardId = req.params.card_id;
+	const userId = req.params.user_id;
+
+	removeAssigneeFromCard(cardId, userId)
+		.then(card => {
+			res.status(200).json(card);
+		})
+		.catch(err => {
+			console.log(err);
+			res.status(404).json('Assignee not removed from card.');
 		});
 });
 

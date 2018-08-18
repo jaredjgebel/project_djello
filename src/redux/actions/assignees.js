@@ -9,12 +9,13 @@ function addAssigneeToCardRequest() {
 	}
 }
 
-function addAssigneeToCardSuccess(card, assigneeId) {
+function addAssigneeToCardSuccess(card, assigneeId, assignee) {
 	return {
 		type: c.ADD_ASSIGNEE_TO_CARD_SUCCESS,
 		payload: {
 			card,
 			assigneeId,
+			assignee,
 		}
 	}
 }
@@ -28,7 +29,7 @@ function addAssigneeToCardFailure(error) {
 	}
 }
 
-export function addAssigneeToCard(cardId, userId) {
+export function addAssigneeToCard(cardId, userId, assignee) {
 	return (dispatch, getState) => {
 		dispatch(addAssigneeToCardRequest())
 
@@ -50,7 +51,7 @@ export function addAssigneeToCard(cardId, userId) {
 				return response.json()
 			})
 			.then(card => {
-				dispatch(addAssigneeToCardSuccess(card, userId))
+				dispatch(addAssigneeToCardSuccess(card, userId, assignee))
 			})
 			.catch(err => {
 				console.log('error', err)
@@ -110,6 +111,62 @@ export function fetchExampleUsers(userId) {
 			})
 			.catch(err => {
 				dispatch(fetchExampleUsersFailure(err))
+			})
+	}
+}
+
+function removeAssigneeFromCardRequest() {
+	return {
+		type: c.REMOVE_ASSIGNEE_FROM_CARD_REQUEST
+	}
+}
+
+function removeAssigneeFromCardSuccess(card, assigneeId) {
+	return {
+		type: c.REMOVE_ASSIGNEE_FROM_CARD_SUCCESS,
+		payload: {
+			card,
+			assigneeId,
+		}
+	}
+}
+
+function removeAssigneeFromCardFailure(error) {
+	return {
+		type: c.REMOVE_ASSIGNEE_FROM_CARD_FAILURE,
+		payload: {
+			error,
+		}
+	}
+}
+
+export function removeAssigneeFromCard(cardId, userId) {
+	return (dispatch, getState) => {
+		dispatch(removeAssigneeFromCardRequest())
+
+		const accessToken = getState().users.accessToken
+
+		fetch(`${apiUrl}/removeassignee/${cardId}/${userId}`, {
+			method: 'PUT',
+			credentials: "include",
+			headers: {
+				'Content-Type': 'application/json',
+				"Authorization": `Bearer ${accessToken}`,
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`${response.status} ${response.statusText}`)
+				}
+
+				return response.json()
+			})
+			.then(card => {
+				dispatch(removeAssigneeFromCardSuccess(card, userId))
+			})
+			.catch(err => {
+				console.log('error', err)
+				dispatch(removeAssigneeFromCardFailure(err))
 			})
 	}
 }
