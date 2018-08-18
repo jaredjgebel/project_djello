@@ -1,4 +1,5 @@
 import * as c from '../constants'
+import { createHistory } from './histories';
 const port = 5000;
 const host = 'localhost';
 const apiUrl = `http://${host}:${port}/api/v1`
@@ -89,6 +90,13 @@ function createCardFailure(error) {
 	}
 }
 
+function createCardAndCreateHistory(response, listId) {
+	return (dispatch) => {
+		dispatch(createCardSuccess(response, listId))
+		dispatch(createHistory(response.card.id, `Card entitled ${response.card.title} added to list`))
+	}
+}
+
 export function createCard(listId, title, description) {
 	return (dispatch, getState) => {
 		dispatch(createCardRequest(listId))
@@ -111,7 +119,7 @@ export function createCard(listId, title, description) {
 				return response.json()
 			})
 			.then(json => {
-				return dispatch(createCardSuccess(json, listId))
+				return dispatch(createCardAndCreateHistory(json, listId))
 			})
 			.then(() => {
 				dispatch(fetchCards(listId))

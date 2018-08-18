@@ -63,8 +63,8 @@ router.post('/cards/:card_id/histories', checkJwt, (req, res) => {
 	const text = q.text;
 
 	createHistory(cardId, text)
-		.then(history => {
-			res.status(200).json(history);
+		.then(response => {
+			res.status(200).json(response);
 		})
 		.catch(err => {
 			console.log(err);

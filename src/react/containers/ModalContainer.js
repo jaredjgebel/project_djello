@@ -27,8 +27,6 @@ class ModalContainer extends Component {
          return React.cloneElement(child, { action: this.props.action })
       })
 
-      // console.log('childrenWithProps', childrenWithProps)
-
       return (
          <div>
             <Button color="primary" onClick={this.toggle} className={this.props.buttonClasses}>{this.props.button}</Button>

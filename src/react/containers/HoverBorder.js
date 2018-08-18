@@ -24,8 +24,6 @@ class HoverBorder extends Component {
       }
    }
 
-   // actually base condition on selected, 
-   // and then set selected
    handleMouseClick() {
       const { selected } = this.state
 
@@ -89,3 +87,8 @@ class HoverBorder extends Component {
 }
 
 export default HoverBorder
+
+HoverBorder.propTypes = {
+   selected: PropTypes.bool.isRequired,
+   children: PropTypes.element,
+}

@@ -6,8 +6,8 @@ import { createCard, editCard } from '../../redux/actions/cards'
 
 const mapDispatchToProps = dispatch => {
 	return {
-		createCard: (listId, title, description) => {
-			dispatch(createCard(listId, title, description))
+		createCard: (listId, cardId, title, description) => {
+			dispatch(createCard(listId, cardId, title, description))
 		},
 		editCard: (cardId, title, description) => {
 			dispatch(editCard(cardId, title, description))

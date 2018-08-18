@@ -21,6 +21,15 @@ function historiesById(state = {}, action) {
 			}, { ...state })
 
 			return obj
+
+		case c.CREATE_HISTORY_SUCCESS:
+			const newHistory = action.payload.history
+
+			return {
+				...state,
+				[newHistory.id]: newHistory,
+			}
+
 		default:
 			return state
 	}
@@ -36,6 +45,12 @@ function allHistoryIds(state = [], action) {
 			}
 
 			return histories.map(history => history.id)
+
+		case c.CREATE_HISTORY_SUCCESS:
+			const newHistory = action.payload.history
+
+			return [...state, newHistory.id]
+
 		default:
 			return state
 	}
@@ -49,21 +64,27 @@ const initialUiState = {
 function historiesUi(state = initialUiState, action) {
 	switch (action.type) {
 		case c.FETCH_HISTORIES_REQUEST:
+		case c.CREATE_HISTORY_REQUEST:
 			return {
 				...state,
 				isFetching: true,
 			}
+
 		case c.FETCH_HISTORIES_SUCCESS:
+		case c.CREATE_HISTORY_REQUEST:
 			return {
 				...state,
 				isFetching: false,
 			}
+
 		case c.FETCH_HISTORIES_FAILURE:
+		case c.CREATE_HISTORY_FAILURE:
 			return {
 				...state,
 				isFetching: false,
 				error: action.payload.error,
 			}
+
 		default:
 			return state
 	}

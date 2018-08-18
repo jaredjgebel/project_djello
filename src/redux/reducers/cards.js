@@ -1,5 +1,6 @@
 import * as c from '../constants'
 import { combineReducers } from 'redux'
+import { createHistory } from '../actions/histories'
 
 function cardsById(state = {}, action) {
 	switch (action.type) {
@@ -67,6 +68,18 @@ function cardsById(state = {}, action) {
 				[thiscard.id]: {
 					...state[thiscard.id],
 					AssigneeIds: state[thiscard.id].AssigneeIds.filter(assigneeId => (assigneeId !== deletedAssigneeId))
+				}
+			}
+
+		case c.CREATE_HISTORY_SUCCESS:
+			const newHistory = action.payload.history
+			const changedCard = action.payload.card
+
+			return {
+				...state,
+				[changedCard.id]: {
+					...state[changedCard.id],
+					HistoryIds: state[changedCard.id].HistoryIds.concat([newHistory.id])
 				}
 			}
 
