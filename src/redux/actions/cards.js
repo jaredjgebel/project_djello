@@ -90,14 +90,14 @@ function createCardFailure(error) {
 	}
 }
 
-function createCardAndCreateHistory(response, listId) {
+function createCardAndCreateHistory(response, listId, user) {
 	return (dispatch) => {
 		dispatch(createCardSuccess(response, listId))
-		dispatch(createHistory(response.card.id, `Card entitled ${response.card.title} added to list`))
+		dispatch(createHistory(response.card.id, `${user.first} ${user.last.slice(0, 1)}. created card entitled ${response.card.title}`))
 	}
 }
 
-export function createCard(listId, title, description) {
+export function createCard(listId, user, title, description) {
 	return (dispatch, getState) => {
 		dispatch(createCardRequest(listId))
 
@@ -119,7 +119,7 @@ export function createCard(listId, title, description) {
 				return response.json()
 			})
 			.then(json => {
-				return dispatch(createCardAndCreateHistory(json, listId))
+				return dispatch(createCardAndCreateHistory(json, listId, user))
 			})
 			.then(() => {
 				dispatch(fetchCards(listId))
@@ -157,7 +157,15 @@ function editCardFailure(error) {
 	}
 }
 
-export function editCard(cardId, title, description) {
+function editCardAndCreateHistory(card, user) {
+	return (dispatch) => {
+		dispatch(editCardSuccess(card))
+		dispatch(createHistory(card.id, `Card edited by ${user.first} ${user.last.slice(0, 1)}.`))
+	}
+}
+
+export function editCard(cardId, listId, user, title, description) {
+	console.log('listId', listId)
 	return (dispatch, getState) => {
 		dispatch(editCardRequest(cardId))
 
@@ -179,7 +187,7 @@ export function editCard(cardId, title, description) {
 				return response.json()
 			})
 			.then(card => {
-				return dispatch(editCardSuccess(card))
+				return dispatch(editCardAndCreateHistory(card, user))
 			})
 			.then(() => {
 				dispatch(fetchCards(listId))

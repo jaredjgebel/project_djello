@@ -1,4 +1,5 @@
 import * as c from '../constants'
+import { createHistory } from '../actions/histories'
 const port = 5000;
 const host = 'localhost';
 const apiUrl = `http://${host}:${port}/api/v1`
@@ -29,13 +30,20 @@ function addAssigneeToCardFailure(error) {
 	}
 }
 
-export function addAssigneeToCard(cardId, userId, assignee) {
+function addAssigneeAndCreateHistory(card, assigneeId, assignee, user) {
+	return dispatch => {
+		dispatch(addAssigneeToCardSuccess(card, assigneeId, assignee))
+		dispatch(createHistory(card.id, `${assignee.first} ${assignee.last.slice(0, 1)}. assigned to card by ${user.first} ${user.last.slice(0, 1)}.`))
+	}
+}
+
+export function addAssigneeToCard(cardId, assigneeId, assignee, user) {
 	return (dispatch, getState) => {
 		dispatch(addAssigneeToCardRequest())
 
 		const accessToken = getState().users.accessToken
 
-		fetch(`${apiUrl}/addassignee/${cardId}/${userId}`, {
+		fetch(`${apiUrl}/addassignee/${cardId}/${assigneeId}`, {
 			method: 'PUT',
 			credentials: "include",
 			headers: {
@@ -51,7 +59,7 @@ export function addAssigneeToCard(cardId, userId, assignee) {
 				return response.json()
 			})
 			.then(card => {
-				dispatch(addAssigneeToCardSuccess(card, userId, assignee))
+				dispatch(addAssigneeAndCreateHistory(card, assigneeId, assignee, user))
 			})
 			.catch(err => {
 				console.log('error', err)
@@ -140,13 +148,13 @@ function removeAssigneeFromCardFailure(error) {
 	}
 }
 
-export function removeAssigneeFromCard(cardId, userId) {
+export function removeAssigneeFromCard(cardId, assigneeId, assignee, user) {
 	return (dispatch, getState) => {
 		dispatch(removeAssigneeFromCardRequest())
 
 		const accessToken = getState().users.accessToken
 
-		fetch(`${apiUrl}/removeassignee/${cardId}/${userId}`, {
+		fetch(`${apiUrl}/removeassignee/${cardId}/${assigneeId}`, {
 			method: 'PUT',
 			credentials: "include",
 			headers: {
@@ -162,7 +170,8 @@ export function removeAssigneeFromCard(cardId, userId) {
 				return response.json()
 			})
 			.then(card => {
-				dispatch(removeAssigneeFromCardSuccess(card, userId))
+				dispatch(removeAssigneeFromCardSuccess(card, assigneeId))
+				dispatch(createHistory(card.id, `${user.first} ${user.last.slice(0, 1)}. removed ${assignee.first} ${assignee.last.slice(0, 1)}. from card`))
 			})
 			.catch(err => {
 				console.log('error', err)

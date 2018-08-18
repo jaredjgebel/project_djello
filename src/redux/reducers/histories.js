@@ -71,7 +71,7 @@ function historiesUi(state = initialUiState, action) {
 			}
 
 		case c.FETCH_HISTORIES_SUCCESS:
-		case c.CREATE_HISTORY_REQUEST:
+		case c.CREATE_HISTORY_SUCCESS:
 			return {
 				...state,
 				isFetching: false,

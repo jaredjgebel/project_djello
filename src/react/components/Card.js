@@ -72,6 +72,7 @@ class Card extends Component {
                      >
                         <CardFormContainer
                            cardId={cardId}
+                           listId={listId}
                         />
                      </ModalContainer>
 

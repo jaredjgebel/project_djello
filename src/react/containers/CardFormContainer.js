@@ -3,14 +3,21 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, FormGroup } from 'reactstrap'
 import { createCard, editCard } from '../../redux/actions/cards'
+import { getUser } from '../../redux/selectors/userSelectors';
+
+const mapStateToProps = state => {
+	return {
+		user: getUser(state),
+	}
+}
 
 const mapDispatchToProps = dispatch => {
 	return {
-		createCard: (listId, cardId, title, description) => {
-			dispatch(createCard(listId, cardId, title, description))
+		createCard: (listId, user, title, description) => {
+			dispatch(createCard(listId, user, title, description))
 		},
-		editCard: (cardId, title, description) => {
-			dispatch(editCard(cardId, title, description))
+		editCard: (cardId, listId, user, title, description) => {
+			dispatch(editCard(cardId, listId, user, title, description))
 		},
 	}
 }
@@ -31,7 +38,7 @@ class CardFormContainer extends Component {
 	handleSubmit(e) {
 		e.preventDefault()
 
-		const { action, cardId, listId } = this.props
+		const { action, cardId, listId, user } = this.props
 
 		const title = this.title.current.value
 		const description = this.description.current.value
@@ -45,9 +52,9 @@ class CardFormContainer extends Component {
 		if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
 			// dispatch action
 			if (action === "New Card") {
-				this.props.createCard(listId, title, description)
+				this.props.createCard(listId, user, title, description)
 			} else if (action === "Edit Card") {
-				this.props.editCard(cardId, title, description)
+				this.props.editCard(cardId, listId, user, title, description)
 			}
 		}
 	}
@@ -94,7 +101,7 @@ class CardFormContainer extends Component {
 }
 
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
 )(CardFormContainer)
 

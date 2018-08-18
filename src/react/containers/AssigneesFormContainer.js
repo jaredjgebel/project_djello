@@ -24,11 +24,11 @@ const mapDispatchToProps = dispatch => {
 		fetchExampleUsers: (userId) => {
 			dispatch(fetchExampleUsers(userId))
 		},
-		addAssigneeToCard: (cardId, userId, assignee) => {
-			dispatch(addAssigneeToCard(cardId, userId, assignee))
+		addAssigneeToCard: (cardId, assigneeId, assignee, user) => {
+			dispatch(addAssigneeToCard(cardId, assigneeId, assignee, user))
 		},
-		removeAssigneeFromCard: (cardId, userId) => {
-			dispatch(removeAssigneeFromCard(cardId, userId))
+		removeAssigneeFromCard: (cardId, assigneeId, assignee, user) => {
+			dispatch(removeAssigneeFromCard(cardId, assigneeId, assignee, user))
 		},
 	}
 }
@@ -55,6 +55,7 @@ class AssigneesFormContainer extends Component {
 	onSubmit() {
 		// only necessary to have one cardId
 		const cardId = this.click1.current.props.cardId
+		const user = this.props.user
 
 		const click1 = {
 			assigneeId: this.click1.current.props.assigneeId,
@@ -91,26 +92,24 @@ class AssigneesFormContainer extends Component {
 			selectedState: this.click5.current.state.selected,
 		}
 
-		console.log('assignees', click1.assignee, click2.assignee, click3.assignee, click4.assignee, click5.assignee)
-
-		this.editCardAssignee(click1.assigneeId, click1.assignee, cardId, click1.selectedProps, click1.selectedState)
-		this.editCardAssignee(click2.assigneeId, click2.assignee, cardId, click2.selectedProps, click2.selectedState)
-		this.editCardAssignee(click3.assigneeId, click3.assignee, cardId, click3.selectedProps, click3.selectedState)
-		this.editCardAssignee(click4.assigneeId, click4.assignee, cardId, click4.selectedProps, click4.selectedState)
-		this.editCardAssignee(click5.assigneeId, click5.assignee, cardId, click5.selectedProps, click5.selectedState)
+		this.editCardAssignee(click1.assigneeId, click1.assignee, cardId, user, click1.selectedProps, click1.selectedState)
+		this.editCardAssignee(click2.assigneeId, click2.assignee, cardId, user, click2.selectedProps, click2.selectedState)
+		this.editCardAssignee(click3.assigneeId, click3.assignee, cardId, user, click3.selectedProps, click3.selectedState)
+		this.editCardAssignee(click4.assigneeId, click4.assignee, cardId, user, click4.selectedProps, click4.selectedState)
+		this.editCardAssignee(click5.assigneeId, click5.assignee, cardId, user, click5.selectedProps, click5.selectedState)
 	}
 
 	// HoverBorder receives initial selected state as a prop
 	// HoverBorder submits final state of selection as selectedState
 	// comparing to see if anything actually changed
-	editCardAssignee(assigneeId, assignee, cardId, selectedProps, selectedState) {
+	editCardAssignee(assigneeId, assignee, cardId, user, selectedProps, selectedState) {
 		if (selectedProps !== selectedState) {
 			if (selectedState === true) {
-				this.props.addAssigneeToCard(cardId, assigneeId, assignee)
+				this.props.addAssigneeToCard(cardId, assigneeId, assignee, user)
 			}
 
 			if (selectedState === false) {
-				this.props.removeAssigneeFromCard(cardId, assigneeId)
+				this.props.removeAssigneeFromCard(cardId, assigneeId, assignee, user)
 			}
 		}
 	}
@@ -142,7 +141,6 @@ class AssigneesFormContainer extends Component {
 				}
 
 				const refNum = `click${(i + 1).toString()}`
-				console.log('assignee', assignee)
 
 				return (
 					<HoverBorder
