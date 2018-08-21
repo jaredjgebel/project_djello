@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import ListContainer from '../containers/ListContainer'
 import BoardFormContainer from '../containers/BoardFormContainer'
 import ModalContainer from '../containers/ModalContainer'
-import { ButtonGroup, Container, Col, Row } from 'reactstrap'
 import BoardInputContainer from '../containers/BoardInputContainer'
 import BoardDeleteContainer from '../containers/BoardDeleteContainer'
 import '../stylesheets/Board.css'
@@ -20,17 +19,18 @@ const Board = ({ current }) => {
    return (
       <div className="board">
          <div className="board-menu-container container-fluid">
-            {/* <div className="board-menu-background col-6 col-sm-12">
-               </div> */}
             <div className="board-menu fixed-top">
                <div className="row">
-                  <Col xs="12" sm="6" className="board-title">
+                  <div className="board-title col-12 col-sm-6">
                      <h3>{current.title}</h3>
                      <p>{current.description}</p>
-                  </Col>
-                  <Col xs="12" sm="6" className="board-control">
+                  </div>
+                  <div className="board-control col-12 col-sm-6">
                      <div className="clearfix">
-                        <ButtonGroup className="float-right">
+                        <div
+                           className="btn-group float-right"
+                           role="group"
+                        >
                            <ModalContainer
                               action="New Board"
                               header="New Board"
@@ -60,9 +60,9 @@ const Board = ({ current }) => {
                            </ModalContainer>
 
                            <BoardInputContainer />
-                        </ButtonGroup>
+                        </div>
                      </div>
-                  </Col>
+                  </div>
                </div>
             </div>
          </div>
@@ -76,5 +76,5 @@ const Board = ({ current }) => {
 export default Board
 
 Board.propTypes = {
-   current: PropTypes.object,
+   current: PropTypes.object.isRequired,
 }

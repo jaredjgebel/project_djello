@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, FormGroup } from 'reactstrap'
 import { deleteList } from '../../redux/actions/lists'
 import { getBoardId } from '../../redux/selectors/boardSelectors';
 
@@ -31,15 +30,14 @@ class ListDeleteContainer extends Component {
 		const { boardId, listId } = this.props
 
 		this.props.deleteList(boardId, listId)
-		// close modal
 	}
 
 	render() {
 		return (
-			<Form>
-				<FormGroup>
+			<form>
+				<div className="form-group">
 					<p>Are you sure you want to delete this list? This action cannot be undone.</p>
-				</FormGroup>
+				</div>
 				<button
 					type="submit"
 					onClick={this.handleSubmit}
@@ -47,7 +45,7 @@ class ListDeleteContainer extends Component {
 				>
 					Delete List
          </button>
-			</Form>
+			</form>
 		)
 	}
 }

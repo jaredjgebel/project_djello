@@ -57,7 +57,6 @@ class BoardInputContainer extends Component {
    }
    render() {
       const { allIds, boards, current } = this.props
-      // console.log('boards', boards)
 
       if (current === null) {
          return null
@@ -72,20 +71,21 @@ class BoardInputContainer extends Component {
       })
 
       const dropdownItems = dropdownIds.map((id, i) => {
-         // console.log('id', id)
          return (
-            <DropdownItem
+            <button
+               type="button"
+               className="dropdown-item"
                onClick={() => this.selectBoard(boards.byId[id])}
                key={i}
             >
                {boards.byId[id].title}
-            </DropdownItem>
+            </button>
          )
       }
       )
 
       return (
-         <InputGroup>
+         <div className="input-group">
             <InputGroupButtonDropdown
                addonType="append"
                isOpen={this.state.dropdownOpen}
@@ -100,7 +100,7 @@ class BoardInputContainer extends Component {
                </DropdownMenu>
 
             </InputGroupButtonDropdown>
-         </InputGroup>
+         </div>
       )
    }
 }

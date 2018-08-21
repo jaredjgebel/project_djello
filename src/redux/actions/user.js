@@ -1,4 +1,5 @@
 import * as c from '../constants'
+import { fetchBoards } from './boards';
 const port = process.env.PORT || 5000;
 const host = 'localhost';
 const apiUrl = `http://${host}:${port}/api/v1`
@@ -151,13 +152,16 @@ export function fetchUser(userId) {
 	}
 }
 
-// combined action creator - fetches API token and user ID
+// dispatches fetchAPI token, fetchUserByToken, and fetchBoards in that order (each needs the result of the previous step)
 export function fetchTokenAndUser(idToken) {
 	return (dispatch, getState) => {
 		return dispatch(fetchApiToken())
 			.then(() => {
 				const accessToken = getState().users.accessToken
-				dispatch(fetchUserByToken(accessToken, idToken))
+				return dispatch(fetchUserByToken(accessToken, idToken))
+			})
+			.then(() => {
+				dispatch(fetchBoards(getState().users.id))
 			})
 	}
 }

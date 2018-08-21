@@ -31,7 +31,9 @@ const mapDispatchToProps = dispatch => {
 
 class AppContainer extends Component {
    componentDidMount() {
+      // parse JSON web token
       const parsedIdToken = KJUR.jws.JWS.parse(localStorage.id_token)
+      // subject of the payloadObj
       const sub = parsedIdToken.payloadObj.sub
       this.props.fetchTokenAndUser(sub)
    }

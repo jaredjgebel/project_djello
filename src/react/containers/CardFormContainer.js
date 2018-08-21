@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, FormGroup } from 'reactstrap'
 import { createCard, editCard } from '../../redux/actions/cards'
 import { getUser } from '../../redux/selectors/userSelectors';
 
@@ -65,8 +64,8 @@ class CardFormContainer extends Component {
 		const descriptionInvalidDiv = this.state.descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">Card description must be less than 255 characters.</div> : null
 
 		return (
-			<Form>
-				<FormGroup>
+			<form>
+				<div className="form-group">
 					<input
 						type="text"
 						name="title"
@@ -76,8 +75,8 @@ class CardFormContainer extends Component {
 						ref={this.title}
 					/>
 					{titleInvalidDiv}
-				</FormGroup>
-				<FormGroup>
+				</div>
+				<div className="form-group">
 					<input
 						type="text"
 						name="description"
@@ -87,7 +86,7 @@ class CardFormContainer extends Component {
 						ref={this.description}
 					/>
 					{descriptionInvalidDiv}
-				</FormGroup>
+				</div>
 				<button
 					type="submit"
 					onClick={this.handleSubmit}
@@ -95,7 +94,7 @@ class CardFormContainer extends Component {
 				>
 					Submit Card
                </button>
-			</Form>
+			</form>
 		)
 	}
 }

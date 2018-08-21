@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, FormGroup } from 'reactstrap'
 import { createList, editList } from '../../redux/actions/lists'
 import { getBoardId } from '../../redux/selectors/boardSelectors';
 
@@ -67,8 +66,8 @@ class ListFormContainer extends Component {
 
       return (
          <div>
-            <Form>
-               <FormGroup>
+            <form>
+               <div className="form-group">
                   <input
                      type="text"
                      name="title"
@@ -78,8 +77,8 @@ class ListFormContainer extends Component {
                      ref={this.title}
                   />
                   {titleInvalidDiv}
-               </FormGroup>
-               <FormGroup>
+               </div>
+               <div className="form-group">
                   <input
                      type="text"
                      name="description"
@@ -89,7 +88,7 @@ class ListFormContainer extends Component {
                      ref={this.description}
                   />
                   {descriptionInvalidDiv}
-               </FormGroup>
+               </div>
                <button
                   type="submit"
                   onClick={this.handleSubmit}
@@ -97,7 +96,7 @@ class ListFormContainer extends Component {
                >
                   Submit List
                </button>
-            </Form>
+            </form>
          </div>
       )
    }

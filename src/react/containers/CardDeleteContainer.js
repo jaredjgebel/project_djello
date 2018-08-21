@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, FormGroup } from 'reactstrap'
 import { deleteCard } from '../../redux/actions/cards'
 
 const mapDispatchToProps = dispatch => {
@@ -28,10 +27,10 @@ class CardDeleteContainer extends Component {
 
    render() {
       return (
-         <Form>
-            <FormGroup>
+         <form>
+            <div className="form-group">
                <p>Are you sure you want to delete this card? This action cannot be undone.</p>
-            </FormGroup>
+            </div>
             <button
                type="submit"
                onClick={this.handleSubmit}
@@ -39,7 +38,7 @@ class CardDeleteContainer extends Component {
             >
                Delete Card
       </button>
-         </Form>
+         </form>
       )
    }
 }

@@ -5,20 +5,18 @@ import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
 import CardFormContainer from '../containers/CardFormContainer'
 import ListDeleteContainer from '../containers/ListDeleteContainer'
-import { Card, CardSubtitle, CardHeader, ButtonGroup, Col } from 'reactstrap';
 import '../stylesheets/List.css'
 
 const List = ({ listId, title, description }) => {
    return (
-      <Col xs="12" lg="6" className="list">
-         <Card outline>
-            <CardHeader>
+      <div className="list col-12 col-lg-6">
+         <div className="card">
+            <div className="card-header">
                <h4>{title}</h4>
-               <CardSubtitle tag="p" style={{ fontWeight: 'normal' }}>{description}</CardSubtitle>
+               <div className="card-subtitle" style={{ fontWeight: 'normal' }}>{description}</div>
 
                <div className="clearfix">
-
-                  <ButtonGroup className="float-right">
+                  <div className="btn-group float-right" role="group">
                      <ModalContainer
                         action="New List"
                         header="New List"
@@ -44,7 +42,7 @@ const List = ({ listId, title, description }) => {
                      </ModalContainer>
 
                      <button className="btn btn-secondary float-left">Lists</button>
-                  </ButtonGroup>
+                  </div>
                   <ModalContainer
                      action="New Card"
                      header="New Card"
@@ -53,10 +51,10 @@ const List = ({ listId, title, description }) => {
                      <CardFormContainer listId={listId} />
                   </ModalContainer>
                </div>
-            </CardHeader>
+            </div>
             <CardContainer listId={listId} />
-         </Card>
-      </Col>
+         </div>
+      </div>
    )
 }
 

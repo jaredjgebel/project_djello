@@ -21,18 +21,21 @@ export function users(state = initialState, action) {
 				...state,
 				isFetchingToken: true,
 			}
+
 		case c.FETCH_TOKEN_SUCCESS:
 			return {
 				...state,
 				isFetchingToken: false,
 				accessToken: action.token,
 			}
+
 		case c.FETCH_TOKEN_FAILURE:
 			return {
 				...state,
 				isFetchingToken: false,
 				error: action.error,
 			}
+
 		case c.FETCH_USER_BY_TOKEN_REQUEST:
 			return {
 				...state,
@@ -40,23 +43,27 @@ export function users(state = initialState, action) {
 				idToken: action.idToken,
 				accessToken: action.accessToken,
 			}
+
 		case c.FETCH_USER_BY_TOKEN_SUCCESS:
 			return {
 				...state,
 				isFetchingId: false,
 				id: action.userId,
 			}
+
 		case c.FETCH_USER_BY_TOKEN_FAILURE:
 			return {
 				...state,
 				isFetchingId: false,
 				error: action.error,
 			}
+
 		case c.FETCH_USER_REQUEST:
 			return {
 				...state,
 				isFetching: true,
 			}
+
 		case c.FETCH_USER_SUCCESS:
 			return {
 				...state,
@@ -67,12 +74,14 @@ export function users(state = initialState, action) {
 				email: action.user.email,
 				photo: action.user.photo,
 			}
+
 		case c.FETCH_USER_FAILURE:
 			return {
 				...state,
 				isFetching: false,
 				error: action.error,
 			}
+
 		default:
 			return state
 	}

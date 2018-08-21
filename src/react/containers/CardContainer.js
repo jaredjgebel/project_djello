@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Card from '../components/Card'
-import { CardBody } from 'reactstrap'
 import { fetchCards } from '../../redux/actions/cards'
 import { areCardsFetching, getCards, getCardIds } from '../../redux/selectors/cardSelectors';
 import { getLists } from '../../redux/selectors/listSelector'
@@ -47,7 +46,7 @@ class CardContainer extends Component {
          cardIds.map(id => {
             if (lists[listId].CardIds && lists[listId].CardIds.includes(id)) {
                cardElements.push(
-                  <CardBody key={id}>
+                  <div key={id} className="card-body">
                      <Card
                         title={cardsById[id].title}
                         description={cardsById[id].description}
@@ -55,7 +54,7 @@ class CardContainer extends Component {
                         cardId={id}
                         listId={listId}
                      />
-                  </CardBody>
+                  </div>
                )
             }
          })

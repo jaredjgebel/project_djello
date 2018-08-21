@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { CardText, Card as RsCard, Button, } from 'reactstrap'
 import '../stylesheets/Card.css'
 import HistoryContainer from '../containers/HistoryContainer'
 import AssigneesContainer from '../containers/AssigneesContainer'
@@ -29,21 +28,15 @@ class Card extends Component {
 
       return (
          <div>
-            <RsCard>
+            <div className="card">
                <div className="card-interior">
+                  <h5 className="card-title">
+                     {title}
+                  </h5>
                   <ul>
-                     <li>
-                        <CardText>
-                           {title}
-                        </CardText>
+                     <li className="card-text">
+                        {description}
                      </li>
-                     <ul>
-                        <li>
-                           <CardText>
-                              {description}
-                           </CardText>
-                        </li>
-                     </ul>
                   </ul>
 
                   <div className="card-details clearfix">
@@ -76,9 +69,9 @@ class Card extends Component {
                         />
                      </ModalContainer>
 
-                     <Button className="float-right" onClick={this.onDetailsClick}>
+                     <button className="float-right btn btn-secondary" onClick={this.onDetailsClick}>
                         {visibleHistory ? "Hide Details" : "Show Details"}
-                     </Button>
+                     </button>
                   </div>
 
                   {visibleHistory ?
@@ -91,10 +84,8 @@ class Card extends Component {
                         />
                      </div> : null
                   }
-
                </div>
-            </RsCard>
-
+            </div>
          </div>
       )
    }

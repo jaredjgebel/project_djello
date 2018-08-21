@@ -23,14 +23,9 @@ const mapDispatchToProps = dispatch => {
 }
 
 class BoardContainer extends Component {
-   componentDidUpdate(prevProps) {
-      if (this.props.userId !== prevProps.userId && this.props.userId) {
-         this.props.fetchBoards(this.props.userId)
-      }
-   }
-
    render() {
       const { isFetching } = this.props
+
       if (isFetching) {
          return (
             <div className="board-loading">
@@ -40,6 +35,7 @@ class BoardContainer extends Component {
       }
 
       const { current } = this.props
+
       return (
          <div>
             <Board

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchLists } from '../../redux/actions/lists'
 import List from '../components/List'
-import { CardDeck, Container, } from 'reactstrap'
 import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
 import array from 'lodash/array'
@@ -39,7 +38,6 @@ class ListContainer extends Component {
 
    componentDidUpdate(prevProps) {
       const { boardId, fetchLists, listIds } = this.props
-      // console.log('difference', array.difference(listIds, prevProps.listIds))
 
       if (array.difference(listIds, prevProps.listIds).length !== 0) {
          fetchLists(boardId)
@@ -48,9 +46,6 @@ class ListContainer extends Component {
 
    render() {
       const { isFetching, listIds, boardId, lists } = this.props
-
-      console.log('LISTIDS', listIds)
-      console.log('LISTS', lists)
 
       if (isFetching || !boardId || lists === {}) {
          return (
@@ -94,11 +89,11 @@ class ListContainer extends Component {
 
          return (
             <div>
-               <Container fluid>
-                  <CardDeck>
+               <div className="container-fluid">
+                  <div className="card-deck">
                      {listElements === [] ? 'No lists yet. Create a new one!' : listElements}
-                  </CardDeck>
-               </Container>
+                  </div>
+               </div>
             </div>
          )
       }

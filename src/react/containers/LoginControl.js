@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-   Navbar,
-   NavbarBrand,
-   Button,
-} from 'reactstrap'
 import '../stylesheets/LoginControl.css'
 
 class LoginControl extends Component {
@@ -24,33 +19,32 @@ class LoginControl extends Component {
 
       return (
          <div>
-            <Navbar fluid="true" fixed="top" dark={true} className="logged-out-nav">
-               <NavbarBrand style={{ color: "#BAB9B1" }}>
+            <nav className="navbar logged-out-nav fixed-top">
+               <div className="navbar-brand" style={{ color: "whitesmoke" }}>
                   Djello Task Management
-               </NavbarBrand>
+               </div>
                {
                   !isAuthenticated() && (
-                     <Button
-                        color="primary"
-                        className="btn-margin"
+                     <button
+                        className="btn btn-primary btn-margin"
                         onClick={this.login.bind(this)}
                      >
                         Log In
-                   </Button>
+                   </button>
                   )
                }
                {
                   isAuthenticated() && (
-                     <Button
+                     <button
                         color="primary"
-                        className="btn-margin"
+                        className="btn btn-primary btn-margin"
                         onClick={this.logout.bind(this)}
                      >
                         Log Out
-                   </Button>
+                   </button>
                   )
                }
-            </Navbar>
+            </nav>
          </div>
       );
    }
