@@ -19,17 +19,14 @@ const Board = ({ current }) => {
 
    return (
       <div className="board">
-         <Container fluid="true">
-            <div className="board-menu-container">
-               <div className="board-menu-background">
-               </div>
-               <Row className="board-menu">
-                  {/* <div > */}
-                  <Col xs="12" sm="6">
-                     <div className="board-title">
-                        <h3>{current.title}</h3>
-                        <p>{current.description}</p>
-                     </div>
+         <div className="board-menu-container container-fluid">
+            {/* <div className="board-menu-background col-6 col-sm-12">
+               </div> */}
+            <div className="board-menu fixed-top">
+               <div className="row">
+                  <Col xs="12" sm="6" className="board-title">
+                     <h3>{current.title}</h3>
+                     <p>{current.description}</p>
                   </Col>
                   <Col xs="12" sm="6" className="board-control">
                      <div className="clearfix">
@@ -66,18 +63,12 @@ const Board = ({ current }) => {
                         </ButtonGroup>
                      </div>
                   </Col>
-                  {/* </div> */}
-               </Row>
+               </div>
             </div>
-            <Row xs="12">
-               <Container fluid>
-                  <div className="list-container">
-                     <ListContainer />
-                  </div>
-               </Container>
-            </Row>
-
-         </Container>
+         </div>
+         <div className="list-container">
+            <ListContainer />
+         </div>
       </div>
    )
 }

@@ -4,11 +4,10 @@
     width: 100%;
     padding: 1rem 1rem 0rem 1rem;
     padding-top: 60px;
-    background: #11998e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-border-radius: 0px 0px 20px 20px;
-z-index: 3;
+    background: #3C3B3F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #605C3C, #3C3B3F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #605C3C, #3C3B3F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    z-index: 3;
 }
 
 .board-menu {
@@ -16,8 +15,12 @@ z-index: 3;
    z-index: 2;
    background-color: rgba(255,255,255,0.6);
    width: 100%;
-   margin-right: 15px;
-   margin-left: -15px;
+   margin-top: 60px;
+}
+
+.board-menu .row {
+    border-top: 2px whitesmoke solid;
+    border-bottom: 2px whitesmoke solid;
 }
 
 .board-menu-background {
@@ -33,6 +36,12 @@ z-index: 3;
    z-index: 0;
 }
 
+@media (max-width: 576px) { 
+    .list-container { 
+       padding-top: 200px 
+    }
+ }
+
 .board-loading {
    padding-top: 75px;
    padding-left: 1rem;
@@ -41,7 +50,32 @@ z-index: 3;
 .board-control {
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
+
+@media (max-width: 576px) { 
+    .board-control { 
+        padding-top: 0px;
+    }
+ }
+
+.board-title {
+   display: flex;
+   flex-direction: column;
+   align-items: left;
+   justify-content: center;
+   padding-left: 30px;
+}
+
+@media (max-width: 576px) { 
+    .board-title { 
+        align-items: center; 
+        padding-top: 5px;
+    }
+ }
+
 /* .board {
    margin: 0rem 2rem 0rem 2rem;
    border: 1px black solid;
@@ -49,12 +83,6 @@ z-index: 3;
    border-radius: 5px;
 }
 
-.board-title {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-}
 
 .board-title h2 {
    align-self: flex-start;

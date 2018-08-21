@@ -50,11 +50,15 @@ export function listsById(state = {}, action) {
 
 			const listId = action.payload.listId
 
+			console.log('state[listId]', state[listId])
+
+			const CardIds = (state[listId].CardIds ? state[listId].CardIds : [])
+
 			return {
 				...state,
 				[listId]: {
 					...state[listId],
-					CardIds: state[listId].CardIds.concat(cardId)
+					CardIds,
 				}
 			}
 

@@ -5,7 +5,7 @@ import ModalContainer from '../containers/ModalContainer'
 import ListFormContainer from '../containers/ListFormContainer'
 import CardFormContainer from '../containers/CardFormContainer'
 import ListDeleteContainer from '../containers/ListDeleteContainer'
-import { Card, CardSubtitle, CardHeader, CardFooter, Button, ButtonGroup, Col } from 'reactstrap';
+import { Card, CardSubtitle, CardHeader, ButtonGroup, Col } from 'reactstrap';
 import '../stylesheets/List.css'
 
 const List = ({ listId, title, description }) => {

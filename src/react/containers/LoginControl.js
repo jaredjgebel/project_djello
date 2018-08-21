@@ -4,6 +4,7 @@ import {
    NavbarBrand,
    Button,
 } from 'reactstrap'
+import '../stylesheets/LoginControl.css'
 
 class LoginControl extends Component {
    goTo(route) {
@@ -23,8 +24,8 @@ class LoginControl extends Component {
 
       return (
          <div>
-            <Navbar fluid="true" fixed="top" dark={true}>
-               <NavbarBrand>
+            <Navbar fluid="true" fixed="top" dark={true} className="logged-out-nav">
+               <NavbarBrand style={{ color: "#BAB9B1" }}>
                   Djello Task Management
                </NavbarBrand>
                {
