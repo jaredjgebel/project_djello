@@ -29,20 +29,29 @@ export function fetchApiToken() {
 	return (dispatch) => {
 		dispatch(fetchTokenRequest())
 
+
+		const headers = new Headers()
+
+		headers.append("Access-Control-Expose-Headers", "Set-Cookie")
+
 		return fetch(`${apiUrl}/user/access`, {
 			method: 'GET',
+			headers,
 		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(`${response.status} ${response.statusText}`)
 				}
 
-				return response.json()
+				// decode cookie, chop off beginning (djello-auth-token), parse JSON
+				const jWebToken = JSON.parse((decodeURIComponent(document.cookie)).slice(18));
+				dispatch(fetchTokenSuccess(jWebToken.access_token))
 			})
-			.then(json => {
-				const tokenObj = JSON.parse(json)
-				dispatch(fetchTokenSuccess(tokenObj.access_token))
-			})
+			// .then(json => {
+			// 	// cookie is added to response header
+			// 	const tokenObj = JSON.parse(json)
+			// 	dispatch(fetchTokenSuccess(tokenObj.access_token))
+			// })
 			.catch(err => {
 				dispatch(fetchTokenFailure(err))
 			})
