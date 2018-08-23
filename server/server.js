@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use(express.static('dist'));
-app.use(express.static('node_modules/awesome-bootstrap-checkbox'))
 
 app.use(cors({
    origin: `http://${host}:9000`,

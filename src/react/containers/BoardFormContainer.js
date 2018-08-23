@@ -37,7 +37,7 @@ class BoardFormContainer extends Component {
    handleSubmit(event) {
       event.preventDefault()
 
-      const { action, boardId } = this.props
+      const { action, boardId, userId, createBoard, editBoard } = this.props
 
       const title = this.title.current.value
       const description = this.description.current.value
@@ -48,29 +48,30 @@ class BoardFormContainer extends Component {
       this.setState({ titleFeedback })
       this.setState({ descriptionFeedback })
 
-
       if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
          // check for which action to dispatch
          if (action === "New Board") {
-            this.props.createBoard(this.props.userId, title, description)
+            createBoard(userId, title, description)
          } else if (action === "Edit Board") {
-            this.props.editBoard(boardId, title, description)
+            editBoard(boardId, title, description)
          }
-         // close modal ????
-         // this.props.toggle()
       }
    }
 
    render() {
+      const { boardTitle, boardDescription, action } = this.props
       const { titleFeedback, descriptionFeedback } = this.state
 
       const titleInvalidDiv = titleFeedback === "is-invalid" ? <div className="invalid-feedback">Board title must be less than 255 characters.</div> : null
 
       const descriptionInvalidDiv = descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">Board description must be less than 255 characters.</div> : null
 
-      const titlePlaceholder = !this.props.boardTitle ? "Title" : this.props.boardTitle
+      const titlePlaceholder = !boardTitle ? "Title" : boardTitle
 
-      const descriptionPlaceholder = !this.props.boardDescription ? "Description" : this.props.boardDescription
+      const descriptionPlaceholder = !boardDescription ? "Description" : boardDescription
+
+      // define separately, one will be undefined
+      const placeholderOrValue = (action === "New Board" ? "placeholder" : "defaultValue")
 
       return (
          <div>

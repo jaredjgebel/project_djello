@@ -1,3 +1,4 @@
+import { KJUR } from 'jsrsasign'
 import * as c from '../constants'
 import { fetchBoards } from './boards';
 const port = process.env.PORT || 5000;
@@ -29,29 +30,20 @@ export function fetchApiToken() {
 	return (dispatch) => {
 		dispatch(fetchTokenRequest())
 
-
-		const headers = new Headers()
-
-		headers.append("Access-Control-Expose-Headers", "Set-Cookie")
-
 		return fetch(`${apiUrl}/user/access`, {
 			method: 'GET',
-			headers,
 		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(`${response.status} ${response.statusText}`)
 				}
 
-				// decode cookie, chop off beginning (djello-auth-token), parse JSON
-				const jWebToken = JSON.parse((decodeURIComponent(document.cookie)).slice(18));
-				dispatch(fetchTokenSuccess(jWebToken.access_token))
+				return response.json()
 			})
-			// .then(json => {
-			// 	// cookie is added to response header
-			// 	const tokenObj = JSON.parse(json)
-			// 	dispatch(fetchTokenSuccess(tokenObj.access_token))
-			// })
+			.then(json => {
+				const tokenObj = JSON.parse(json)
+				dispatch(fetchTokenSuccess(tokenObj.access_token))
+			})
 			.catch(err => {
 				dispatch(fetchTokenFailure(err))
 			})
@@ -162,15 +154,26 @@ export function fetchUser(userId) {
 }
 
 // dispatches fetchAPI token, fetchUserByToken, and fetchBoards in that order (each needs the result of the previous step)
-export function fetchTokenAndUser(idToken) {
+export function fetchTokenAndUser() {
 	return (dispatch, getState) => {
 		return dispatch(fetchApiToken())
 			.then(() => {
+				if (localStorage && localStorage.id_token) {
+					const parsedIdToken = KJUR.jws.JWS.parse(localStorage.id_token)
+					// subject of the payloadObj
+					const idToken = parsedIdToken.payloadObj.sub
+					return idToken
+				}
+			})
+			.then((idToken) => {
 				const accessToken = getState().users.accessToken
 				return dispatch(fetchUserByToken(accessToken, idToken))
 			})
 			.then(() => {
 				dispatch(fetchBoards(getState().users.id))
+			})
+			.catch(err => {
+				console.log(error)
 			})
 	}
 }

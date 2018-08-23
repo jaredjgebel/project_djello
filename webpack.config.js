@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 
 module.exports = {
   mode: "development",
@@ -22,19 +21,6 @@ module.exports = {
           }
         }
       },
-      // {
-      //   test: /\.(woff|woff2)$/,
-      //   use: {
-      //     loader: "url-loader",
-      //     options: {
-      //       // Size limit of 50 kb
-      //       // Above that emits separate files
-      //       limit: 50000,
-      //       mimetype: "application/font-woff",
-      //       name: "./src/fonts/[name].[ext]",
-      //     }
-      //   }
-      // },
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
@@ -56,17 +42,5 @@ module.exports = {
       title: "Webpack!",
       template: 'index.html'
     }),
-    // new GoogleFontsPlugin({
-    //   fonts: [
-    //     { family: "Oswald", variants: ["400", "700"] }
-    //   ],
-    //   filename: './style.css',
-    //   path: './src/fonts/',
-    //   formats: ["woff", "woff2"]
-    // })
   ]
 };
-
-// 
-
-

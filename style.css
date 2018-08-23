@@ -1,8 +1,5 @@
-* {
-  font-family: 'Oswald', sans-serif;
-}
-
 html, body {
+  font-family: 'Roboto', sans-serif;
   min-height: 100% !important;
   height: 100%;
 }

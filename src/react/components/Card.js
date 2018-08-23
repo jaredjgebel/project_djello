@@ -21,7 +21,7 @@ class Card extends Component {
    }
 
    render() {
-      const { cardId, title, description, updatedAt, listId } = this.props
+      const { cardId, title, description, updatedAt, listId, editCard } = this.props
       const visibleHistory = this.state.visibleHistory
       const parsedDate = updatedAt.slice(0, 10)
       const parsedTime = updatedAt.slice(11, 16)
@@ -30,6 +30,10 @@ class Card extends Component {
          <div>
             <div className="card">
                <div className="card-interior">
+                  {/* <input 
+                     type="checkbox"
+                     onClick={editCard(cardId, listId, user, title, description, complete)}
+                     >Complete</input> */}
                   <h5 className="card-title">
                      {title}
                   </h5>

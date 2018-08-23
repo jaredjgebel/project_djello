@@ -8,7 +8,6 @@ const Assignee = ({ assignee }) => {
          <img src={assignee.photo} className="assignee-photo" style={{ height: "75px", width: "75px" }} />
          <p>{assignee.first}</p>
          <p>{assignee.last}</p>
-
       </div>
    )
 }

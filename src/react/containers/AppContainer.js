@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import App from '../components/App'
 import Auth from '../../auth/Auth'
 import { KJUR } from 'jsrsasign'
-import { fetchTokenAndUser } from '../../redux/actions/user'
+import { fetchTokenAndUser, fetchApiToken, fetchUserByToken } from '../../redux/actions/user'
 import { getUserId } from '../../redux/selectors/userSelectors'
 
 const auth = new Auth();
@@ -23,19 +23,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
    return {
-      fetchTokenAndUser: (idToken) => {
-         dispatch(fetchTokenAndUser(idToken))
-      }
+      fetchTokenAndUser: () => {
+         dispatch(fetchTokenAndUser())
+      },
    }
 }
 
 class AppContainer extends Component {
    componentDidMount() {
-      // parse JSON web token
-      const parsedIdToken = KJUR.jws.JWS.parse(localStorage.id_token)
-      // subject of the payloadObj
-      const sub = parsedIdToken.payloadObj.sub
-      this.props.fetchTokenAndUser(sub)
+      this.props.fetchTokenAndUser()
    }
 
    render() {

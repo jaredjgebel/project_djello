@@ -9,14 +9,14 @@ import '../stylesheets/List.css'
 
 const List = ({ listId, title, description }) => {
    return (
-      <div className="list col-12 col-lg-6">
+      <div className="list col-12 col-xl-6">
          <div className="card">
             <div className="card-header">
                <h4>{title}</h4>
-               <div className="card-subtitle" style={{ fontWeight: 'normal' }}>{description}</div>
-
+               <div className="card-subtitle">{description}</div>
                <div className="clearfix">
                   <div className="btn-group float-right" role="group">
+                     <button className="btn btn-disabled float-left">Lists</button>
                      <ModalContainer
                         action="New List"
                         header="New List"
@@ -40,8 +40,6 @@ const List = ({ listId, title, description }) => {
                      >
                         <ListDeleteContainer listId={listId} />
                      </ModalContainer>
-
-                     <button className="btn btn-secondary float-left">Lists</button>
                   </div>
                   <ModalContainer
                      action="New Card"

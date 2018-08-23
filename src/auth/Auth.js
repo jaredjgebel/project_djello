@@ -63,6 +63,7 @@ export default class Auth {
    }
 
    setSession(authResult) {
+      console.log('authResult', authResult)
       // Set the time that the Access Token will expire at
       let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       localStorage.setItem('access_token', authResult.accessToken);

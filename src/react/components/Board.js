@@ -31,6 +31,9 @@ const Board = ({ current }) => {
                            className="btn-group float-right"
                            role="group"
                         >
+                           {/* select which board to display */}
+                           <BoardInputContainer />
+
                            <ModalContainer
                               action="New Board"
                               header="New Board"
@@ -58,8 +61,6 @@ const Board = ({ current }) => {
                            >
                               <BoardDeleteContainer boardId={current.id} />
                            </ModalContainer>
-
-                           <BoardInputContainer />
                         </div>
                      </div>
                   </div>

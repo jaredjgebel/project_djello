@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Card from '../components/Card'
-import { fetchCards } from '../../redux/actions/cards'
+import { fetchCards, editCard } from '../../redux/actions/cards'
 import { areCardsFetching, getCards, getCardIds } from '../../redux/selectors/cardSelectors';
 import { getLists } from '../../redux/selectors/listSelector'
 
@@ -19,11 +19,19 @@ const mapDispatchToProps = dispatch => {
    return {
       fetchCards: (listId) => {
          dispatch(fetchCards(listId))
-      }
+      },
+      // editCard: (cardId, listId, user, title, description, complete) => {
+      //    dispatch(editCard(cardId, listId, user, title, description, complete))
+      // }
    }
 }
 
 class CardContainer extends Component {
+   // constructor() {
+   //    super()
+   //    this.editCard = this.editCard.bind(this)
+   // }
+
    componentDidMount() {
       this.props.fetchCards(this.props.listId)
    }
@@ -53,6 +61,7 @@ class CardContainer extends Component {
                         updatedAt={cardsById[id].updatedAt}
                         cardId={id}
                         listId={listId}
+                        editCard={this.editCard}
                      />
                   </div>
                )
