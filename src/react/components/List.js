@@ -18,7 +18,7 @@ const List = ({ listId, title, description }) => {
                   <div className="btn-group float-right" role="group">
                      <button className="btn btn-disabled float-left">Lists</button>
                      <ModalContainer
-                        action="New List"
+                        action="new-list"
                         header="New List"
                         button="New"
                      >
@@ -26,7 +26,7 @@ const List = ({ listId, title, description }) => {
                      </ModalContainer>
 
                      <ModalContainer
-                        action="Edit List"
+                        action="edit-list"
                         header="Edit List"
                         button="Edit"
                      >
@@ -34,7 +34,7 @@ const List = ({ listId, title, description }) => {
                      </ModalContainer>
 
                      <ModalContainer
-                        action="Delete List"
+                        action="delete-list"
                         header="Delete List"
                         button="Delete"
                      >
@@ -42,7 +42,7 @@ const List = ({ listId, title, description }) => {
                      </ModalContainer>
                   </div>
                   <ModalContainer
-                     action="New Card"
+                     action="new-card"
                      header="New Card"
                      button="New Card"
                   >

@@ -6,6 +6,7 @@ import AssigneesContainer from '../containers/AssigneesContainer'
 import ModalContainer from '../containers/ModalContainer'
 import CardFormContainer from '../containers/CardFormContainer'
 import CardDeleteContainer from '../containers/CardDeleteContainer'
+import LargeCheckbox from '../components/LargeCheckbox'
 
 class Card extends Component {
    constructor() {
@@ -21,27 +22,38 @@ class Card extends Component {
    }
 
    render() {
-      const { cardId, title, description, updatedAt, listId, editCard } = this.props
+      const { cardId, title, description, updatedAt, complete, listId, editCard } = this.props
       const visibleHistory = this.state.visibleHistory
       const parsedDate = updatedAt.slice(0, 10)
       const parsedTime = updatedAt.slice(11, 16)
 
       return (
          <div>
-            <div className="card">
+            <div className="card container">
                <div className="card-interior">
-                  {/* <input 
-                     type="checkbox"
-                     onClick={editCard(cardId, listId, user, title, description, complete)}
-                     >Complete</input> */}
-                  <h5 className="card-title">
-                     {title}
-                  </h5>
-                  <ul>
-                     <li className="card-text">
-                        {description}
-                     </li>
-                  </ul>
+                  <div className="row">
+                     <div className="col-10">
+                        <h5 className="card-title">
+                           {title}
+                        </h5>
+                        <ul>
+                           <li className="card-text">
+                              {description}
+                           </li>
+                        </ul>
+                     </div>
+                     <div className="col-2">
+                        <LargeCheckbox
+                           complete={complete}
+                           cardId={cardId}
+                           toggleCheck={() => {
+                              const check = document.querySelector(`#i${cardId}`)
+                              console.log(check.hasAttribute('selected'))
+                           }}
+                        />
+                     </div>
+                  </div>
+
 
                   <div className="card-details clearfix">
                      <div className="card-update float-left align-bottom">
@@ -49,7 +61,7 @@ class Card extends Component {
                      </div>
 
                      <ModalContainer
-                        action="Delete Card"
+                        action="delete-card"
                         header="Delete Card"
                         button="Delete Card"
                         buttonClasses="float-right btn-secondary"
@@ -62,7 +74,7 @@ class Card extends Component {
 
 
                      <ModalContainer
-                        action="Edit Card"
+                        action="edit-card"
                         header="Edit Card"
                         button="Edit Card"
                         buttonClasses="float-right btn-secondary"

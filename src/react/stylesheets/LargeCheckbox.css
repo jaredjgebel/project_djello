@@ -1,0 +1,11 @@
+.custom-control-label::before, 
+.custom-control-label::after {
+bottom: .8rem;
+width: 3rem;
+height: 3rem;
+border: 2px solid whitesmoke;
+}
+
+.custom-control-label {
+   bottom: 1.8rem;
+}

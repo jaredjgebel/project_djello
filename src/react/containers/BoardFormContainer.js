@@ -50,9 +50,9 @@ class BoardFormContainer extends Component {
 
       if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
          // check for which action to dispatch
-         if (action === "New Board") {
+         if (action === "new-board") {
             createBoard(userId, title, description)
-         } else if (action === "Edit Board") {
+         } else if (action === "edit-board") {
             editBoard(boardId, title, description)
          }
       }
@@ -71,7 +71,7 @@ class BoardFormContainer extends Component {
       const descriptionPlaceholder = !boardDescription ? "Description" : boardDescription
 
       // define separately, one will be undefined
-      const placeholderOrValue = (action === "New Board" ? "placeholder" : "defaultValue")
+      const placeholderOrValue = (action === "new-board" ? "placeholder" : "defaultValue")
 
       return (
          <div>

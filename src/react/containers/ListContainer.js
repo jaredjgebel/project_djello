@@ -57,7 +57,7 @@ class ListContainer extends Component {
             <div>
                <p>No lists yet. Create a new one!</p>
                <ModalContainer
-                  action="New List"
+                  action="new-list"
                   header="New List"
                   button="New List"
                >

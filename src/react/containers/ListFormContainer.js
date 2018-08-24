@@ -50,9 +50,9 @@ class ListFormContainer extends Component {
 
       if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
          // dispatch action
-         if (action === "New List") {
+         if (action === "new-list") {
             this.props.createList(boardId, title, description)
-         } else if (action === "Edit List") {
+         } else if (action === "edit-list") {
             this.props.editList(listId, boardId, title, description)
          }
          // close modal ????

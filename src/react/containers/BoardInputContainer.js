@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-   DropdownItem,
-   DropdownMenu,
-   DropdownToggle,
-   InputGroup,
-   InputGroupButtonDropdown,
-} from 'reactstrap'
 import { switchBoards } from '../../redux/actions/boards'
 import { fetchLists } from '../../redux/actions/lists'
 import { getCurrentBoard, getAllBoards, getAllBoardIds, getBoardsById, getBoardNames } from '../../redux/selectors/boardSelectors';
@@ -38,11 +31,6 @@ class BoardInputContainer extends Component {
       super(props)
 
       this.selectBoard = this.selectBoard.bind(this)
-      this.toggleDropDown = this.toggleDropDown.bind(this)
-
-      this.state = {
-         dropdownOpen: false,
-      }
    }
 
    selectBoard(board) {
@@ -50,11 +38,6 @@ class BoardInputContainer extends Component {
       this.props.fetchLists(board.id)
    }
 
-   toggleDropDown() {
-      this.setState({
-         dropdownOpen: !this.state.dropdownOpen
-      })
-   }
    render() {
       const { allIds, boards, current } = this.props
 
@@ -85,21 +68,15 @@ class BoardInputContainer extends Component {
       )
 
       return (
-         <div className="input-group">
-            <InputGroupButtonDropdown
-               addonType="append"
-               isOpen={this.state.dropdownOpen}
-               toggle={this.toggleDropDown}>
+         <div className="btn-group">
+            <button type="button" className="btn btn-primary">Select Board</button>
+            <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <span className="sr-only">Toggle Dropdown</span>
+            </button>
 
-               <DropdownToggle caret>
-                  Select Board
-               </DropdownToggle>
-
-               <DropdownMenu>
-                  {dropdownItems}
-               </DropdownMenu>
-
-            </InputGroupButtonDropdown>
+            <div className="dropdown-menu">
+               {dropdownItems}
+            </div>
          </div>
       )
    }
@@ -116,10 +93,4 @@ BoardInputContainer.propTypes = {
    current: PropTypes.object,
    byId: PropTypes.object,
    boardNames: PropTypes.array,
-}
-
-InputGroup.propTypes = {
-   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-   size: PropTypes.string,
-   className: PropTypes.string
 }

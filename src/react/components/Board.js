@@ -35,7 +35,7 @@ const Board = ({ current }) => {
                            <BoardInputContainer />
 
                            <ModalContainer
-                              action="New Board"
+                              action="new-board"
                               header="New Board"
                               button="New"
                            >
@@ -43,7 +43,7 @@ const Board = ({ current }) => {
                            </ModalContainer>
 
                            <ModalContainer
-                              action="Edit Board"
+                              action="edit-board"
                               header="Edit Board"
                               button="Edit"
                            >
@@ -55,7 +55,7 @@ const Board = ({ current }) => {
                            </ModalContainer>
 
                            <ModalContainer
-                              action="Delete Board"
+                              action="delete-board"
                               header="Delete Board"
                               button="Delete"
                            >

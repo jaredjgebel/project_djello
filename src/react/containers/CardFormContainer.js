@@ -50,9 +50,9 @@ class CardFormContainer extends Component {
 
 		if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
 			// dispatch action
-			if (action === "New Card") {
+			if (action === "new-card") {
 				this.props.createCard(listId, user, title, description)
-			} else if (action === "Edit Card") {
+			} else if (action === "edit-card") {
 				this.props.editCard(cardId, listId, user, title, description)
 			}
 		}
