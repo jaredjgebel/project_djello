@@ -1,5 +1,5 @@
 import * as c from '../constants'
-import { createHistory } from './histories';
+import { createHistory } from './histories'
 const port = 5000;
 const host = 'localhost';
 const apiUrl = `http://${host}:${port}/api/v1`
@@ -164,14 +164,13 @@ function editCardAndCreateHistory(card, user) {
 	}
 }
 
-export function editCard(cardId, listId, user, title, description) {
-	console.log('listId', listId)
+export function editCard(cardId, listId, user, title, description, complete) {
 	return (dispatch, getState) => {
 		dispatch(editCardRequest(cardId))
 
 		const accessToken = getState().users.accessToken
 
-		fetch(`${apiUrl}/cards/${cardId}?title=${title}&description=${description}`, {
+		fetch(`${apiUrl}/cards/${cardId}?title=${title}&description=${description}&complete=${complete}`, {
 			method: "PUT",
 			credentials: "include",
 			headers: {
@@ -257,5 +256,11 @@ export function deleteCard(listId, cardId) {
 			.catch(err => {
 				dispatch(deleteCardFailure(err))
 			})
+	}
+}
+
+function markAsCompleteRequest(cardId) {
+	return {
+
 	}
 }

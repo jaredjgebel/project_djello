@@ -1,22 +1,47 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheets/LargeCheckbox.css'
+import { ThemeProvider } from '@zendeskgarden/react-theming'
+import { Checkbox, Label } from '@zendeskgarden/react-checkboxes'
 
-const LargeCheckbox = ({ complete, toggleCheck, cardId }) => {
-   const checked = complete ? "selected" : ""
+class LargeCheckbox extends Component {
+   constructor(props) {
+      super(props)
+      this.state = { isChecked: props.complete }
+      this.onChange = this.onChange.bind(this)
+   }
 
-   return (
-      <div className="custom-control form-control-lg custom-checkbox">
-         <input type="checkbox" className="custom-control-input" id={`i${cardId}`} onChange={toggleCheck} />
-         <label className="custom-control-label active" htmlFor={`i${cardId}`}  ></label>
-      </div>
-   )
+   onChange = () => {
+      const { cardId, title, description, user, listId, editCard } = this.props
+
+      // callback ensures editCard waits for isChecked state to change
+      this.setState({ isChecked: !this.state.isChecked }, () => {
+         editCard(cardId, listId, user, title, description, this.state.isChecked)
+         console.log(this.state.isChecked)
+      })
+   }
+
+   render() {
+      return (
+         <ThemeProvider>
+            <Checkbox
+               checked={this.state.isChecked}
+               onChange={this.onChange}
+            >
+               <Label></Label>
+            </Checkbox>
+         </ThemeProvider>
+      )
+   }
 }
 
 export default LargeCheckbox
 
 LargeCheckbox.propTypes = {
+   cardId: PropTypes.number,
+   title: PropTypes.string,
+   description: PropTypes.string,
    complete: PropTypes.bool,
-   toggleCheck: PropTypes.func,
+   editCard: PropTypes.func,
    cardId: PropTypes.number,
 }

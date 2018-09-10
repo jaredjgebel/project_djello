@@ -46,8 +46,9 @@ router.put('/cards/:id', checkJwt, (req, res) => {
 	const q = qs.parse(req.query);
 	const title = q.title;
 	const description = q.description;
+	const complete = q.complete;
 
-	editCard(cardId, title, description)
+	editCard(cardId, title, description, complete)
 		.then(card => {
 			res.status(200).json(card);
 		})

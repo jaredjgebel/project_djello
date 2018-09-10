@@ -9,6 +9,7 @@ import { rootReducer } from './src/redux/reducers'
 import { createLogger } from 'redux-logger'
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@zendeskgarden/react-checkboxes/dist/styles.css';
 import AppContainer from "./src/react/containers/AppContainer";
 
 const logger = createLogger({

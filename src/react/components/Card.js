@@ -22,7 +22,7 @@ class Card extends Component {
    }
 
    render() {
-      const { cardId, title, description, updatedAt, complete, listId, editCard } = this.props
+      const { cardId, title, description, updatedAt, complete, listId, editCard, user } = this.props
       const visibleHistory = this.state.visibleHistory
       const parsedDate = updatedAt.slice(0, 10)
       const parsedTime = updatedAt.slice(11, 16)
@@ -42,14 +42,15 @@ class Card extends Component {
                            </li>
                         </ul>
                      </div>
-                     <div className="col-2">
+                     <div className="col-1 offset-1">
                         <LargeCheckbox
-                           complete={complete}
                            cardId={cardId}
-                           toggleCheck={() => {
-                              const check = document.querySelector(`#i${cardId}`)
-                              console.log(check.hasAttribute('selected'))
-                           }}
+                           title={title}
+                           description={description}
+                           complete={complete}
+                           listId={listId}
+                           user={user}
+                           editCard={editCard}
                         />
                      </div>
                   </div>

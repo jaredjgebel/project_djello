@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Card from '../components/Card'
-import { fetchCards } from '../../redux/actions/cards'
+import { fetchCards, editCard } from '../../redux/actions/cards'
 import { areCardsFetching, getCards, getCardIds } from '../../redux/selectors/cardSelectors';
 import { getLists } from '../../redux/selectors/listSelector'
+import { getUser } from '../../redux/selectors/userSelectors'
 
 const mapStateToProps = state => {
    return {
@@ -12,6 +13,7 @@ const mapStateToProps = state => {
       cardsById: getCards(state),
       cardIds: getCardIds(state),
       lists: getLists(state),
+      user: getUser(state),
    }
 }
 
@@ -20,6 +22,9 @@ const mapDispatchToProps = dispatch => {
       fetchCards: (listId) => {
          dispatch(fetchCards(listId))
       },
+      editCard: (cardId, listId, user, title, description, complete) => {
+         dispatch(editCard(cardId, listId, user, title, description, complete))
+      }
    }
 }
 
@@ -29,7 +34,7 @@ class CardContainer extends Component {
    }
 
    render() {
-      const { isFetching, cardsById, cardIds, listId, lists } = this.props
+      const { editCard, isFetching, cardsById, cardIds, listId, lists, user } = this.props
 
       if (isFetching) {
          return (
@@ -53,7 +58,8 @@ class CardContainer extends Component {
                         complete={cardsById[id].complete}
                         cardId={id}
                         listId={listId}
-                        editCard={this.editCard}
+                        editCard={editCard}
+                        user={user}
                      />
                   </div>
                )
