@@ -23,6 +23,8 @@ class CardDeleteContainer extends Component {
       const { listId, cardId } = this.props
 
       this.props.deleteCard(listId, cardId)
+
+      document.querySelector('body').classList.remove('modal-open')
    }
 
    render() {

@@ -30,6 +30,8 @@ class ListDeleteContainer extends Component {
 		const { boardId, listId } = this.props
 
 		this.props.deleteList(boardId, listId)
+
+		document.querySelector('body').classList.remove('modal-open')
 	}
 
 	render() {

@@ -11,7 +11,14 @@ const Board = ({ current }) => {
    if (!current) {
       return (
          <div className="board-loading">
-            <p>Retrieving boards.</p>
+            <p>No boards created yet.</p>
+            <ModalContainer
+               action="new-board"
+               header="New Board"
+               button="New"
+            >
+               <BoardFormContainer />
+            </ModalContainer>
          </div>
       )
    }
@@ -77,5 +84,5 @@ const Board = ({ current }) => {
 export default Board
 
 Board.propTypes = {
-   current: PropTypes.object.isRequired,
+   current: PropTypes.object,
 }

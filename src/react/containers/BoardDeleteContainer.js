@@ -31,6 +31,8 @@ class BoardDeleteContainer extends Component {
 		const { boardId, userId } = this.props
 
 		this.props.deleteBoard(userId, boardId)
+
+		document.querySelector('body').classList.remove('modal-open')
 	}
 
 	render() {

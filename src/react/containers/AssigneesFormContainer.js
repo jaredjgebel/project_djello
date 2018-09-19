@@ -163,6 +163,9 @@ class AssigneesFormContainer extends Component {
 
 
 			if (user) {
+				const { userId, cardAssignees } = this.props
+				const userSelected = cardAssignees.includes(userId)
+
 				assigneeElements =
 					[
 						...assigneeElements,
@@ -171,6 +174,7 @@ class AssigneesFormContainer extends Component {
 							assignee={user}
 							key={user.id}
 							ref={this.click5}
+							selected={userSelected}
 						>
 							<Assignee
 								assignee={user}

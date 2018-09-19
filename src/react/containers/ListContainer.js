@@ -49,12 +49,14 @@ class ListContainer extends Component {
 
       if (isFetching || !boardId || lists === {}) {
          return (
-            <p>Retrieving list data.</p>
+            <div className="container">
+               <p>Retrieving list data.</p>
+            </div>
          )
 
       } else if (!isFetching && !listIds) {
          return (
-            <div>
+            <div className="container">
                <p>No lists yet. Create a new one!</p>
                <ModalContainer
                   action="new-list"

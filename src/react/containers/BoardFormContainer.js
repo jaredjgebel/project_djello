@@ -56,6 +56,8 @@ class BoardFormContainer extends Component {
             editBoard(boardId, title, description)
          }
       }
+
+      document.querySelector('body').classList.remove('modal-open')
    }
 
    render() {
@@ -66,12 +68,11 @@ class BoardFormContainer extends Component {
 
       const descriptionInvalidDiv = descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">Board description must be less than 255 characters.</div> : null
 
-      const titlePlaceholder = !boardTitle ? "Title" : boardTitle
+      const titlePlaceholder = action === "new-board" ? "Title" : null
+      const descriptionPlaceholder = action === "new-board" ? "Description" : null
 
-      const descriptionPlaceholder = !boardDescription ? "Description" : boardDescription
-
-      // define separately, one will be undefined
-      const placeholderOrValue = (action === "new-board" ? "placeholder" : "defaultValue")
+      const titleValue = action === "new-board" ? null : boardTitle
+      const descriptionValue = action === "new-board" ? null : boardDescription
 
       return (
          <div>
@@ -82,6 +83,7 @@ class BoardFormContainer extends Component {
                      name="title"
                      id="boardTitle"
                      placeholder={titlePlaceholder}
+                     defaultValue={titleValue}
                      className={`form-control ${titleFeedback}`}
                      ref={this.title}
                   />
@@ -93,6 +95,7 @@ class BoardFormContainer extends Component {
                      name="description"
                      id="boardDescription"
                      placeholder={descriptionPlaceholder}
+                     defaultValue={descriptionValue}
                      className={`form-control ${descriptionFeedback}`}
                      ref={this.description}
                   />

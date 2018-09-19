@@ -162,12 +162,13 @@ export function boardUi(state = initialUiState, action) {
 		// on new board creation
 		case c.CREATE_LIST_SUCCESS:
 			const listId = action.payload.list && action.payload.list.id
+			const ListIds = state.current.ListIds || []
 
 			return {
 				...state,
 				current: {
 					...state.current,
-					ListIds: state.current.ListIds.concat(listId)
+					ListIds: ListIds.concat(listId)
 				}
 			}
 

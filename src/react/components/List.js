@@ -30,7 +30,11 @@ const List = ({ listId, title, description }) => {
                         header="Edit List"
                         button="Edit"
                      >
-                        <ListFormContainer listId={listId} />
+                        <ListFormContainer 
+                           listId={listId}
+                           title={title}
+                           description={description}
+                        />
                      </ModalContainer>
 
                      <ModalContainer

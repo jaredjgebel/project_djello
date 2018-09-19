@@ -50,9 +50,7 @@ export function listsById(state = {}, action) {
 
 			const listId = action.payload.listId
 
-			console.log('state[listId]', state[listId])
-
-			const CardIds = (state[listId].CardIds ? state[listId].CardIds : [])
+			const CardIds = (state[listId].CardIds ? state[listId].CardIds : []).concat(cardId)
 
 			return {
 				...state,

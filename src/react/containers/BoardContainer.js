@@ -5,6 +5,7 @@ import Board from '../components/Board'
 import { fetchBoards } from '../../redux/actions/boards'
 import { getUserId } from '../../redux/selectors/userSelectors'
 import { getCurrentBoard, isBoardFetching } from '../../redux/selectors/boardSelectors';
+import BoardInputContainer from './BoardInputContainer';
 
 const mapStateToProps = state => {
    return {
@@ -29,7 +30,7 @@ class BoardContainer extends Component {
       if (isFetching) {
          return (
             <div className="board-loading">
-               <p>Loading lists.</p>
+               <p>Loading boards.</p>
             </div>
          )
       }

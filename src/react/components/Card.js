@@ -29,7 +29,7 @@ class Card extends Component {
 
       return (
          <div>
-            <div className="card container">
+            <div className="card">
                <div className="card-interior">
                   <div className="row">
                      <div className="col-10">
@@ -56,39 +56,48 @@ class Card extends Component {
                   </div>
 
 
-                  <div className="card-details clearfix">
-                     <div className="card-update float-left align-bottom">
-                        <small className="text-muted" >Updated at {parsedTime} on {parsedDate}</small>
+                  <div className="card-details clearfix container">
+                     <div className="row">
+                        <div className="card-update float-left align-bottom col-12 col-md-4">
+                           <small className="text-muted" >Updated at {parsedTime} on {parsedDate}</small>
+                        </div>
+
+                        <div className="col-12 col-md-8">
+                           <ModalContainer
+                              action="delete-card"
+                              header="Delete Card"
+                              button="Delete Card"
+                              buttonClasses="float-right btn-secondary"
+                           >
+                              <CardDeleteContainer
+                                 cardId={cardId}
+                                 listId={listId}
+                              />
+                           </ModalContainer>
+
+
+                           <ModalContainer
+                              action="edit-card"
+                              header="Edit Card"
+                              button="Edit Card"
+                              buttonClasses="float-right btn-secondary"
+                           >
+                              <CardFormContainer
+                                 cardId={cardId}
+                                 listId={listId}
+                                 cardTitle={title}
+                                 cardDescription={description}
+                                 complete={complete}
+                              />
+                           </ModalContainer>
+
+                           <button className="float-right btn btn-secondary" onClick={this.onDetailsClick}>
+                              {visibleHistory ? "Hide Details" : "Show Details"}
+                           </button>
+                        </div>
+
                      </div>
 
-                     <ModalContainer
-                        action="delete-card"
-                        header="Delete Card"
-                        button="Delete Card"
-                        buttonClasses="float-right btn-secondary"
-                     >
-                        <CardDeleteContainer
-                           cardId={cardId}
-                           listId={listId}
-                        />
-                     </ModalContainer>
-
-
-                     <ModalContainer
-                        action="edit-card"
-                        header="Edit Card"
-                        button="Edit Card"
-                        buttonClasses="float-right btn-secondary"
-                     >
-                        <CardFormContainer
-                           cardId={cardId}
-                           listId={listId}
-                        />
-                     </ModalContainer>
-
-                     <button className="float-right btn btn-secondary" onClick={this.onDetailsClick}>
-                        {visibleHistory ? "Hide Details" : "Show Details"}
-                     </button>
                   </div>
 
                   {visibleHistory ?

@@ -12,11 +12,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		createCard: (listId, user, title, description) => {
-			dispatch(createCard(listId, user, title, description))
+		createCard: (listId, user, title, description, complete) => {
+			dispatch(createCard(listId, user, title, description, complete))
 		},
-		editCard: (cardId, listId, user, title, description) => {
-			dispatch(editCard(cardId, listId, user, title, description))
+		editCard: (cardId, listId, user, title, description, complete) => {
+			dispatch(editCard(cardId, listId, user, title, description, complete))
 		},
 	}
 }
@@ -37,7 +37,7 @@ class CardFormContainer extends Component {
 	handleSubmit(e) {
 		e.preventDefault()
 
-		const { action, cardId, listId, user } = this.props
+		const { action, cardId, listId, user, complete } = this.props
 
 		const title = this.title.current.value
 		const description = this.description.current.value
@@ -51,17 +51,27 @@ class CardFormContainer extends Component {
 		if (titleFeedback === "is-valid" && descriptionFeedback === "is-valid") {
 			// dispatch action
 			if (action === "new-card") {
-				this.props.createCard(listId, user, title, description)
+				this.props.createCard(listId, user, title, description, complete)
 			} else if (action === "edit-card") {
-				this.props.editCard(cardId, listId, user, title, description)
+				this.props.editCard(cardId, listId, user, title, description, complete)
 			}
 		}
+
+		document.querySelector('body').classList.remove('modal-open')
 	}
 
 	render() {
+		const { action, cardTitle, cardDescription } = this.props
+
 		const titleInvalidDiv = this.state.titleFeedback === "is-invalid" ? <div className="invalid-feedback">Card title must be less than 255 characters.</div> : null
 
 		const descriptionInvalidDiv = this.state.descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">Card description must be less than 255 characters.</div> : null
+
+		const titlePlaceholder = action === "new-card" ? "Title" : null
+		const descriptionPlaceholder = action === "new-card" ? "Description" : null
+
+		const titleValue = action === "edit-card" ? cardTitle : null
+		const descriptionValue = action === "edit-card" ? cardDescription : null
 
 		return (
 			<form>
@@ -70,7 +80,8 @@ class CardFormContainer extends Component {
 						type="text"
 						name="title"
 						id="cardTitle"
-						placeholder="Title"
+						placeholder={titlePlaceholder}
+						defaultValue={titleValue}
 						className={`form-control ${this.state.titleFeedback}`}
 						ref={this.title}
 					/>
@@ -81,7 +92,8 @@ class CardFormContainer extends Component {
 						type="text"
 						name="description"
 						id="cardDescription"
-						placeholder="Description"
+						placeholder={descriptionPlaceholder}
+						defaultValue={descriptionValue}
 						className={`form-control ${this.state.descriptionFeedback}`}
 						ref={this.description}
 					/>

@@ -56,7 +56,6 @@ export function fetchCards(listId) {
 				dispatch(fetchCardsSuccess(json))
 			})
 			.catch(err => {
-				console.log('error', err)
 				dispatch(fetchCardsFailure(err))
 			})
 	}
