@@ -61,7 +61,7 @@ class ListContainer extends Component {
                <ModalContainer
                   action="new-list"
                   header="New List"
-                  button="New List"
+                  buttonText="New List"
                >
                   <ListFormContainer />
                </ModalContainer>

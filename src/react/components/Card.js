@@ -66,7 +66,7 @@ class Card extends Component {
                            <ModalContainer
                               action="delete-card"
                               header="Delete Card"
-                              button="Delete Card"
+                              buttonText="Delete Card"
                               buttonClasses="float-right btn-secondary"
                            >
                               <CardDeleteContainer
@@ -79,7 +79,7 @@ class Card extends Component {
                            <ModalContainer
                               action="edit-card"
                               header="Edit Card"
-                              button="Edit Card"
+                              buttonText="Edit Card"
                               buttonClasses="float-right btn-secondary"
                            >
                               <CardFormContainer

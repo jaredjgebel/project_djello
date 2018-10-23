@@ -5,7 +5,6 @@ import Board from '../components/Board'
 import { fetchBoards } from '../../redux/actions/boards'
 import { getUserId } from '../../redux/selectors/userSelectors'
 import { getCurrentBoard, isBoardFetching } from '../../redux/selectors/boardSelectors';
-import BoardInputContainer from './BoardInputContainer';
 
 const mapStateToProps = state => {
    return {
@@ -25,7 +24,17 @@ const mapDispatchToProps = dispatch => {
 
 class BoardContainer extends Component {
    render() {
-      const { isFetching } = this.props
+      const { current, isFetching } = this.props
+
+      if (current) {
+         return (
+            <div>
+               <Board
+                  current={current}
+               />
+            </div>
+         )
+      }
 
       if (isFetching) {
          return (
@@ -35,15 +44,13 @@ class BoardContainer extends Component {
          )
       }
 
-      const { current } = this.props
-
-      return (
-         <div>
-            <Board
-               current={current}
-            />
-         </div>
-      )
+      else {
+         return (
+            <div>
+               <p>No boards created yet.</p>
+            </div>
+         )
+      }
    }
 }
 

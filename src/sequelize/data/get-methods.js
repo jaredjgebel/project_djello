@@ -1,4 +1,3 @@
-const path = require('path');
 const Sequelize = require('sequelize');
 const models = require('../models');
 const User = models.User;
@@ -24,7 +23,6 @@ const getUserByIdToken = async (idToken) => {
             idToken,
          }
       });
-      console.log('user', user)
       return user.dataValues.id;
    } catch (err) {
       throw new Error(err);
@@ -45,7 +43,6 @@ const getUserBoards = async (userId) => {
    try {
       const userBoards = [];
       const user = await User.findById(userId);
-      console.log('e44', user.dataValues);
       // if a user has boards, iterate and return them
       if (user.dataValues.BoardIds) {
          for (let board of user.dataValues.BoardIds) {
@@ -67,6 +64,7 @@ const getUserBoards = async (userId) => {
 const getList = async (listId) => {
    try {
       const list = await List.findById(listId);
+
       return list.dataValues;
    } catch (err) {
       throw new Error(err);
@@ -129,7 +127,7 @@ const getCardAssignees = async (cardId) => {
       const cardResponse = await Card.findById(cardId);
 
 
-      if (!cardResponse.dataValues.AssigneeIds[0]) {
+      if (!cardResponse.dataValues.AssigneeIds || !cardResponse.dataValues.AssigneeIds[0]) {
          return null;
 
       } else {
@@ -159,7 +157,7 @@ const getHistories = async (cardId) => {
       const histories = [];
       const card = await Card.findById(cardId);
 
-      if (!card.dataValues.HistoryIds[0]) {
+      if (!card.dataValues.HistoryIds || card.dataValues.History === []) {
          return null;
       } else {
          for (let id of card.HistoryIds) {

@@ -3,10 +3,7 @@ const models = require('../models');
 const User = models.User;
 const Board = models.Board;
 const Card = models.Card;
-const History = models.History;
 const List = models.List;
-const Op = Sequelize.Op;
-
 // NOTE: returning promises with these methods
 // so they can be 'await'ed in post  and delete methods
 
@@ -29,7 +26,6 @@ const addBoardToUser = async (userId, boardId) => {
 		return Promise.resolve(user);
 
 	} catch (err) {
-		console.error(err);
 		return Promise.reject(err);
 	}
 };
@@ -50,7 +46,6 @@ const addListToBoard = async (boardId, listId) => {
 
 		return Promise.resolve(board);
 	} catch (err) {
-		console.error(err);
 		return Promise.reject('List could not be added to board.');
 	}
 };
@@ -72,7 +67,6 @@ const addCardToList = async (listId, cardId) => {
 		return Promise.resolve(list);
 
 	} catch (err) {
-		console.error(err.errors);
 		return Promise.reject('Card was not added to list.');
 	}
 };
@@ -94,7 +88,6 @@ const addAssigneeToCard = async (cardId, userId) => {
 		return Promise.resolve(card);
 
 	} catch (err) {
-		console.error(err);
 		return Promise.reject('Assignee was not added to card.');
 	}
 };
@@ -116,7 +109,6 @@ const addHistoryToCard = async (cardId, historyId) => {
 		return Promise.resolve(card);
 
 	} catch (err) {
-		console.error(err.errors);
 		return Promise.reject('Assignee was not added to card.');
 	}
 }
@@ -137,7 +129,6 @@ const removeBoardFromUser = async (userId, boardId) => {
 
 		return Promise.resolve(user);
 	} catch (err) {
-		console.error(err);
 		return Promise.reject(err);
 	}
 }
@@ -157,7 +148,6 @@ const removeListFromBoard = async (boardId, listId) => {
 
 		return Promise.resolve(board);
 	} catch (err) {
-		console.error(err);
 		return Promise.reject(err);
 	}
 }
@@ -177,7 +167,6 @@ const removeCardFromList = async (listId, cardId) => {
 
 		return Promise.resolve(list);
 	} catch (err) {
-		console.error(err);
 		return Promise.reject(err);
 	}
 }
@@ -198,7 +187,6 @@ const removeAssigneeFromCard = async (cardId, userId) => {
 		return Promise.resolve(card)
 
 	} catch (err) {
-		console.error(err);
 		return Promise.reject('Assignee was not added to card.');
 	}
 }

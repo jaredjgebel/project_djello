@@ -55,6 +55,7 @@ module.exports = {
       });
     }
 
+    // Chocolate chip cookies, cardRows 10-13
     cards.push({
       title: 'Chocolate chips',
       description: 'One bag',
@@ -72,6 +73,40 @@ module.exports = {
     cards.push({
       title: 'Butter',
       description: 'Two sticks',
+      complete: false,
+      AssigneeIds: [userRows[2].id],
+    });
+
+    cards.push({
+      title: 'Vanilla',
+      description: 'One teaspoon',
+      complete: false,
+    });
+
+    // Pumpkin pie
+    cards.push({
+      title: 'Pumpkin, canned',
+      description: 'Two cups',
+      complete: false,
+      AssigneeIds: [userRows[0].id],
+    });
+
+    cards.push({
+      title: 'Flour',
+      description: 'Two cups',
+      complete: true,
+    });
+
+    // Laundry
+    cards.push({
+      title: 'Sort laundry',
+      description: 'By color',
+      complete: true,
+      AssigneeIds: [userRows[0].id],
+    });
+
+    cards.push({
+      title: "Don't forget to bring fabric softener",
       complete: false,
     });
 
@@ -91,11 +126,24 @@ module.exports = {
       });
     }
 
+    // For board "recipes" -- listRows [10], [11]
     lists.push({
       title: 'Chocolate chip cookies',
       description: 'Ingredients',
-      CardIds: [cardRows[10].id, cardRows[11].id, cardRows[12].id],
+      CardIds: [cardRows[10].id, cardRows[11].id, cardRows[12].id, cardRows[13].id],
     });
+
+    lists.push({
+      title: 'Pumpkin pie',
+      description: 'Ingredients',
+      CardIds: [cardRows[14].id, cardRows[15].id],
+    });
+
+    lists.push({
+      title: 'Laundry',
+      description: 'Go to laundromat with $30 cash',
+      CardIds: [cardRows[16].id, cardRows[17].id]
+    })
 
     await queryInterface.bulkInsert('Lists', lists);
 
@@ -116,7 +164,13 @@ module.exports = {
     boards.push({
       title: 'Recipes',
       description: 'Collect recipes and ingredients',
-      ListIds: [listRows[10].id],
+      ListIds: [listRows[10].id, listRows[11].id],
+    });
+
+    boards.push({
+      title: 'To-Do',
+      description: 'Things to do this week',
+      ListIds: [listRows[12].id]
     });
 
     await queryInterface.bulkInsert('Boards', boards);
@@ -124,6 +178,8 @@ module.exports = {
     const boardsQuery = await queryInterface.sequelize.query(`SELECT id from "Boards";`);
     const boardRows = boardsQuery[0];
 
+    // Add boards with example lists and cards to "Jamie Doe"
+    addBoardToUser(userRows[10].id, boardRows[11].id);
     return addBoardToUser(userRows[10].id, boardRows[10].id);
 
   },

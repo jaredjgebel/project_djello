@@ -20,7 +20,7 @@ const List = ({ listId, title, description }) => {
                      <ModalContainer
                         action="new-list"
                         header="New List"
-                        button="New"
+                        buttonText="New"
                      >
                         <ListFormContainer />
                      </ModalContainer>
@@ -28,9 +28,9 @@ const List = ({ listId, title, description }) => {
                      <ModalContainer
                         action="edit-list"
                         header="Edit List"
-                        button="Edit"
+                        buttonText="Edit"
                      >
-                        <ListFormContainer 
+                        <ListFormContainer
                            listId={listId}
                            title={title}
                            description={description}
@@ -40,7 +40,7 @@ const List = ({ listId, title, description }) => {
                      <ModalContainer
                         action="delete-list"
                         header="Delete List"
-                        button="Delete"
+                        buttonText="Delete"
                      >
                         <ListDeleteContainer listId={listId} />
                      </ModalContainer>
@@ -48,7 +48,7 @@ const List = ({ listId, title, description }) => {
                   <ModalContainer
                      action="new-card"
                      header="New Card"
-                     button="New Card"
+                     buttonText="New Card"
                   >
                      <CardFormContainer listId={listId} />
                   </ModalContainer>

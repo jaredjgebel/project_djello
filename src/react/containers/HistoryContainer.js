@@ -43,7 +43,7 @@ class HistoryContainer extends Component {
          const historyElements = []
 
          historyIds.map(id => {
-            if (cardsById[cardId].HistoryIds.includes(id)) {
+            if (cardsById[cardId].HistoryIds && cardsById[cardId].HistoryIds.includes(id)) {
                historyElements.push(
                   <History
                      text={histories[id].text}

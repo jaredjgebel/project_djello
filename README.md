@@ -1,2 +1,7 @@
-# assignment_djello
-Project management with that great wobbly taste.
+# "Djello" Task Manager
+
+This application allows for the tracking of tasks on teams - similar to Trello. Each user can create boards, lists, and cards to organize tasks while auto-tracking changes. I took on this project as an opportunity to learn about integrating several technologies in a full-stack, ready-for-production application. I dealt with the challenges of adding several layers to the app, including creating a REST API, managing a PostgreSQL environment, and using React and Redux to control the front end and create ddynamic views. I also took the opportunity to set up my own Webpack configuration, and test out the tools available once you can start customizing your own build procedure.
+
+## Overall application structure
+
+I used Sequelize.js along with PostgreSQL to interface between the database and my Node server. I created CRUD methods and a set of utility methods, along with migrations, models, and tests. For a server, I used Express, both to authenticate each API request and authorize users to view their account information. Integration with Auth0 on the front and back ends gave me experience using authentication as a service and handling JSON web tokens. On the front end, Redux serves as the control center. I enjoyed using Redux to dispatch actions, because while there is a bit of a learning curve to it, it allows for the tracking of state during each action while debugging, and interfaces well with React.

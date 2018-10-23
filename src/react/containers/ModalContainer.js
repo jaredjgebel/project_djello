@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ModalContainer = ({ children, header, action, button, buttonClasses }) => {
+const ModalContainer = ({ children, header, action, buttonText, buttonClasses }) => {
    // Action prop copied to each element
    // indicates which Redux action to dispatch
    // in BoardFormContainer
@@ -18,7 +18,7 @@ const ModalContainer = ({ children, header, action, button, buttonClasses }) => 
             data-target={`#${action}Modal`}
             data-backdrop="false"
          >
-            {button}
+            {buttonText}
          </button>
 
          <div

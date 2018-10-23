@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 const models = require('../models');
 const Board = models.Board;
 const Card = models.Card;

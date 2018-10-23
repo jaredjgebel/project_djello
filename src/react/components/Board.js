@@ -15,7 +15,7 @@ const Board = ({ current }) => {
             <ModalContainer
                action="new-board"
                header="New Board"
-               button="New"
+               buttonText="New"
             >
                <BoardFormContainer />
             </ModalContainer>
@@ -44,7 +44,7 @@ const Board = ({ current }) => {
                            <ModalContainer
                               action="new-board"
                               header="New Board"
-                              button="New"
+                              buttonText="New"
                            >
                               <BoardFormContainer />
                            </ModalContainer>
@@ -52,7 +52,7 @@ const Board = ({ current }) => {
                            <ModalContainer
                               action="edit-board"
                               header="Edit Board"
-                              button="Edit"
+                              buttonText="Edit"
                            >
                               <BoardFormContainer
                                  boardId={current.id}
@@ -64,7 +64,7 @@ const Board = ({ current }) => {
                            <ModalContainer
                               action="delete-board"
                               header="Delete Board"
-                              button="Delete"
+                              buttonText="Delete"
                            >
                               <BoardDeleteContainer boardId={current.id} />
                            </ModalContainer>

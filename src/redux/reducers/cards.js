@@ -55,7 +55,7 @@ function cardsById(state = {}, action) {
 				...state,
 				[thisCard.id]: {
 					...state[thisCard.id],
-					AssigneeIds: state[thisCard.id].AssigneeIds.concat([assigneeId])
+					AssigneeIds: (state[thisCard.id].AssigneeIds ? state[thisCard.id].AssigneeIds.concat([assigneeId]) : [assigneeId])
 				}
 			}
 
@@ -79,7 +79,7 @@ function cardsById(state = {}, action) {
 				...state,
 				[changedCard.id]: {
 					...state[changedCard.id],
-					HistoryIds: state[changedCard.id].HistoryIds.concat([newHistory.id])
+					HistoryIds: (state[changedCard.id].HistoryIds ? state[changedCard.id].HistoryIds.concat([newHistory.id]) : [newHistory])
 				}
 			}
 

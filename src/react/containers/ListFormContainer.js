@@ -64,7 +64,6 @@ class ListFormContainer extends Component {
         const { action, title, description } = this.props
 
         const titleInvalidDiv = titleFeedback === "is-invalid" ? <div className="invalid-feedback">List title must be less than 255 characters.</div> : null
-
         const descriptionInvalidDiv = descriptionFeedback === "is-invalid" ? <div className="invalid-feedback">List description must be less than 255 characters.</div> : null
 
         const titlePlaceholder = action === "new-list" ? "Title" : null

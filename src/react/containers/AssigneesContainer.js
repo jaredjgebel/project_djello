@@ -40,7 +40,7 @@ class AssigneeContainer extends Component {
             </div>
             <ModalContainer
                header="Add or Remove Assignee To Card"
-               button="Add or Remove Assignee"
+               buttonText="Add or Remove Assignee"
             >
                <AssigneesFormContainer cardId={cardId} />
             </ModalContainer>

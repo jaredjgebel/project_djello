@@ -173,7 +173,7 @@ export function fetchTokenAndUser() {
 				dispatch(fetchBoards(getState().users.id))
 			})
 			.catch(err => {
-				console.log(error)
+				console.log(err)
 			})
 	}
 }

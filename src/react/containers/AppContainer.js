@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import App from '../components/App'
 import Auth from '../../auth/Auth'
-import { KJUR } from 'jsrsasign'
-import { fetchTokenAndUser, fetchApiToken, fetchUserByToken } from '../../redux/actions/user'
+import { fetchTokenAndUser } from '../../redux/actions/user'
 import { getUserId } from '../../redux/selectors/userSelectors'
 
 const auth = new Auth();

@@ -10,6 +10,7 @@ import HoverBorder from './HoverBorder'
 import '../stylesheets/HoverBorder.css'
 
 const mapStatetoProps = (state, ownProps) => {
+	console.log('OWNPROPS', ownProps)
 	return {
 		isFetching: getExampleAssigneesStatus(state),
 		exampleAssignees: getExampleAssignees(state),
@@ -127,6 +128,7 @@ class AssigneesFormContainer extends Component {
 		} else {
 			// get assignee IDs for this card
 			const { cardAssignees } = this.props
+			console.log('CARD ASSIGNEES', cardAssignees)
 
 			let assigneeElements = []
 			assigneeElements = exampleAssignees.map((assignee, i) => {
@@ -164,7 +166,7 @@ class AssigneesFormContainer extends Component {
 
 			if (user) {
 				const { userId, cardAssignees } = this.props
-				const userSelected = cardAssignees.includes(userId)
+				const userSelected = cardAssignees && cardAssignees.includes(userId)
 
 				assigneeElements =
 					[
@@ -174,7 +176,7 @@ class AssigneesFormContainer extends Component {
 							assignee={user}
 							key={user.id}
 							ref={this.click5}
-							selected={userSelected}
+							selected={userSelected ? userSelected : false}
 						>
 							<Assignee
 								assignee={user}
