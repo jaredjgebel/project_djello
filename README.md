@@ -1,6 +1,6 @@
 # "Djello" Task Manager
 
-This application allows for the tracking of tasks on teams - similar to Trello. Each user can create boards, lists, and cards to organize tasks while auto-tracking changes. I took on this project as an opportunity to learn about integrating several technologies in a full-stack, ready-for-production application. I dealt with the challenges of adding several layers to the app, including creating a REST API, managing a PostgreSQL environment, and using React and Redux to control the front end and create ddynamic views. I also took the opportunity to set up my own Webpack configuration, and test out the tools available once you can start customizing your own build procedure.
+This application allows for the tracking of tasks on teams - similar to Trello. Each user can create boards, lists, and cards to organize tasks while auto-tracking changes. I took on this project as an opportunity to learn about integrating several technologies in a full-stack, ready-for-production application. I dealt with the challenges of adding several layers to the app, including creating a REST API, managing a PostgreSQL environment, and using React and Redux to control the front end and create dynamic views. I also took the opportunity to set up my own Webpack configuration, and test out the tools available once you can start customizing your own build procedure.
 
 ## Overall application structure
 
