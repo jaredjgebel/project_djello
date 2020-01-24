@@ -89,7 +89,7 @@
     "request": "^2.87.0",
     "request-debug": "^0.2.0",
     "request-promise-native": "^1.0.5",
-    "sequelize": "^4.44.3",
+    "sequelize": "^5.1.0",
     "sequelize-cli": "^5.5.0",
     "styled-components": "^3.4.5",
     "snyk": "^1.232.0"
