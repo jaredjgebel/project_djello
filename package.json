@@ -92,7 +92,7 @@
     "sequelize": "^4.44.3",
     "sequelize-cli": "^5.5.0",
     "styled-components": "^3.4.5",
-    "snyk": "^1.232.0"
+    "snyk": "^1.258.2"
   },
   "snyk": true
 }
