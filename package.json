@@ -86,7 +86,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "request-debug": "^0.2.0",
     "request-promise-native": "^1.0.5",
     "sequelize": "^4.44.3",
